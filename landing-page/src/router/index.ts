@@ -34,6 +34,11 @@ const router = createRouter({
       name: "product",
       component: () => import("../pages/HomePage.vue")
     },
+    {
+      path:"/contact",
+      name: "contact",
+      component: () => import("../pages/ContactUsPage.vue")
+    },
     // {
     //   path: "*",
     //   name: "not-found-page",
