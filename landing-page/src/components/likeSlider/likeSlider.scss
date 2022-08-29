@@ -1,21 +1,21 @@
-.product_more {
+#product_more {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-bottom: 30px;
 
     .product_more-HomeTitle {
-        font-size: 28px;
+        font-size: calc(var(--vela-font-size) + 12px );
         padding: 0 0 10px;
         line-height: 34px;
         font-weight: 700;
-        color: #1a1a1a;
+        color: var( --vela-text-color-secondary);
     }
 
     .product_more-HomeSub {
-        color: #444;
+        color: var( --vela-text-color-primary);
         font-weight: 400;
-        font-size: 16px;
+        font-size: var(--vela-font-size);
         line-height: 21px;
         margin: 0 auto 10px;
         max-width: 600px;
@@ -25,8 +25,8 @@
     .product_more-slide {
         &:hover .carousel-control-icon {
             display: block;
-            color: #444;
-            background-color: #444;
+            color: var( --vela-text-color-primary);
+            background-color: var( --vela-text-color-primary);
             opacity: 0.7;
         }
 
@@ -54,7 +54,7 @@
                     padding: 20px 10px;
 
                     &:hover {
-                        color: #ba933e;
+                        color: var(--button_one_bgcolor_hover);
                         cursor: pointer;
                     }
                 }
@@ -77,7 +77,7 @@
                             width: 20px;
                             height: 20px;
                             border-radius: 50%;
-                            background: #ccc;
+                            background: var(  --vela-topbar-bgcolor);
                         }
                     }
                 }
@@ -86,12 +86,12 @@
                     position: absolute;
                     top: 8%;
                     right: 10%;
-                    background-color: white;
+                    background-color: var( --vela-body-bg);
                     padding: 8px 12px;
                     display: none;
 
                     &:hover {
-                        background-color: #ba933e;
+                        background-color: var(--button_one_bgcolor_hover);
                         animation: easyColorsearch ease 0.5s;
                     }
                 }
@@ -100,12 +100,12 @@
                     position: absolute;
                     top: 20%;
                     right: 10%;
-                    background-color: white;
+                    background-color: var(  --vela-body-bg);
                     padding: 8px 12px;
                     display: none;
 
                     &:hover {
-                        background-color: #ba933e;
+                        background-color: var(--button_one_bgcolor_hover);
                         animation: easyColorsearch ease 0.5s;
                     }
                 }
@@ -125,10 +125,10 @@
                 .product-show_product-sale {
                     position: absolute;
                     padding: 3px 10px;
-                    background-color: #ba933e;
+                    background-color: var(--button_one_bgcolor_hover);
                     font-weight: 700;
                     border-radius: 3px;
-                    color: #fff;
+                    color: var(--button_one_txtcolor);
                     top: 20px;
                     left: 20px;
                 }
@@ -151,8 +151,8 @@
             position: absolute !important;
 
             &:hover {
-                background-color: #ba933e;
-                color: #f6f6f6;
+                background-color: var(--button_one_bgcolor_hover);
+                color: var(--button_one_txtcolor);
             }
         }
     }

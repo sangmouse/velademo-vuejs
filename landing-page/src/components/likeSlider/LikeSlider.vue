@@ -1,5 +1,5 @@
 <template>
-  <div class="product_more">
+  <div id="product_more">
     <h3 class="product_more-HomeTitle">Maybe You Like</h3>
     <p class="product_more-HomeSub">
       Mirum est notare quam littera gothica quam nunc putamus parum claram!

@@ -1,5 +1,5 @@
 <template>
-  <div class="product-detail">
+  <div id="product-detail">
     <div class="product_img">
       <div class="CSSgal">
         <!-- Don't wrap targets in parent -->
