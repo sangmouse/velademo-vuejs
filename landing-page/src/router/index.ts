@@ -37,7 +37,7 @@ const router = createRouter({
     {
       path:"/contact",
       name: "contact",
-      component: () => import("../pages/ContactUsPage.vue")
+      component: () => import("../pages/contact-page/ContactUsPage.vue")
     },
     // {
     //   path: "*",
