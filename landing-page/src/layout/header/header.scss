@@ -13,7 +13,7 @@
       display: flex;
       align-items: center;
       font-size: var(--velasubmenu-fontsize);
-      opacity: .9;
+      opacity: 0.9;
     }
 
     &_sale {
@@ -37,10 +37,9 @@
 
         .item {
           margin: 0 6px;
-          opacity: .5;
+          opacity: 0.5;
         }
       }
-
     }
   }
 }
@@ -51,6 +50,10 @@
   justify-content: space-between;
   padding: 20px 60px;
   background: #c0c0c040;
+
+  .logo {
+    width: 130px;
+  }
 
   .menus {
     display: inline-flex;
@@ -121,6 +124,18 @@
         top: -17px;
         font-size: 20px;
         right: -11px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .top-bar {
+    &-body {
+      justify-content: center;
+      &_info,
+      &_social {
+        display: none;
       }
     }
   }
