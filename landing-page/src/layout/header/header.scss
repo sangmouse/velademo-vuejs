@@ -49,8 +49,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 20px 60px;
-  background: #c0c0c040;
-
+  background: var(--header-transparent-bgcolor);
   .logo {
     width: 130px;
   }
