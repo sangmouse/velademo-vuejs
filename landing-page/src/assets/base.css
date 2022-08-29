@@ -92,6 +92,10 @@
   --vela-loading-color: #0000005c;
   --vela-notfound-bgcolor: #ededed;
   --vela-btn-bordercolor: #dfdfdf;
+  --vela-notfound-bgcolor: #ededed;
+  --vela-notfound-txtcolor: #ccc;
+  --btn-notfound-bordercolor: #191919;
+  --btn-notfound-bgcolor: #191919;
 }
 
 html {
