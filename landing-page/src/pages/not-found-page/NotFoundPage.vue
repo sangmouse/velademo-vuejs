@@ -1,6 +1,6 @@
 <template>
   <div id="not-found-page">
-    <div class="body">
+    <div class="box">
       <div class="container">
           <h3 class="not-found-page__title">404</h3>
           <h3 class="not-found-page__title not-found-page__title--sub">PAGE NOT FOUND</h3>
