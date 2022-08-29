@@ -19,13 +19,15 @@
 
 @font-face {
   font-family: RedHatSemiBold;
-  src: url(./fonts/red-hat-display/RedHatDisplay-SemiBold.ttf) format("truetype");
+  src: url(./fonts/red-hat-display/RedHatDisplay-SemiBold.ttf)
+    format("truetype");
   font-weight: 600;
 }
 
 @font-face {
   font-family: RedHatMediumItalic;
-  src: url(./fonts/red-hat-display/RedHatDisplay-MediumItalic.ttf) format("truetype");
+  src: url(./fonts/red-hat-display/RedHatDisplay-MediumItalic.ttf)
+    format("truetype");
   font-weight: 500;
 }
 
@@ -34,7 +36,6 @@
   src: url(./fonts/red-hat-display/RedHatDisplay-Black.ttf) format("truetype");
   font-weight: 900;
 }
-
 
 :root {
   --vela-color-primary: #ba933e;
@@ -88,10 +89,14 @@
   --velasubmenu-linkcolor: #888888;
   --velasubmenu-linkcolor-hover: #333333;
   --velasubmenu-fontsize: 14px;
+  --vela-loading-color: #0000005c;
+  --vela-notfound-bgcolor: #ededed;
+  --vela-btn-bordercolor: #dfdfdf;
   --vela-notfound-bgcolor: #ededed;
   --vela-notfound-txtcolor: #ccc;
   --btn-notfound-bordercolor: #191919;
   --btn-notfound-bgcolor: #191919;
+  --header-transparent-bgcolor: rgb(235 236 237);
 }
 
 html {
@@ -109,7 +114,6 @@ html {
 
 img {
   display: block;
-  max-width: 100%;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -138,6 +142,12 @@ ul li {
 
 button {
   cursor: pointer;
+  border: none;
+  background-color: transparent;
+}
+
+button:focus {
+  box-shadow: none !important;
 }
 
 textarea {
@@ -163,4 +173,5 @@ body {
   color: var(--vela-text-color-primary);
   background-color: var(--vela-body-bg);
   overflow-x: hidden;
+  position: relative;
 }
