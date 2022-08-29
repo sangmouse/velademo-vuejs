@@ -1,215 +1,113 @@
 <template>
-  <div class="container">
-      <ProductDetail />
-      <LikeSlider />
+  <div class="product-detail">
+    <div class="product_img">
+      <div class="CSSgal">
+        <!-- Don't wrap targets in parent -->
+        <s id="s1"></s>
+        <s id="s2"></s>
+        <s id="s3"></s>
+        <s id="s4"></s>
+
+        <div class="slider">
+          <div style="background: #fff">
+            <img
+              style="width: 100%; height: 600px"
+              src="https://cdn.shopify.com/s/files/1/0376/9440/6700/products/11_4_360x.jpg?v=1598084962"
+              alt=""
+            />
+          </div>
+          <div style="background: #fff">
+            <img
+              style="width: 100%; height: 600px"
+              src="https://cdn.shopify.com/s/files/1/0376/9440/6700/products/1_2_360x.jpg?v=1586244828"
+              alt=""
+            />
+          </div>
+          <div style="background: #fff">
+            <img
+              style="width: 100%; height: 600px"
+              src="https://cdn.shopify.com/s/files/1/0376/9440/6700/products/30_1_360x.jpg?v=1586316781"
+              alt=""
+            />
+          </div>
+          <div style="background: #fff">
+            <img
+              style="width: 100%; height: 600px"
+              src="https://cdn.shopify.com/s/files/1/0376/9440/6700/products/14_360x.jpg?v=1586245038"
+              alt=""
+            />
+          </div>
+        </div>
+        <div class="bullets">
+          <a href="#s1"
+            ><img
+              src="https://cdn.shopify.com/s/files/1/0376/9440/6700/products/11_4_360x.jpg?v=1598084962"
+              alt=""
+          /></a>
+          <a href="#s2"
+            ><img
+              src="https://cdn.shopify.com/s/files/1/0376/9440/6700/products/1_2_360x.jpg?v=1586244828"
+              alt=""
+          /></a>
+          <a href="#s3"
+            ><img
+              src="https://cdn.shopify.com/s/files/1/0376/9440/6700/products/30_1_360x.jpg?v=1586316781"
+              alt=""
+          /></a>
+          <a href="#s4"
+            ><img
+              src="https://cdn.shopify.com/s/files/1/0376/9440/6700/products/14_360x.jpg?v=1586245038"
+              alt=""
+          /></a>
+        </div>
+      </div>
+    </div>
+    <div class="product_infor">
+      <h1 class="product_infor-name">Arctander Chair</h1>
+      <p class="product_infor-description">
+        Most of us are familiar with the iconic design of the egg shaped chair
+        floating in the air. The Hanging Egg Chair is a critically acclaimed
+        design that has enjoyed praise worldwide ever since the distinctive
+        sculptural shape was created.
+      </p>
+      <div class="product_infor-color">
+        <h4 class="product_infor-price">$39.000</h4>
+        <div class="product_infor-cart">
+          <div class="product_infor-cart_qty">
+            <button>-</button>
+            <input type="text" value="1" />
+            <button>+</button>
+          </div>
+          <div class="product_infor-cart_add">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-bag"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"
+              />
+            </svg>
+            <span class="product_infor-cart_addtocart"> Add To Cart</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-  import ProductDetail from '@/components/productDetail_Infor/ProductDetail.vue'
-  import LikeSlider from '@/components/likeSlider/LikeSlider.vue'
+import "./ProductDetail.scss";
 
-  export default {
-  components: {ProductDetail , LikeSlider}
+export default {
+  name: "ProductDetail",
 };
 </script>
 
-<style lang="scss" scoped>
-html {
-  font-family: "Red Hat Display", sans-serif;
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-*::before,
-*::after {
-  box-sizing: inherit;
-}
-
-.container_product {
-  position: relative;
-}
-
-/* HEADER  */
-.container {
-  //   margin: 0 60px;
-  margin: auto;
-  padding: 30px 0;
-}
-
-// .product_more {
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   padding-bottom: 30px;
-// }
-
-// .product_more-HomeTitle {
-//   font-size: 28px;
-//   padding: 0 0 10px;
-//   line-height: 34px;
-//   font-weight: 700;
-//   color: #1a1a1a;
-// }
-
-// .product_more-HomeSub {
-//   color: #444;
-//   font-weight: 400;
-//   font-size: 16px;
-//   line-height: 21px;
-//   margin: 0 auto 10px;
-//   max-width: 600px;
-//   margin-bottom: 20px;
-// }
-
-// .product_more-slide {
-//   width: 100%;
-//   height: 500px;
-//   /* overflow: hidden; */
-//   position: relative;
-// }
-
-// .product_more-slide-page {
-//   display: flex !important;
-//   justify-content: space-between;
-//   width: 100%;
-// }
-
-// .product_more-slide-page-item {
-//   width: 22%;
-//   position: relative;
-//   cursor: pointer;
-// }
-
-// .product_more-slide-page-item_img {
-//   width: 100%;
-//   height: 340px;
-// }
-
-// .product_more-slide-page-item-name {
-//   padding: 20px 10px;
-// }
-
-// .product_more-slide-page-item-name:hover {
-//   color: #ba933e;
-//   cursor: pointer;
-//   /* animation: easyColor ease .5s; */
-// }
-
-// .product_more-slide-page-item-price {
-//   display: flex;
-//   justify-content: space-between;
-//   padding: 0 5px;
-// }
-
-// .product_more-slide-page-item-branch {
-//   list-style: none;
-//   padding: 0;
-//   display: flex;
-//   align-items: center;
-// }
-
-// .product_more-slide-page-item-branch li {
-//   /* content: ""; */
-//   margin-right: 10px;
-//   display: block;
-//   width: 20px;
-//   height: 20px;
-//   border-radius: 50%;
-//   background: #ccc;
-// }
-
-// .product-show_product_icon-cart {
-//   position: absolute;
-//   top: 8%;
-//   right: 10%;
-//   background-color: white;
-//   padding: 8px 12px;
-//   display: none;
-// }
-
-// .product-show_product_icon-search {
-//   position: absolute;
-//   top: 20%;
-//   right: 10%;
-//   background-color: white;
-//   padding: 8px 12px;
-//   display: none;
-// }
-
-// .product_more-slide-page-item:hover .product-show_product_icon-cart {
-//   display: block;
-//   cursor: pointer;
-//   border-radius: 10px;
-//   /* animation: easyColorsearch ease .5s; */
-// }
-// .product-show_product_icon-cart:hover {
-//   background-color: #ba933e;
-//   animation: easyColorsearch ease 0.5s;
-// }
-
-// .product_more-slide-page-item:hover .product-show_product_icon-search {
-//   display: block;
-//   cursor: pointer;
-//   border-radius: 10px;
-//   /* animation: easyColorsearch ease .5s; */
-// }
-// .product-show_product_icon-search:hover {
-//   background-color: #ba933e;
-//   animation: easyColorsearch ease 0.5s;
-// }
-
-// .product-show_product-sale {
-//   position: absolute;
-//   padding: 3px 10px;
-//   background-color: #ba933e;
-//   font-weight: 700;
-//   border-radius: 3px;
-//   color: #fff;
-//   top: 20px;
-//   left: 20px;
-// }
-
-// .carousel-control-prev-icon {
-//   left: -25px;
-//   color: #444;
-// }
-// .carousel-control-prev {
-//   width: 10px !important;
-// }
-// .carousel-control-next {
-//   width: 10px !important;
-// }
-// .carousel-control-next-icon {
-//   right: -25px;
-// }
-// .carousel-control-icon {
-//   display: none;
-//   background-color: transparent;
-//   padding: 20px;
-//   border-radius: 50%;
-//   position: absolute !important;
-// }
-
-// .product_more-slide:hover .carousel-control-icon {
-//   display: block;
-//   color: #444;
-//   background-color: #444;
-//   opacity: 0.7;
-// }
-// .carousel-control-icon:hover {
-//   background-color: #ba933e;
-//   color: #f6f6f6;
-// }
-
+<style  scoped>
 /* AAAAAAAAAAAAAAAA */
 
 /* *{box-sizing: border-box; -webkit-box-sizing: border-box; }
@@ -402,16 +300,7 @@ prevNext {
   text-decoration: none;
 }
 
-.product_search-modal {
-  position: absolute;
-  top: 15%;
-  left: 50%;
-  transform: translate(-50%, -50%) !important;
-  margin: 0 !important;
-  display: flex;
-  justify-content: center;
-  max-width: 900px !important;
-}
+
 @media screen and (max-width: 767px) {
   .product_infor-cart_addtocart {
     display: none;
@@ -457,3 +346,4 @@ prevNext {
   }
 }
 </style>
+

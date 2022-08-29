@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../pages/HomePage.vue";
-import ProductDetailVue from "@/pages/ProductDetail.vue";
+// import ProductDetailVue from "@/pages/ProductDetail.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,7 +28,8 @@ const router = createRouter({
     {
       path: "/product/id-123",
       name: "productdetail",
-      component: ProductDetailVue,
+      component: () => import("../pages/ProductDetail.vue")
+      // component: ProductDetailVue,
     },
     {
       path: "/search",
