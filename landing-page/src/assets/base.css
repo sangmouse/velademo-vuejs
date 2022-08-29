@@ -88,6 +88,10 @@
   --velasubmenu-linkcolor: #888888;
   --velasubmenu-linkcolor-hover: #333333;
   --velasubmenu-fontsize: 14px;
+  --vela-notfound-bgcolor: #ededed;
+  --vela-notfound-txtcolor: #ccc;
+  --btn-notfound-bordercolor: #191919;
+  --btn-notfound-bgcolor: #191919;
 }
 
 html {
