@@ -48,13 +48,17 @@
                 </div>
                 <div class="account-password">
                   <input
-                    type="password"
                     class="form-control account-password-control"
                     required
                     placeholder="Password"
+                    v-bind:type="showPassWord ? 'text' : 'password'"
                   />
-                  <div class="account-password__showbtn">
-                    <span class="showbtn">Show</span>
+                  <div
+                    class="account-password__showbtn"
+                    @click="handleShowpassWord"
+                  >
+                    <span class="showbtn" v-if="ispassword">Hidden </span>
+                    <span class="showbtn" v-if="!ispassword">Show</span>
                   </div>
                 </div>
                 <div class="account-signin-btn">
@@ -100,7 +104,7 @@
                 </div>
                 <div class="register-password">
                   <input
-                    v-bind:type=" showPassWord ? 'text' : 'password'"
+                    v-bind:type="showPassWord ? 'text' : 'password'"
                     class="form-control register-password-control"
                     required
                     placeholder="Password"
@@ -109,7 +113,8 @@
                     class="register-password__showbtn"
                     @click="handleShowpassWord"
                   >
-                    <span class="showbtn">Show</span>
+                    <span class="showbtn" v-if="ispassword">Hidden</span>
+                    <span class="showbtn" v-if="!ispassword">Show</span>
                   </div>
                 </div>
                 <div class="register-signin-btn">
@@ -127,7 +132,6 @@
     </div>
   </main>
 </template>
-
 <script>
 export default {
   data() {
@@ -145,11 +149,11 @@ export default {
       console.log(this.ispassword);
     },
   },
-  computed:{
-    showPassWord(){
-        return this.ispassword
-    }
-  }
+  computed: {
+    showPassWord() {
+      return this.ispassword;
+    },
+  },
 };
 </script>
 
