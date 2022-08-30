@@ -3,8 +3,8 @@
     v-model:visible="isVisible"
     :class="class"
     :title="title"
-    placement="right"
-    :width="400"
+    :placement="placement || right"
+    :width="width || 400"
     @close="(event: any) => $emit('handleClose', event)"
   >
     <slot></slot>
@@ -19,6 +19,8 @@ export default {
     isVisible: Boolean,
     class: String,
     title: String,
+    width: String || Number,
+    placement: String,
   },
   data() {},
   methods: {},
