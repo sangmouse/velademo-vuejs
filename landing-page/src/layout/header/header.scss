@@ -13,7 +13,7 @@
       display: flex;
       align-items: center;
       font-size: var(--velasubmenu-fontsize);
-      opacity: .9;
+      opacity: 0.9;
     }
 
     &_sale {
@@ -37,10 +37,9 @@
 
         .item {
           margin: 0 6px;
-          opacity: .5;
+          opacity: 0.5;
         }
       }
-
     }
   }
 }
@@ -110,7 +109,77 @@
       margin: 0 10px;
       border: none;
     }
-
+    .search-top {
+      position: absolute;
+      right: 0;
+      position: absolute;
+      background-color: var(--vela-body-bg);
+      width: 400px;
+      border-radius: 3px;
+      box-shadow: 0 0 5px var(--vela-notfound-txtcolor);
+      top: 35px;
+      z-index: 999;
+      opacity: 1;
+      visibility: visible;
+      &-form {
+        max-width: 600px;
+        position: relative;
+        box-shadow: 0 0 3px var(--vela-notfound-txtcolor);
+        border-radius: 5px;
+        overflow: hidden;
+        &-group {
+          position: relative;
+          width: 100%;
+          display: table;
+          border-collapse: separate;
+          &__input {
+            height: 48px;
+            border: 0;
+            padding: 9px 50px 9px 20px;
+            color: var(--vela-header-textcolor);
+            position: relative;
+            z-index: 2;
+            float: left;
+            margin-bottom: 0;
+          }
+          &-addon {
+            font-weight: 400;
+            line-height: 1;
+            color: var(--vela-text-color-primary);
+            text-align: center;
+            background-color: var(--vela-header-bgcolor);
+            border: var(--vela-border-main);
+            border-radius: 3px;
+            &__img {
+              display: inline-block;
+              width: 20px;
+              height: auto;
+            }
+            &__btn {
+              transition: all 0.35s ease;
+              width: 50px;
+              border: 0;
+              position: absolute;
+              right: 0;
+              top: 5px;
+              padding: 0;
+              border-radius: 0;
+              line-height: 32px;
+              z-index: 3;
+              font-size: 18px;
+              color: var(--button_one_bgcolor);
+              background-color: transparent;
+              &:focus {
+                box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 0%);
+              }
+              &:hover {
+                opacity: 0.6;
+              }
+            }
+          }
+        }
+      }
+    }
     .btn-shop-bag {
       position: relative;
       margin: 0 10px;

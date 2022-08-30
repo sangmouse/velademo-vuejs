@@ -69,9 +69,21 @@
           <RouterLink to="/account/register"> Sign up</RouterLink>
         </p>
       </li>
-      <button class="btn-search" type="button">
+      <button class="btn-search" type="button" @click="handleOpenInputSearch">
         <img src="../../assets/images/search.png" alt="search-i">
       </button>
+      <div class="search-top" v-if="isOpen">
+       <form action="" class="search-top-form">
+         <div class="search-top-form-group">
+           <input type="text" placeholder="Enter keywords to search..." class="search-top-form-group__input form-control">
+           <div class="search-top-form-group-addon">
+             <button class="btn search-top-form-group-addon__btn" type="button" @click="handleOpenInputSearch">
+               <img class="search-top-form-group-addon__img" src="../../assets/images/search.png" alt="search-i"/>
+             </button>
+           </div>
+         </div>
+       </form>
+      </div>
       <button class="btn-shop-bag" type="button">
         <img src="../../assets/images/shopping-bag.png" alt="shop-bag">
         <small class="quantity">o</small>
@@ -85,5 +97,17 @@
 
 <script lang="ts">
 import "./header.scss";
+export default {
+  data(){
+    return {
+      isOpen: false 
+    }
+  },
+  methods: {
+    handleOpenInputSearch(){
+      this.isOpen = !this.isOpen
+    }
+  }
+}
 
 </script>
