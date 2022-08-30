@@ -27,22 +27,22 @@ const router = createRouter({
     {
       path: "/product/:id",
       name: "product",
-      component: () => import("../pages/HomePage.vue")
+      component: () => import("../pages/product-detail/ProductDetail.vue"),
     },
     {
       path: "/search",
-      name: "product",
-      component: () => import("../pages/HomePage.vue")
+      name: "search-page",
+      component: () => import("../pages/HomePage.vue"),
     },
     {
       path: "/:pathMatch(.*)*",
       name: "not-found-page",
-      component: () => import("../pages/not-found-page/NotFoundPage.vue")
+      component: () => import("../pages/not-found-page/NotFoundPage.vue"),
     },
     {
-      path:"/contact",
+      path: "/contact",
       name: "contact",
-      component: () => import("../pages/contact-page/ContactUsPage.vue")
+      component: () => import("../pages/contact-page/ContactUsPage.vue"),
     },
   ],
 });

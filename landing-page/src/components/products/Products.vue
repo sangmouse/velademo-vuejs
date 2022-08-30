@@ -37,12 +37,12 @@
                       </span>
                     </button>
                   </div>
-                  <RouterLink to="/products">
+                  <RouterLink :to="'/product/' + product.id">
                     <div class="image">
                       <img v-bind:src="product.images[0]" alt="product" />
                     </div>
                   </RouterLink>
-                  <RouterLink to="/">
+                  <RouterLink :to="'/product/' + product.id">
                     <h6 class="name">{{ product.displayName }}</h6>
                   </RouterLink>
                   <p class="price">${{ product.price }}</p>
