@@ -17,7 +17,7 @@
     <div class="contact-info">
       <div class="container">
         <div class="contact-info-control d-flex flex-wrap">
-          <div class="col-xs-12 col-md-5">
+          <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-12">
             <div class="contact-info-control-left">
               <h1 class="contact-info-control-left__title">Contact Us</h1>
               <div class="d-flex flex-wrap">
@@ -38,7 +38,7 @@
               </div>
             </div>
           </div>
-          <div class="col-xs-12 col-md-7">
+          <div class="col-xxl-7 col-xl-7 col-lg-7 col-md-12">
             <div class="contact-info-control-right">
               <form action="">
                 <div class="row">
@@ -48,6 +48,8 @@
                         type="text"
                         class="form-control contact-info-control-right__control"
                         placeholder="Name"
+                        required
+                        autofocus
                       />
                     </div>
                   </div>
@@ -57,6 +59,8 @@
                         type="email"
                         class="form-control contact-info-control-right__control"
                         placeholder="Email"
+                        required
+                        autofocus
                       />
                     </div>
                   </div>
