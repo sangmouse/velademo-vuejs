@@ -7,7 +7,7 @@
 
 <script lang="ts">
   import ProductDetail from '@/components/product-detail/ProductDetail.vue'
-  import LikeSlider from '@/components/likeSlider/LikeSlider.vue'
+  import LikeSlider from '@/components/like-slider/LikeSlider.vue'
 
   export default {
   components: {ProductDetail , LikeSlider}
