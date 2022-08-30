@@ -32,7 +32,7 @@ const router = createRouter({
     {
       path: "/search",
       name: "product",
-      component: () => import("../pages/HomePage.vue")
+      component: () => import("../pages/search-product/SearchProduct.vue")
     },
     {
       path: "/:pathMatch(.*)*",
