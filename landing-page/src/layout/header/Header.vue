@@ -66,7 +66,7 @@
           <RouterLink to="/products">Collections</RouterLink>
         </li>
         <li class="menu">
-          <RouterLink to="/">Contact Us</RouterLink>
+          <RouterLink to="/contact">Contact Us</RouterLink>
         </li>
       </ul>
       <ul class="user">
