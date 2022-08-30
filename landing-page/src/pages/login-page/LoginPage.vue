@@ -26,7 +26,10 @@
         </div>
         <div class="account-main">
           <div class="account-content" v-if="this.numLogin === 1">
-            <div class="account-alert__error account-alert__error--active">
+            <div
+              class="account-alert__error"
+              :class="errorMessage ? 'account-alert__error--active' : ''"
+            >
               <p>Incorrect email or password!.</p>
             </div>
             <div class="account-alert__success account-alert__success--active">
@@ -40,6 +43,7 @@
                   required
                   autofocus
                   placeholder="Email"
+                  v-on:change="onChangeEmail"
                 />
               </div>
               <div class="account-password">
@@ -48,6 +52,7 @@
                   class="form-control account-password-control"
                   required
                   placeholder="Password"
+                  v-on:change="onChangePassword"
                 />
                 <div
                   class="account-password__showbtn"
@@ -58,7 +63,12 @@
                 </div>
               </div>
               <div class="account-signin-btn">
-                <input type="button" value="Sign In" class="signin-btn" />
+                <input
+                  type="button"
+                  value="Sign In"
+                  v-on:click="handleSubmitForm"
+                  class="signin-btn"
+                />
               </div>
             </div>
           </div>
@@ -120,11 +130,11 @@
                   class="create-account-btn"
                 />
               </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
   </div>
 </template>
 
@@ -135,6 +145,24 @@ export default {
     return {
       numLogin: 1,
       isPassword: true,
+      login: {
+        email: "",
+        password: "",
+      },
+      errorMessage: false,
+      validateEmail(email) {
+        if (
+          String(email)
+            .toLowerCase()
+            .match(
+              /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            )
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      },
     };
   },
   methods: {
@@ -144,10 +172,30 @@ export default {
     handleShowPassword() {
       this.isPassword = !this.isPassword;
     },
+    onChangeEmail(e) {
+      this.login.email = e.target.value;
+    },
+    onChangePassword(e) {
+      this.login.password = e.target.value;
+    },
+
+    handleSubmitForm() {
+      if (
+        this.login.email == "" ||
+        this.login.password == "" ||
+        !this.validateEmail(this.login.email)
+      ) {
+       return  this.errorMessage = true;
+      }
+      return this.errorMessage = false
+    },
   },
   computed: {
     showPassword() {
       return this.isPassword;
+    },
+    errorMessage() {
+      return this.errorMessage;
     },
   },
 };
