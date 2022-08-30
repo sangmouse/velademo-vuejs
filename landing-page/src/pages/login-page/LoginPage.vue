@@ -6,7 +6,7 @@
           <h4
             class="account-nav-login__title"
             v-bind:class="
-              this.numLogin == 2 ? '' : 'account-nav-login__title--active'
+              this.numLogin === 2 ? '' : 'account-nav-login__title--active'
             "
           >
             Login
@@ -16,7 +16,7 @@
           <h4
             class="account-nav-create__title"
             v-bind:class="
-              this.numLogin == 1 ? '' : 'account-nav-create__title--active'
+              this.numLogin === 1 ? '' : 'account-nav-create__title--active'
             "
           >
             Create Account
@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="account-main">
-        <div class="account-content" v-if="this.numLogin == 1">
+        <div class="account-content" v-if="this.numLogin === 1">
           <div class="account-alert__error account-alert__error--active">
             <p>Incorrect email or password!.</p>
           </div>
@@ -43,17 +43,17 @@
             </div>
             <div class="account-password">
               <input
-                v-bind:type="showPassWord ? 'text' : 'password'"
+                v-bind:type="showPassword ? 'text' : 'password'"
                 class="form-control account-password-control"
                 required
                 placeholder="Password"
               />
               <div
                 class="account-password__showbtn"
-                @click="handleShowpassWord"
+                @click="handleShowPassword"
               >
-                <span class="showbtn" v-if="ispassword">Hide </span>
-                <span class="showbtn" v-if="!ispassword">Show</span>
+                <span class="showbtn" v-if="isPassword">Hide </span>
+                <span class="showbtn" v-if="!isPassword">Show</span>
               </div>
             </div>
             <div class="account-signin-btn">
@@ -62,7 +62,7 @@
           </form>
         </div>
 
-        <div class="register-content" v-if="this.numLogin == 2">
+        <div class="register-content" v-if="this.numLogin === 2">
           <div class="register-alert__error register-alert__error--active">
             <p>Check again please!</p>
           </div>
@@ -97,17 +97,17 @@
             </div>
             <div class="register-password">
               <input
-                v-bind:type="showPassWord ? 'text' : 'password'"
+                v-bind:type="showPassword ? 'text' : 'password'"
                 class="form-control register-password-control"
                 required
                 placeholder="Password"
               />
               <div
                 class="register-password__showbtn"
-                @click="handleShowpassWord"
+                @click="handleShowPassword"
               >
-                <span class="showbtn" v-if="ispassword">Hide</span>
-                <span class="showbtn" v-if="!ispassword">Show</span>
+                <span class="showbtn" v-if="isPassword">Hide</span>
+                <span class="showbtn" v-if="!isPassword">Show</span>
               </div>
             </div>
             <div class="register-create-btn">
@@ -130,20 +130,20 @@ export default {
   data() {
     return {
       numLogin: 1,
-      ispassword: true,
+      isPassword: true,
     };
   },
   methods: {
     handleLogin(value) {
       this.numLogin = value;
     },
-    handleShowpassWord() {
-      this.ispassword = !this.ispassword;
+    handleShowPassword() {
+      this.isPassword = !this.isPassword;
     },
   },
   computed: {
-    showPassWord() {
-      return this.ispassword;
+    showPassword() {
+      return this.isPassword;
     },
   },
 };
