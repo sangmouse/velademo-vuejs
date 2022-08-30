@@ -17,49 +17,84 @@
       "displayName": "Stainless steel teapot",
       "description": "Most of us are familiar with the iconic design of the egg shaped chair floating in the air. The Hanging Egg Chair is a critically acclaimed design that has enjoyed praise worldwide ever since the distinctive sculptural shape was created.",
       "price": 85.93,
-      "images": ["src/assets/images/products/product_2.jpg"]
+      "images": [
+        "../src/assets/images/products/product_2.jpg",
+        "../src/assets/images/products/product_3.jpg",
+        "../src/assets/images/products/product_1.jpg",
+        "../src/assets/images/products/product_4.jpg"
+      ]
     },
     {
       "id": "aa963463-83c6-47c4-b919-fb9bf010ba01",
       "displayName": "Beoplay A1",
       "description": "Most of us are familiar with the iconic design of the egg shaped chair floating in the air. The Hanging Egg Chair is a critically acclaimed design that has enjoyed praise worldwide ever since the distinctive sculptural shape was created by Nanna & Jørgen Ditzel in 1959.",
       "price": 56.82,
-      "images": ["src/assets/images/products/product_3.jpg"]
+      "images": [
+        "../src/assets/images/products/product_3.jpg",
+        "../src/assets/images/products/product_1.jpg",
+        "../src/assets/images/products/product_2.jpg",
+        "../src/assets/images/products/product_4.jpg"
+      ]
     },
     {
       "id": "04c06d1f-c51c-40d4-994f-202c921ba90b",
       "displayName": "Turning Table",
       "description": "Most of us are familiar with the iconic design of the egg shaped chair floating in the air. The Hanging Egg Chair is a critically acclaimed design that has enjoyed praise worldwide ever since the distinctive sculptural shape was created.",
       "price": 44.81,
-      "images": ["src/assets/images/products/product_4.jpg"]
+      "images": [
+        "../src/assets/images/products/product_4.jpg",
+        "../src/assets/images/products/product_3.jpg",
+        "../src/assets/images/products/product_1.jpg",
+        "../src/assets/images/products/product_2.jpg"
+      ]
     },
     {
       "id": "b653a452-491e-4d0f-acf0-709f92a7a636",
       "displayName": "Side Table",
       "description": "Most of us are familiar with the iconic design of the egg shaped chair floating in the air. The Hanging Egg Chair is a critically acclaimed design that has enjoyed praise worldwide ever since the distinctive sculptural shape was created.",
       "price": 11.8,
-      "images": ["src/assets/images/products/product_5.jpg"]
+      "images": [
+        "../src/assets/images/products/product_5.jpg",
+        "../src/assets/images/products/product_4.jpg",
+        "../src/assets/images/products/product_3.jpg",
+        "../src/assets/images/products/product_1.jpg"
+      ]
     },
     {
       "id": "d52a0d7e-4971-4ca3-9699-edf7bcc928ee",
       "displayName": "Pia Chair",
       "description": "Most of us are familiar with the iconic design of the egg shaped chair floating in the air. The Hanging Egg Chair is a critically acclaimed design that has enjoyed praise worldwide ever since the distinctive sculptural shape was created.",
       "price": 23.8,
-      "images": ["src/assets/images/products/product_6.jpg"]
+      "images": [
+        "../src/assets/images/products/product_6.jpg",
+        "../src/assets/images/products/product_4.jpg",
+        "../src/assets/images/products/product_3.jpg",
+        "../src/assets/images/products/product_1.jpg"
+      ]
     },
     {
       "id": "17ae835c-d678-4793-af62-3928fb0f5284",
       "displayName": "Iconic Rocking Horse",
       "description": "Most of us are familiar with the iconic design of the egg shaped chair floating in the air. The Hanging Egg Chair is a critically acclaimed design that has enjoyed praise worldwide ever since the distinctive sculptural shape was created.",
       "price": 59.8,
-      "images": ["src/assets/images/products/product_7.jpg"]
+      "images": [
+        "../src/assets/images/products/product_7.jpg",
+        "../src/assets/images/products/product_4.jpg",
+        "../src/assets/images/products/product_3.jpg",
+        "../src/assets/images/products/product_1.jpg"
+      ]
     },
     {
       "id": "16964101-739f-474e-86ea-5a129ab4fc9f",
       "displayName": "Outdoor Dining Table",
       "description": "Most of us are familiar with the iconic design of the egg shaped chair floating in the air. The Hanging Egg Chair is a critically acclaimed design that has enjoyed praise worldwide ever since the distinctive sculptural shape was created.",
       "price": 296.8,
-      "images": ["src/assets/images/products/product_8.jpg"]
+      "images": [
+        "../src/assets/images/products/product_8.jpg",
+        "../src/assets/images/products/product_4.jpg",
+        "../src/assets/images/products/product_3.jpg",
+        "../src/assets/images/products/product_1.jpg"
+      ]
     }
   ]
 }

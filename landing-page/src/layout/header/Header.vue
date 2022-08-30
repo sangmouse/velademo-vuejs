@@ -12,7 +12,6 @@
           <p class="top-bar-body_phone-number ml-8 mr-8">
             +391 (0)35 2568 4593
           </p>
-          <!-- <a-divider type="vertical" style="background: black;" /> -->
           <p class="top-bar-email-i mr-8">
             <img alt="phone-outlined" src="../../assets/images/envelope.png" />
           </p>
@@ -42,6 +41,24 @@
       </div>
     </div>
     <div class="navigator">
+      <!-- input search -->
+      <div :class="!isVisibleInputSearch ? 'search-top' : 'search-top active'">
+        <div class="search-top-group">
+          <input
+            type="text"
+            placeholder="Enter keywords to search..."
+            class="search-top-group__input form-control"
+            v-model="inputSearch"
+          />
+          <button
+            class="btn-search"
+            type="button"
+            v-on:click="handleSearchProduct"
+          >
+            <img src="../../assets/images/search.png" alt="search-i" />
+          </button>
+        </div>
+      </div>
       <button type="button" class="btn-burger" v-on:click="handleVisibleMenu">
         <span>
           <img
@@ -81,7 +98,11 @@
             <RouterLink to="/account/register"> Sign up</RouterLink>
           </p>
         </li>
-        <button class="btn-search" type="button">
+        <button
+          class="btn-search"
+          type="button"
+          v-on:click="handleVisibleInputSearch"
+        >
           <img src="../../assets/images/search.png" alt="search-i" />
         </button>
         <button
@@ -192,6 +213,8 @@ export default {
     return {
       isVisible: false,
       isVisibleViewCart: false,
+      isVisibleInputSearch: false,
+      inputSearch: "",
     };
   },
   methods: {
@@ -206,6 +229,17 @@ export default {
     },
     handleCloseDrawer() {
       this.isVisibleViewCart = false;
+    },
+    handleVisibleInputSearch() {
+      this.isVisibleInputSearch = !this.isVisibleInputSearch;
+    },
+    handleSearchProduct() {
+      this.$router.push({
+        name: "search-product",
+        query: {
+          q: this.inputSearch.trim(),
+        },
+      });
     },
   },
 };

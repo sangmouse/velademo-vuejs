@@ -47,6 +47,7 @@
 .navigator {
   display: flex;
   align-items: center;
+  position: relative;
   justify-content: space-between;
   padding: 20px 60px;
   background: var(--header-transparent-bgcolor);
@@ -126,6 +127,62 @@
         top: -17px;
         font-size: 20px;
         right: -11px;
+      }
+    }
+  }
+  // input search
+  .search-top {
+    position: absolute;
+    transition: all 0.35s ease;
+    right: 60px;
+    z-index: 10;
+    width: 400px;
+    border-radius: 3px;
+    box-shadow: 0 0 5px var(--vela-notfound-txtcolor);
+    top: 0;
+    opacity: 0;
+    &.active {
+      top: 70px;
+      opacity: 1;
+    }
+    &-group {
+      max-width: 600px;
+      position: relative;
+      box-shadow: 0 0 3px var(--vela-notfound-txtcolor);
+      border-radius: 5px;
+      overflow: hidden;
+      &__input {
+        min-height: 45px;
+        border: 0;
+        padding: 9px 50px 9px 20px;
+        color: var(--vela-header-textcolor);
+        position: relative;
+        float: left;
+        font-size: 14px;
+        margin-bottom: 0;
+        &::placeholder {
+          font-size: 14px;
+        }
+      }
+      .btn-search {
+        transition: all 0.35s ease;
+        display: inline-flex;
+        border: 0;
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        padding: 0;
+        border-radius: 0;
+        transform: translate(0, -50%);
+        z-index: 3;
+        color: var(--button_one_bgcolor);
+        background-color: transparent;
+        &:focus {
+          box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 0%);
+        }
+        &:hover {
+          opacity: 0.6;
+        }
       }
     }
   }

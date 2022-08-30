@@ -7,47 +7,13 @@
         <div class="product-list">
           <div class="container">
             <div class="row">
-              <div
-                class="col-xxl-3 col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-6"
+              <Product
                 v-for="product in products"
                 :key="product.id"
-              >
-                <div class="product">
-                  <div class="action">
-                    <button
-                      class="btn btn-add-cart"
-                      v-on:click="handleVisibleCart"
-                    >
-                      <span>
-                        <img
-                          src="../../assets/images/shopping-bag-16.png"
-                          alt="add-cart"
-                        />
-                      </span>
-                    </button>
-                    <button
-                      class="btn btn-view"
-                      v-on:click="handleVisibleViewInfoModal"
-                    >
-                      <span>
-                        <img
-                          src="../../assets/images/search-b-16.png"
-                          alt="add-cart"
-                        />
-                      </span>
-                    </button>
-                  </div>
-                  <RouterLink :to="'/product/' + product.id">
-                    <div class="image">
-                      <img v-bind:src="product.images[0]" alt="product" />
-                    </div>
-                  </RouterLink>
-                  <RouterLink :to="'/product/' + product.id">
-                    <h6 class="name">{{ product.displayName }}</h6>
-                  </RouterLink>
-                  <p class="price">${{ product.price }}</p>
-                </div>
-              </div>
+                :product="product"
+                @handleVisibleCart="handleVisibleCart"
+                @handleVisibleViewInfoModal="handleVisibleViewInfoModal"
+              />
             </div>
           </div>
         </div>
@@ -143,6 +109,7 @@
 import "./products.scss";
 import Drawer from "../drawer/Drawer.vue";
 import http from "@/api/request";
+import Product from "../product/Product.vue";
 
 export default {
   data() {
@@ -154,6 +121,7 @@ export default {
   },
   components: {
     Drawer,
+    Product,
   },
   methods: {
     handleVisibleCart() {
