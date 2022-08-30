@@ -188,8 +188,6 @@ export default {
   line-height: 20px;
   text-align: center;
   font-size: calc(var(--vela-font-size) + 2px);
-  -webkit-transition: all 0.35s ease;
-  -o-transition: all 0.35s ease;
   transition: all 0.35s ease;
   font-weight: 700;
 }
@@ -211,8 +209,6 @@ export default {
   line-height: 20px;
   text-align: center;
   font-size: calc(var(--vela-font-size) + 2px);
-  -webkit-transition: all 0.35s ease;
-  -o-transition: all 0.35s ease;
   transition: all 0.35s ease;
   font-weight: 700;
 }
@@ -236,28 +232,12 @@ export default {
   display: none;
 }
 
-//  .account-alert__error--active {
-//     display: block;
-// }
-
-/* .register-alert__error--active {
-    display: block;
-} */
-
 .account-alert__success,
 .register-alert__success {
   background-color: var(--vela-sussce-bgcolor);
   margin-bottom: 30px;
   display: none;
 }
-
-/* .account-alert__success--active {
-    display: block;
-} */
-
-/* .register-alert__success--active {
-    display: block;
-} */
 
 .account-error-text,
 .account-success-text,
@@ -304,7 +284,7 @@ export default {
 
 ::placeholder {
   font-family: var(--vela-font-family);
-  color: rgb(168, 168, 168) !important;
+  color: var(--vela-btn-bordercolor) !important;
 }
 
 .showbtn {
@@ -331,8 +311,6 @@ export default {
   font-weight: 700;
   line-height: 24px;
   border-radius: 3px;
-  -webkit-transition: all 0.35s ease;
-  -o-transition: all 0.35s ease;
   transition: all 0.35s ease;
 }
 
@@ -362,9 +340,6 @@ export default {
 
 .register-lasttname-control {
   margin-left: 15px;
-}
-
-.register-lasttname-control {
 }
 
 @media (max-width: 576px) {
