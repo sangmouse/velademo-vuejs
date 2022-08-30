@@ -12,13 +12,11 @@
             Login
           </h4>
         </div>
-        <div class="account-nav-createAccount" @click="handleLogin(2)">
+        <div class="account-nav-create" @click="handleLogin(2)">
           <h4
-            class="account-nav-createAccount__title"
+            class="account-nav-create__title"
             v-bind:class="
-              this.numLogin == 1
-                ? ''
-                : 'account-nav-createAccount__title--active'
+              this.numLogin == 1 ? '' : 'account-nav-create__title--active'
             "
           >
             Create Account
