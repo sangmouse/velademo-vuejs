@@ -5,7 +5,12 @@
       "displayName": "Arctander Chair",
       "description": "Most of us are familiar with the iconic design of the egg shaped chair floating in the air. The Hanging Egg Chair is a critically acclaimed design that has enjoyed praise worldwide ever since the distinctive sculptural shape was created.",
       "price": 56.8,
-      "images": ["src/assets/images/products/product_1.jpg"]
+      "images": [
+        "../src/assets/images/products/product_1.jpg",
+        "../src/assets/images/products/product_2.jpg",
+        "../src/assets/images/products/product_3.jpg",
+        "../src/assets/images/products/product_4.jpg"
+      ]
     },
     {
       "id": "8d89b7b6-c9ad-46e9-a92c-13d21dae311c",

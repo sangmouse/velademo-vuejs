@@ -1,0 +1,88 @@
+#product-detail {
+  .body {
+    padding: 70px 0;
+    .info {
+      h2 {
+        font-family: RedHatBold;
+        font-size: 30px;
+      }
+      p {
+        color: var(--textfield-detail-txtcolor);
+        word-spacing: 1px;
+        margin: 0 0 50px 0;
+      }
+      h5 {
+        font-family: RedHatBold;
+        color: var(--addtocart_bordercolor_hover);
+        margin: 0 0 30px 0;
+      }
+      .action {
+        margin: 0 0 50px 0;
+        display: inline-flex;
+        align-items: center;
+        .quantity {
+          background: var(--vela-topbar-bgcolor);
+          width: 130px;
+          height: 50px;
+          margin: 0 20px 0 0;
+          display: inline-flex;
+          border-radius: 5px;
+          align-items: center;
+          justify-content: space-around;
+          font-family: RedHatBold;
+          p {
+            margin: 0;
+            font-size: 20px;
+            color: var(--vela-footer_top-textcolor);
+          }
+          .btn {
+            font-size: 25px;
+          }
+        }
+        .btn-add-to-cart {
+          background: var(--button_one_bgcolor);
+          border-radius: 5px;
+          display: inline-flex;
+          align-items: center;
+          min-width: 180px;
+          height: 50px;
+          justify-content: center;
+          .icon {
+            margin: 0;
+            img {
+              height: auto;
+              max-width: 100%;
+              width: auto;
+              object-fit: contain;
+            }
+          }
+          .text-field {
+            margin: 0 0 0 10px;
+            color: var(--vela-header-bgcolor);
+            font-family: RedHatBold;
+          }
+        }
+      }
+      .category {
+        b {
+          color: var(--button_one_bgcolor);
+          font-size: 15px;
+        }
+        span {
+          font-size: 14px;
+        }
+      }
+    }
+    .products-relate {
+      margin: 200px 0 0 0;
+      h2 {
+        font-family: RedHatBold;
+        text-transform: capitalize;
+        margin: 0 0 10px 0;
+      }
+      p {
+        margin: 0 0 30px 0;
+      }
+    }
+  }
+}
