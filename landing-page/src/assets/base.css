@@ -38,6 +38,9 @@
 }
 
 :root {
+  --vela-sussce-bgcolor: #5cb85c;
+  --vela-error-bgcolor: #e26868;
+  --vela-font-family: "Red Hat Display", sans-serif;
   --vela-color-primary: #ba933e;
   --vela-color-secondary: #ba933e;
   --vela-border-color: #e1e1e1;
@@ -90,7 +93,6 @@
   --velasubmenu-linkcolor-hover: #333333;
   --velasubmenu-fontsize: 14px;
   --vela-loading-color: #0000005c;
-  --vela-notfound-bgcolor: #ededed;
   --vela-btn-bordercolor: #dfdfdf;
   --vela-notfound-bgcolor: #ededed;
   --vela-notfound-txtcolor: #ccc;

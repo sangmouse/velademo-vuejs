@@ -157,42 +157,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-:root {
-  --vela-color-primary: #ba933e;
-  --vela-color-secondary: #ba933e;
-  --vela-border-color: #e1e1e1;
-  --vela-text-color-primary: #444444;
-  --vela-font-family: "Red Hat Display", sans-serif;
-  --vela-font-size: 16px;
-  --vela-text-color-secondary: #1a1a1a;
-}
-
-html {
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: var(--vela-font-family);
-  font-size: var(--vela-font-size);
-  line-height: 24px;
-  color: var(--vela-text-color-primary);
-  font-weight: 400;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-*::before,
-*::after {
-  box-sizing: inherit;
-}
+<style  scoped>
 
 .vela-container {
   padding: 50px 0;
@@ -219,7 +184,7 @@ body {
 .account-nav-login__title {
   padding: 20px 0;
   color: var(--vela-text-color-primary);
-  background-color: #ebebeb;
+  background-color: var(--vela-notfound-bgcolor);
   line-height: 20px;
   text-align: center;
   font-size: calc(var(--vela-font-size) + 2px);
@@ -231,7 +196,7 @@ body {
 
 .account-nav-login__title--active,
 .account-nav-createAccount__title--active {
-  background-color: #fff !important;
+  background-color: var(--vela-body-bg) !important;
 }
 
 .account-nav-createAccount {
@@ -242,7 +207,7 @@ body {
 .account-nav-createAccount__title {
   padding: 20px 0;
   color: var(--vela-text-color-primary);
-  background-color: #ebebeb;
+  background-color: var(--vela-notfound-bgcolor);
   line-height: 20px;
   text-align: center;
   font-size: calc(var(--vela-font-size) + 2px);
@@ -266,7 +231,7 @@ body {
 
 .account-alert__error,
 .register-alert__error {
-  background-color: #e26868;
+  background-color: var( --vela-error-bgcolor);
   margin-bottom: 30px;
   display: none;
 }
@@ -281,7 +246,7 @@ body {
 
 .account-alert__success,
 .register-alert__success {
-  background-color: #5cb85c;
+  background-color: var(--vela-sussce-bgcolor);
   margin-bottom: 30px;
   display: none;
 }
@@ -298,7 +263,7 @@ body {
 .account-success-text,
 .register-error-text,
 .register-success-text {
-  color: #fff;
+  color: var(--addtocart_txtcolor);
   margin: 0;
   padding: 8px 10px;
 }
@@ -359,9 +324,9 @@ body {
   text-align: center;
   display: inline-block;
   padding: 8px 30px;
-  color: #fff;
-  background-color: #1a1a1a;
-  border: 0px solid #1a1a1a;
+  color: var(--addtocart_txtcolor);
+  background-color: var(--button_one_bgcolor);
+  border: 0px solid var(--button_one_bgcolor);
   font-size: calc(var(--vela-font-size) - 2px);
   font-weight: 700;
   line-height: 24px;
