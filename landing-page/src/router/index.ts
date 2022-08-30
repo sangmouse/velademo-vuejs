@@ -12,7 +12,7 @@ const router = createRouter({
     {
       path: "/account/login",
       name: "login",
-      component: HomePage,
+      component: () => import("../pages/login-page/LoginPage.vue"),
     },
     {
       path: "/account/register",
@@ -31,8 +31,8 @@ const router = createRouter({
     },
     {
       path: "/search",
-      name: "search-page",
-      component: () => import("../pages/HomePage.vue"),
+      name: "product",
+      component: () => import("../pages/search-product/SearchProduct.vue"),
     },
     {
       path: "/:pathMatch(.*)*",
