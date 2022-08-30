@@ -165,10 +165,8 @@
 @media screen and (max-width: 576px) {
   .top-bar {
     &-body {
-      &_info {
-        &_sale {
-          text-align: center;
-        }
+      &_sale {
+        text-align: center;
       }
     }
   }
@@ -204,7 +202,18 @@
               &-item {
                 border: none;
                 .ant-collapse-header {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  flex-direction: row-reverse;
                   padding: 0;
+                  & + div {
+                    display: inline-flex;
+                    .ant-collapse-arrow {
+                      display: inline-flex;
+                      margin: 0;
+                    }
+                  }
                 }
               }
             }
