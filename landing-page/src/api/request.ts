@@ -2,6 +2,7 @@ import axios from "axios";
 
 const API_URL = "http://localhost:3000";
 
+
 const http = axios.create({
   baseURL: API_URL,
 });
@@ -29,3 +30,7 @@ http.interceptors.response.use(
 );
 
 export default http;
+
+export const request = axios.create({
+    baseURL: "",
+})

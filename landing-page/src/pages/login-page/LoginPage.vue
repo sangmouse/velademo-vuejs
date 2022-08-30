@@ -32,7 +32,10 @@
             >
               <p>Incorrect email or password!.</p>
             </div>
-            <div class="account-alert__success account-alert__success--active">
+            <div
+              class="account-alert__success"
+              :class="successMessage ? 'account-alert__success--active' : ''"
+            >
               <p>Successfully!</p>
             </div>
             <div>
@@ -139,8 +142,11 @@
 </template>
 
 <script>
+import {request} from "@/api/request";
+import { useRouter } from "vue-router";
 import "./login.scss";
 export default {
+
   data() {
     return {
       numLogin: 1,
@@ -149,7 +155,10 @@ export default {
         email: "",
         password: "",
       },
-      errorMessage: false,
+      message: {
+        error: false,
+        success: false,
+      },
       validateEmail(email) {
         if (
           String(email)
@@ -163,7 +172,15 @@ export default {
           return false;
         }
       },
+      router: useRouter(),
     };
+  },
+  created() {
+    if (localStorage.getItem("token") !== null) {
+      this.router.push("/");
+    } else {
+      this.router.push("/account/login");
+    }
   },
   methods: {
     handleLogin(value) {
@@ -179,15 +196,32 @@ export default {
       this.login.password = e.target.value;
     },
 
-    handleSubmitForm() {
+    async handleSubmitForm() {
+      const data = this.login;
       if (
-        this.login.email == "" ||
-        this.login.password == "" ||
-        !this.validateEmail(this.login.email)
+        data.email == "" ||
+        data.password == "" ||
+        !this.validateEmail(data.email)
       ) {
-       return  this.errorMessage = true;
+        this.message.error = true;
+        this.message.success = false;
+      } else {
+        this.message.success = true;
+        this.message.error = false;
+        try {
+          const response = await request.post(
+            "https://api.dev.dentity.com/core/api/v1/admin/login",
+            {
+              email: data.email,
+              password: data.password,
+            }
+          );
+          localStorage.setItem("token", response.data.data.token);
+          this.router.push("/");
+        } catch (err) {
+          console.log("khong dang nhap dc");
+        }
       }
-      return this.errorMessage = false
     },
   },
   computed: {
@@ -195,7 +229,10 @@ export default {
       return this.isPassword;
     },
     errorMessage() {
-      return this.errorMessage;
+      return this.message.error;
+    },
+    successMessage() {
+      return this.message.success;
     },
   },
 };
