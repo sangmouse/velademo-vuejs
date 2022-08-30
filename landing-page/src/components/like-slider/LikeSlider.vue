@@ -536,7 +536,7 @@
 </template>
 
 <script lang="ts">
-import "./likeSlider.scss";
+import "./like-slider.scss";
 export default {};
 </script>
 <style>
