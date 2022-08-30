@@ -96,7 +96,7 @@
 </template>
 
 <script lang="ts">
-import "./ProductDetail.scss";
+import "./productDetail.scss";
 
 export default {
   name: "ProductDetail",

@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-  import ProductDetail from '@/components/productDetail-infor/ProductDetail.vue'
+  import ProductDetail from '@/components/product-detail/ProductDetail.vue'
   import LikeSlider from '@/components/likeSlider/LikeSlider.vue'
 
   export default {
