@@ -1,67 +1,72 @@
-.vela-container {
+.container {
   padding: 50px 0;
 }
 
-.form-account {
+.account {
   margin: 0 auto;
   max-width: 600px;
   border-radius: 3px;
   box-shadow: 0 2px 2px #00000024, 0 1px 5px #0000001f, 0 3px 1px -2px #0003;
-}
 
-.account-nav {
-  display: flex;
-  width: 100%;
-  height: 60px;
+  &-nav {
+    display: flex;
+    width: 100%;
+    height: 60px;
 
-  &-login {
-    flex: 1;
-    cursor: pointer;
+    &-login {
+      flex: 1;
+      cursor: pointer;
 
-    &__title {
-      padding: 20px 0;
-      color: var(--vela-text-color-primary);
-      background-color: #ebebeb;
-      line-height: 20px;
-      text-align: center;
-      font-size: calc(var(--vela-font-size) + 2px);
-      transition: all 0.35s ease;
-      font-weight: 700;
+      &__title {
+        padding: 20px 0;
+        color: var(--vela-text-color-primary);
+        background-color: #ebebeb;
+        line-height: 20px;
+        text-align: center;
+        font-size: calc(var(--vela-font-size) + 2px);
+        transition: all 0.35s ease;
+        font-weight: 700;
 
-      &--active {
-        background-color: var(--vela-body-bg) !important;
+        &--active {
+          background-color: var(--vela-body-bg) !important;
+        }
+      }
+    }
+
+    &-createAccount {
+      flex: 1;
+      cursor: pointer;
+
+      &__title {
+        padding: 20px 0;
+        color: var(--vela-text-color-primary);
+        background-color: #ebebeb;
+        line-height: 20px;
+        text-align: center;
+        font-size: calc(var(--vela-font-size) + 2px);
+        transition: all 0.35s ease;
+        font-weight: 700;
+
+        &--active {
+          background-color: var(--vela-body-bg) !important;
+        }
       }
     }
   }
 
-  &-createAccount {
-    flex: 1;
-    cursor: pointer;
+  &-main {
+    padding: 30px;
 
-    &__title {
-      padding: 20px 0;
-      color: var(--vela-text-color-primary);
-      background-color: #ebebeb;
-      line-height: 20px;
-      text-align: center;
-      font-size: calc(var(--vela-font-size) + 2px);
-      transition: all 0.35s ease;
-      font-weight: 700;
-
+    .account-content {
       &--active {
-        background-color: var(--vela-body-bg) !important;
+        display: block;
       }
     }
-  }
-}
-
-.account-main {
-  padding: 30px;
-}
-
-.account-content {
-  &--active {
-    display: block;
+    .register-content {
+      &--active {
+        display: block;
+      }
+    }
   }
 }
 
@@ -72,13 +77,13 @@
   display: none;
 }
 
-/* .account-alert__error--active {
-      display: block;
-  } */
+// .account-alert__error--active {
+//   display: block;
+// }
 
-/* .register-alert__error--active {
-      display: block;
-  } */
+// .register-alert__error--active {
+//   display: block;
+// }
 
 .account-alert__success,
 .register-alert__success {
@@ -87,9 +92,9 @@
   display: none;
 }
 
-//  .account-alert__success--active {
-//       display: block;
-//   }
+// .account-alert__success--active {
+//   display: block;
+// }
 
 // .register-alert__success--active {
 //   display: block;
@@ -167,27 +172,21 @@
   }
 }
 
-.register-content {
-  &--active {
-    display: block;
-  }
-}
-
 .register-name {
   display: flex;
   margin-bottom: 30px;
-}
 
-.register-firstname-control {
-  border: 1px solid var(--vela-border-color) !important;
-  border-radius: 3px !important;
-  margin-right: 15px;
-}
+  .register-firstname-control {
+    border: 1px solid var(--vela-border-color) !important;
+    border-radius: 3px !important;
+    margin-right: 15px;
+  }
 
-.register-lastname-control {
-  border: 1px solid var(--vela-border-color) !important;
-  border-radius: 3px !important;
-  margin-left: 15px;
+  .register-lastname-control {
+    border: 1px solid var(--vela-border-color) !important;
+    border-radius: 3px !important;
+    margin-left: 15px;
+  }
 }
 
 .register-email {
