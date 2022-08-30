@@ -9,7 +9,8 @@
             <div class="row">
               <div
                 class="col-xxl-3 col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-6"
-                v-for="item in [1, 2, 3, 4, 5, 6, 7, 8]"
+                v-for="product in products"
+                :key="product.id"
               >
                 <div class="product">
                   <div class="action">
@@ -38,16 +39,13 @@
                   </div>
                   <RouterLink to="/products">
                     <div class="image">
-                      <img
-                        src="../../assets/images/products/product_1.jpg"
-                        alt="product"
-                      />
+                      <img v-bind:src="product.images[0]" alt="product" />
                     </div>
                   </RouterLink>
                   <RouterLink to="/">
-                    <h6 class="name">Arctander Chair</h6>
+                    <h6 class="name">{{ product.displayName }}</h6>
                   </RouterLink>
-                  <p class="price">$56.47</p>
+                  <p class="price">${{ product.price }}</p>
                 </div>
               </div>
             </div>
@@ -60,7 +58,6 @@
       class="view-cart-drawer"
       title="Shopping Cart"
       @handle-close="handleCloseDrawer"
-      @log="handleLog"
     >
       <div id="view-cart">
         <div class="products">
@@ -145,22 +142,20 @@
 <script lang="ts">
 import "./products.scss";
 import Drawer from "../drawer/Drawer.vue";
-// import Loading from "@/components/loading/Loading.vue"
+import http from "@/api/request";
 
 export default {
   data() {
     return {
       isLoading: false,
       isVisibleDrawer: false,
+      products: [],
     };
   },
   components: {
     Drawer,
   },
   methods: {
-    handleLog(param: string) {
-      console.log(param);
-    },
     handleVisibleCart() {
       this.isVisibleDrawer = true;
     },
@@ -170,6 +165,10 @@ export default {
     handleVisibleViewInfoModal() {
       // this.isVisible = true;
     },
+  },
+  async created() {
+    const response = await http.get("/products");
+    this.products = response;
   },
 };
 </script>

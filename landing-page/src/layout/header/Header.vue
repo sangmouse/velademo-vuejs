@@ -84,20 +84,25 @@
         <button class="btn-search" type="button">
           <img src="../../assets/images/search.png" alt="search-i" />
         </button>
-        <button class="btn-shop-bag" type="button">
+        <button
+          class="btn-shop-bag"
+          type="button"
+          v-on:click="handleVisibleViewCart"
+        >
           <img src="../../assets/images/shopping-bag.png" alt="shop-bag" />
           <small class="quantity">o</small>
         </button>
       </ul>
     </div>
 
-    <!-- drawer -->
+    <!-- menu mobile drawer -->
     <Drawer
       :isVisible="isVisible"
       class="menu-drawer"
       title="Menu Mobile"
-      width="70%"
+      width="50%"
       placement="left"
+      @handleClose="handleClose"
     >
       <div id="menu-mobile">
         <div class="body">
@@ -107,16 +112,71 @@
             </RouterLink>
           </div>
           <div class="item">
-            <RouterLink to="/"><p>Contact Us</p></RouterLink>
+            <RouterLink to="/">
+              <p>Shop</p>
+            </RouterLink>
           </div>
           <div class="item">
+            <RouterLink to="/">
+              <p>Collections</p>
+            </RouterLink>
+          </div>
+          <div class="item">
+            <RouterLink to="/"><p>Contact Us</p></RouterLink>
+          </div>
+          <!-- <div class="item">
             <a-collapse :bordered="false" :ghost="true">
-              <a-collapse-panel :showArrow="false" key="1" header="Shop">
-                <p>Nested</p>
+              <a-collapse-panel key="1" header="Shop">
+                <p class="nested">Nested</p>
               </a-collapse-panel>
             </a-collapse>
+          </div> -->
+        </div>
+      </div>
+    </Drawer>
+
+    <!-- view cart drawer -->
+    <Drawer
+      :isVisible="isVisibleViewCart"
+      class="view-cart-drawer"
+      title="Shopping Cart"
+      @handle-close="handleCloseDrawer"
+    >
+      <div id="view-cart">
+        <div class="products">
+          <div class="item">
+            <div class="info">
+              <div class="img">
+                <RouterLink to="/">
+                  <img
+                    src="../../assets/images/shopping-bag-16.png"
+                    alt="product-img"
+                  />
+                </RouterLink>
+              </div>
+              <div class="order">
+                <RouterLink to="/">
+                  <h5>Outdoor Dining Table</h5>
+                </RouterLink>
+                <p>$85.52</p>
+                <div class="action">
+                  <button class="btn btn-increment">-</button>
+                  <p class="quantity">2</p>
+                  <button class="btn btn-increment">+</button>
+                </div>
+              </div>
+            </div>
+            <button class="btn-remove">X</button>
           </div>
         </div>
+        <div class="total-price">
+          <p>Subtotal</p>
+          <h5>$987.34</h5>
+        </div>
+        <p class="privacy">
+          Shipping, taxes, and discounts will be calculated at checkout.
+        </p>
+        <button class="btn-view-cart">View Cart</button>
       </div>
     </Drawer>
   </div>
@@ -131,11 +191,21 @@ export default {
   data() {
     return {
       isVisible: false,
+      isVisibleViewCart: false,
     };
   },
   methods: {
     handleVisibleMenu() {
       this.isVisible = true;
+    },
+    handleClose() {
+      this.isVisible = false;
+    },
+    handleVisibleViewCart() {
+      this.isVisibleViewCart = true;
+    },
+    handleCloseDrawer() {
+      this.isVisibleViewCart = false;
     },
   },
 };
