@@ -8,14 +8,14 @@
 
 <script lang="ts">
 import Carousel from "@/components/carousel/Carousel.vue";
-import Products from "@/components/products/Products.vue"
+import Products from "@/components/products/Products.vue";
 
 
 export default {
   components: {
     Carousel,
     Products,
-    Products
+    Products,
   }
 }
 </script>

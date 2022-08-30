@@ -8,8 +8,8 @@
       background-position: center center;
 
       .body {
-        min-width: 1410px;
-        width: 1410px;
+        min-width: 85%;
+        width: 85%;
         margin: 0 auto;
 
         h5 {
@@ -29,7 +29,7 @@
 
         .btn-shop {
           border: none;
-          transition: all .35s ease;
+          transition: all 0.35s ease;
           border-color: var(--vela-header-textcolor);
           background-color: var(--vela-header-textcolor);
           color: var(--vela-body-bg);
@@ -87,14 +87,11 @@
 
           button {
             background-color: transparent;
-
           }
         }
       }
     }
   }
-
-
 }
 
 .btn-slide {
@@ -104,7 +101,7 @@
   height: 100%;
   border-radius: 50%;
   position: relative;
-  transition: all .35s ease;
+  transition: all 0.35s ease;
 
   span {
     position: absolute;
@@ -116,5 +113,45 @@
       height: auto;
     }
   }
+}
 
+@media screen and (max-width: 800px) {
+  .carousel {
+    .ant-carousel {
+      .carousel-item {
+        .body {
+          h2 {
+            font-size: 50px;
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 576px) {
+  .carousel {
+    .ant-carousel {
+      .carousel-item {
+        padding-top: 150px;
+        .body {
+          h2 {
+            font-size: 45px;
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 500px) {
+  .carousel {
+    .ant-carousel {
+      .carousel-item {
+        .body {
+          h2 {
+            font-size: 38px;
+          }
+        }
+      }
+    }
+  }
 }

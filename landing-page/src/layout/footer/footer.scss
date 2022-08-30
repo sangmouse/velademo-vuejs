@@ -6,7 +6,8 @@ footer {
 
     .item {
       .logo {
-        margin: 0 0 40px 0;
+        width: 130px;
+        margin: 0 0 30px 0;
       }
 
       .social {
@@ -44,7 +45,6 @@ footer {
           .icon {
             margin: 5px 10px 0 0;
           }
-
         }
       }
 
@@ -78,6 +78,21 @@ footer {
     span {
       color: var(--vela-breadcrumb-textcolor);
     }
+  }
+}
 
+@media screen and (max-width: 575px) {
+  footer {
+    .menus {
+      .item {
+        text-align: center;
+        .logo {
+          margin: 0 auto 30px auto;
+        }
+        .social {
+          margin: 0 0 50px 0;
+        }
+      }
+    }
   }
 }
