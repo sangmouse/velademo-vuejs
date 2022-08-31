@@ -185,7 +185,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import "./header.scss";
 import Drawer from "../../components/drawer/Drawer.vue";
 import { useRouter } from "vue-router";
