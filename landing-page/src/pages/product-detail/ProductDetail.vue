@@ -24,14 +24,11 @@
             </div>
             <div class="col-xxl-6 col-xl-6 col-lg-6 col-12">
               <div class="info">
-                <h2>Stainless steel teapot</h2>
+                <h2>{{ productDetail?.displayName ?? "" }}</h2>
                 <p>
-                  Most of us are familiar with the iconic design of the egg
-                  shaped chair floating in the air. The Hanging Egg Chair is a
-                  critically acclaimed design that has enjoyed praise worldwide
-                  ever since the distinctive sculptural shape was created.
+                  {{ productDetail?.description ?? "" }}
                 </p>
-                <h5>$56.80</h5>
+                <h5>${{ productDetail?.price }}</h5>
                 <div class="action">
                   <div class="quantity">
                     <button class="btn">-</button>
@@ -52,7 +49,14 @@
                     <div class="text-field">Add To Cart</div>
                   </button>
                 </div>
-                <p class="category"><b>Categories: </b> <span>Decor</span></p>
+                <p class="category">
+                  <b>Categories: </b>
+                  <span>{{
+                    productDetail?.categories
+                      ?.map((category) => ` ${category}`)
+                      .toString() || ""
+                  }}</span>
+                </p>
               </div>
             </div>
           </div>
@@ -164,8 +168,6 @@ import "./product-detail.scss";
 import Carousel from "../../components/carousel/Carousel.vue";
 import Drawer from "../../components/drawer/Drawer.vue";
 
-// const { id } = this.$route.params;
-
 export default {
   data() {
     const getImgUrl = (i: number) => {
@@ -187,12 +189,17 @@ export default {
     },
   },
   async created() {
-    const { id } = this.$route.params;
     const products = await http.get("/products");
     this.products = products;
-    const response = await http.get(`/products/${id}`);
+    const response = await http.get(`/products/${this.$route.params.id}`);
     this.productDetail = response;
-    console.log(this.productDetail);
+    this.$watch(
+      () => this.$route.params.id,
+      async (value, _) => {
+        const response = await http.get(`/products/${value}`);
+        this.productDetail = response;
+      }
+    );
   },
   components: { Carousel, Drawer },
 };
