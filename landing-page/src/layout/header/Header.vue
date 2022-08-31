@@ -76,8 +76,8 @@
               <img src="../../assets/images/user.png" alt="user-i" />
             </RouterLink>
           </p>
-          <p class="link" v-if="isLogout">
-            <RouterLink to="/account/login">Logout</RouterLink>
+          <p class="link"  v-if="isLogout">
+            <button @click="handleLogout" >Logout</button>
           </p>
           <p class="link" v-else >
             <RouterLink to="/account/login">Login /</RouterLink>
@@ -188,6 +188,7 @@
 <script>
 import "./header.scss";
 import Drawer from "../../components/drawer/Drawer.vue";
+import { useRouter } from "vue-router";
 
 export default {
   components: { Drawer },
@@ -196,6 +197,7 @@ export default {
       isVisible: false,
       isVisibleViewCart: false,
       isLogout:true,
+      router: useRouter(),
     };
   },
   created() {
@@ -214,6 +216,10 @@ export default {
     },
   },
   methods: {
+    handleLogout(){
+      localStorage.removeItem("token")
+      this.router.push("/account/login");
+    },
     handleVisibleMenu() {
       this.isVisible = true;
     },

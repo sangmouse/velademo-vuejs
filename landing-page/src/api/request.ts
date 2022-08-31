@@ -31,6 +31,6 @@ http.interceptors.response.use(
 
 export default http;
 
-export const request = axios.create({
-    baseURL: "",
-})
+// export const request = axios.create({
+//     baseURL: "",
+// })
