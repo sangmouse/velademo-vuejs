@@ -76,7 +76,10 @@
               <img src="../../assets/images/user.png" alt="user-i" />
             </RouterLink>
           </p>
-          <p class="link">
+          <p class="link" v-if="isLogout">
+            <RouterLink to="/account/login">Logout</RouterLink>
+          </p>
+          <p class="link" v-else >
             <RouterLink to="/account/login">Login /</RouterLink>
             <RouterLink to="/account/register"> Sign up</RouterLink>
           </p>
@@ -182,7 +185,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import "./header.scss";
 import Drawer from "../../components/drawer/Drawer.vue";
 
@@ -192,7 +195,23 @@ export default {
     return {
       isVisible: false,
       isVisibleViewCart: false,
+      isLogout:true,
     };
+  },
+  created() {
+      if (localStorage.getItem("token") !== null) {
+       this.isLogout = true
+      } else {
+         this.isLogout = false
+      }
+  },
+  computed:{
+    isLogout(){
+      if (localStorage.getItem("token") !== null) {
+      return this.isLogout = true
+      } 
+      return this.isLogout = false
+    },
   },
   methods: {
     handleVisibleMenu() {

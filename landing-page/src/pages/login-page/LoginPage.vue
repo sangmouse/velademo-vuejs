@@ -30,7 +30,7 @@
               class="account-alert__error"
               :class="errorMessage ? 'account-alert__error--active' : ''"
             >
-              <p>Incorrect email or password!.</p>
+              <p>{{ this.messageErrorLogin }}</p>
             </div>
             <div
               class="account-alert__success"
@@ -69,7 +69,7 @@
                 <input
                   type="button"
                   value="Sign In"
-                  v-on:click="handleSubmitForm"
+                  v-on:click="handleSubmitLogin"
                   class="signin-btn"
                 />
               </div>
@@ -77,11 +77,15 @@
           </div>
 
           <div class="register-content" v-if="this.numLogin === 2">
-            <div class="register-alert__error register-alert__error--active">
+            <div
+              class="register-alert__error"
+              :class="errorMessager ? 'register-alert__error--active' : ''"
+            >
               <p>Check again please!</p>
             </div>
             <div
-              class="register-alert__success register-alert__success--active"
+              class="register-alert__success"
+              :class="successMessager ? 'register-alert__success--active' : ''"
             >
               <p>Create account successfully!</p>
             </div>
@@ -94,6 +98,7 @@
                   placeholder="First Name"
                   required
                   autofocus
+                  @change="handleFirstname"
                 />
                 <input
                   type="text"
@@ -101,6 +106,7 @@
                   placeholder="Last Name"
                   required
                   autofocus
+                  @change="handleLastname"
                 />
               </div>
               <div class="register-email">
@@ -109,6 +115,7 @@
                   class="form-control register-email-control"
                   required
                   placeholder="Email"
+                  v-on:change="onChangeEmailr"
                 />
               </div>
               <div class="register-password">
@@ -117,6 +124,7 @@
                   class="form-control register-password-control"
                   required
                   placeholder="Password"
+                  v-on:change="onChangePasswordr"
                 />
                 <div
                   class="register-password__showbtn"
@@ -131,6 +139,7 @@
                   type="button"
                   value="Create Account"
                   class="create-account-btn"
+                  v-on:click="handleSubmitRegister"
                 />
               </div>
             </div>
@@ -142,13 +151,13 @@
 </template>
 
 <script>
-import {request} from "@/api/request";
+import { request } from "@/api/request";
 import { useRouter } from "vue-router";
 import "./login.scss";
 export default {
-
   data() {
     return {
+      messageErrorLogin: "",
       numLogin: 1,
       isPassword: true,
       login: {
@@ -158,6 +167,16 @@ export default {
       message: {
         error: false,
         success: false,
+      },
+      messager: {
+        error: false,
+        success: false,
+      },
+      register: {
+        firstname: "",
+        lastname: "",
+        email: "",
+        password: "",
       },
       validateEmail(email) {
         if (
@@ -183,6 +202,19 @@ export default {
     }
   },
   methods: {
+    handleFirstname(e) {
+      this.register.firstname = e.target.value;
+      console.log(this.register.firstname);
+    },
+    handleLastname(e) {
+      this.register.lastname = e.target.value;
+    },
+    onChangePasswordr(e) {
+      this.register.password = e.target.value;
+    },
+    onChangeEmailr(e) {
+      this.register.email = e.target.value;
+    },
     handleLogin(value) {
       this.numLogin = value;
     },
@@ -195,19 +227,40 @@ export default {
     onChangePassword(e) {
       this.login.password = e.target.value;
     },
-
-    async handleSubmitForm() {
-      const data = this.login;
+    handleSubmitRegister() {
+      const data = this.register;
       if (
         data.email == "" ||
         data.password == "" ||
+        data.firstname == "" ||
+        data.lastname == "" ||
         !this.validateEmail(data.email)
       ) {
-        this.message.error = true;
-        this.message.success = false;
+        this.messager.error = true;
+        this.messager.success = false;
       } else {
-        this.message.success = true;
-        this.message.error = false;
+        this.messager.error = false;
+        this.messager.success = true;
+      }
+    },
+
+    async handleSubmitLogin() {
+      const data = this.login;
+      const message = this.message;
+      if (data.email == "") {
+        this.messageErrorLogin = "Email must be not empty!";
+        message.error = true;
+        message.success = false;
+        return console.log("tuancan");
+      } else if (!this.validateEmail(data.email)) {
+        this.messageErrorLogin = "Invalid email";
+        message.error = true;
+        message.success = false;
+      } else if (data.password == "") {
+        this.messageErrorLogin = "Password must be not empty!";
+        message.error = true;
+        message.success = false;
+      } else {
         try {
           const response = await request.post(
             "https://api.dev.dentity.com/core/api/v1/admin/login",
@@ -216,10 +269,14 @@ export default {
               password: data.password,
             }
           );
+          console.log(response);
+          message.success = true;
           localStorage.setItem("token", response.data.data.token);
           this.router.push("/");
         } catch (err) {
-          console.log("khong dang nhap dc");
+          console.log(err);
+          message.error = true;
+          this.messageErrorLogin = err?.response?.data.message;
         }
       }
     },
@@ -233,6 +290,12 @@ export default {
     },
     successMessage() {
       return this.message.success;
+    },
+    errorMessager() {
+      return this.messager.error;
+    },
+    successMessager() {
+      return this.messager.success;
     },
   },
 };
