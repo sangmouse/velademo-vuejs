@@ -17,7 +17,7 @@
                     </a>
                   </template>
                   <div v-for="item in productDetail?.images" :key="item">
-                    <img :src="item" />
+                    <img :src="item.url" />
                   </div>
                 </a-carousel>
               </div>
@@ -53,7 +53,7 @@
                   <b>Categories: </b>
                   <span>{{
                     productDetail?.categories
-                      ?.map((category) => ` ${category}`)
+                      ?.map((category) => ` ${category.name}`)
                       .toString() || ""
                   }}</span>
                 </p>
@@ -100,7 +100,10 @@
                     </div>
                     <RouterLink v-bind:to="'/product/' + product.id">
                       <div class="img">
-                        <img v-bind:src="product.images[0]" alt="product" />
+                        <img
+                          v-bind:src="product.images[0]?.url"
+                          alt="product"
+                        />
                       </div>
                     </RouterLink>
                     <RouterLink v-bind:to="'/product/' + product.id">
@@ -129,7 +132,7 @@
               <div class="img">
                 <RouterLink to="/">
                   <img
-                    src="../../assets/images/shopping-bag-16.png"
+                    src="../../assets/images/products/product_3_xs.jpg"
                     alt="product-img"
                   />
                 </RouterLink>
