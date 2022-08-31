@@ -97,6 +97,8 @@
   --btn-notfound-bordercolor: #191919;
   --btn-notfound-bgcolor: #191919;
   --header-transparent-bgcolor: rgb(235 236 237);
+  --btn-searchproduct-bordercolor: #a1a1a1;
+  --textfield-detail-txtcolor: #868686;
 }
 
 html {
