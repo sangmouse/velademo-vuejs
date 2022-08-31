@@ -76,13 +76,13 @@
   display: none;
 }
 
-// .account-alert__error--active {
-//   display: block;
-// }
+.account-alert__error--active {
+  display: block;
+}
 
-// .register-alert__error--active {
-//   display: block;
-// }
+.register-alert__error--active {
+  display: block;
+}
 
 .account-alert__success,
 .register-alert__success {
@@ -91,13 +91,13 @@
   display: none;
 }
 
-// .account-alert__success--active {
-//   display: block;
-// }
+.account-alert__success--active {
+  display: block;
+}
 
-// .register-alert__success--active {
-//   display: block;
-// }
+.register-alert__success--active {
+  display: block;
+}
 
 .account-alert__error p,
 .account-alert__success p,
