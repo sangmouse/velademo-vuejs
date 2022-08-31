@@ -40,10 +40,9 @@ import "./search-product.scss";
 import Product from "../../components/product/Product.vue";
 export default {
   async created() {
-    const response = await http.get("/products");
     if (this.$route.query.q.length) {
-      this.searchResult = response?.filter((product) =>
-        product.displayName.includes(this.$route.query.q)
+      this.searchResult = await http.get(
+        `/api/search?page=1&size=8&name=${this.$route.query.q}`
       );
     }
 
@@ -52,8 +51,8 @@ export default {
       async (value, _) => {
         this.search = value;
         if (value.trim().length > 0) {
-          this.searchResult = response?.filter((product) =>
-            product.displayName.includes(value)
+          this.searchResult = await http.get(
+            `/api/search?page=1&size=8&name=${this.$route.query.q}`
           );
         } else {
           this.searchResult = [];

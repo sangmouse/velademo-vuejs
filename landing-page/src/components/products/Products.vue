@@ -135,7 +135,7 @@ export default {
     },
   },
   async created() {
-    const response = await http.get("/products");
+    const response = await http.get("/api/products?page=1&size=8");
     this.products = response;
   },
 };
