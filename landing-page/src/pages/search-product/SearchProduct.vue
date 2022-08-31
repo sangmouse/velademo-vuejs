@@ -3,13 +3,12 @@
     <div class="search">
       <h1 class="search__title">
         Search for
-        <span v-if="showmessageSearch"> "{{ messageSearch }}" </span> products
-        on our site
+        <span> "{{ search }}" </span> products on our site
       </h1>
       <div class="search-group">
         <input
           type="text"
-          v-model="messageSearch"
+          v-model="search"
           placeholder="Enter keywords to search..."
           class="search-group__input form-control"
         />
@@ -24,12 +23,13 @@
         </div>
       </div>
       <div class="search-list">
-        <Product
-          v-if="searchResult?.length > 0"
-          v-for="product in searchResult"
-          v-bind:key="product.id"
-          :product="product"
-        />
+        <div class="row">
+          <Product
+            v-for="product in searchResult"
+            v-bind:key="product.id"
+            :product="product"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -39,13 +39,22 @@ import http from "@/api/request";
 import "./search-product.scss";
 import Product from "../../components/product/Product.vue";
 export default {
-  created() {
+  async created() {
+    const response = await http.get("/products");
+    if (this.$route.query.q.length) {
+      this.searchResult = response?.filter((product) =>
+        product.displayName.includes(this.$route.query.q)
+      );
+    }
+
     this.$watch(
       () => this.$route.query.q,
       async (value, _) => {
+        this.search = value;
         if (value.trim().length > 0) {
-          const response = await http.get("");
-          this.searchResult = response;
+          this.searchResult = response?.filter((product) =>
+            product.displayName.includes(value)
+          );
         } else {
           this.searchResult = [];
         }
@@ -54,15 +63,18 @@ export default {
   },
   data() {
     return {
-      messageSearch: "",
-      showmessageSearch: false,
+      search: this.$route.query.q,
       searchResult: [],
     };
   },
   methods: {
     handleSearch() {
-      this.showmessageSearch = true;
-      console.log(this.messageSearch);
+      this.$router.push({
+        name: "search-product",
+        query: {
+          q: this.search,
+        },
+      });
     },
   },
   components: { Product },
