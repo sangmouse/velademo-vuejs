@@ -189,14 +189,14 @@ export default {
     },
   },
   async created() {
-    const products = await http.get("/products");
+    const products = await http.get("/api/products?page=1&size=8");
     this.products = products;
-    const response = await http.get(`/products/${this.$route.params.id}`);
+    const response = await http.get(`/api/products/${this.$route.params.id}`);
     this.productDetail = response;
     this.$watch(
       () => this.$route.params.id,
       async (value, _) => {
-        const response = await http.get(`/products/${value}`);
+        const response = await http.get(`/api/products/${value}`);
         this.productDetail = response;
       }
     );

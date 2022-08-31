@@ -151,7 +151,7 @@
 </template>
 
 <script>
-import { request } from "@/api/request";
+import http from "@/api/request";
 import { useRouter } from "vue-router";
 import "./login.scss";
 export default {
@@ -262,7 +262,7 @@ export default {
         message.success = false;
       } else {
         try {
-          const response = await request.post(
+          const response = await http.post(
             "https://api.dev.dentity.com/core/api/v1/admin/login",
             {
               email: data.email,
