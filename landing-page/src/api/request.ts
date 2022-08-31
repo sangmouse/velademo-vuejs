@@ -13,7 +13,7 @@ http.interceptors.request.use(
     return { ...config };
   },
   (err) => {
-    // Do something with request error
+    // Do something with request errorgi
     return Promise.reject(err);
   }
 );
