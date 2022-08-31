@@ -16,7 +16,6 @@ export default {
     v-if="
       [
         'home',
-        'login',
         'register',
         'products',
         'product',
@@ -30,7 +29,6 @@ export default {
     v-if="
       [
         'home',
-        'login',
         'register',
         'products',
         'product',
