@@ -32,7 +32,7 @@
               <div class="img">
                 <RouterLink to="/">
                   <img
-                    src="../../assets/images/shopping-bag-16.png"
+                    src="../../assets/images/products/product_3_xs.jpg"
                     alt="product-img"
                   />
                 </RouterLink>

@@ -196,9 +196,13 @@ export default {
   },
   created() {
     if (localStorage.getItem("token") !== null) {
-      this.router.push("/");
+      this.router.push({
+        name: "home",
+      });
     } else {
-      this.router.push("/account/login");
+      this.router.push({
+        name: "login",
+      });
     }
   },
   methods: {
@@ -262,21 +266,23 @@ export default {
         message.success = false;
       } else {
         try {
-          const response = await http.post(
-            "https://api.dev.dentity.com/core/api/v1/admin/login",
-            {
-              email: data.email,
-              password: data.password,
-            }
-          );
-          console.log(response);
+          const response = await http.post("/login", {
+            username: data.email.trim(),
+            password: data.password.trim(),
+          });
           message.success = true;
-          localStorage.setItem("token", response.data.data.token);
-          this.router.push("/");
+          message.error = false;
+          localStorage.setItem("token", response.token);
+          this.$router.push({
+            name: "home",
+          });
         } catch (err) {
           console.log(err);
+          if (err.response.status == 401) {
+            message.error = true;
+            return (this.messageErrorLogin = "Incorect Email or Password!");
+          }
           message.error = true;
-          this.messageErrorLogin = err?.response?.data.message;
         }
       }
     },
