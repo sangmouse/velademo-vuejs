@@ -1,22 +1,18 @@
 <template>
   <div id="home-page">
-    <Carousel />
+    <SlideShow />
     <Products />
   </div>
 </template>
 
-
 <script lang="ts">
-import Carousel from "@/components/carousel/Carousel.vue";
 import Products from "@/components/products/Products.vue";
-
+import SlideShow from "@/components/slide-show/SlideShow.vue";
 
 export default {
   components: {
-    Carousel,
+    SlideShow,
     Products,
-    Products,
-  }
-}
+  },
+};
 </script>
-
