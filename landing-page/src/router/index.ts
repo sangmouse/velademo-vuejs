@@ -12,12 +12,12 @@ const router = createRouter({
     {
       path: "/account/login",
       name: "login",
-      component: HomePage,
+      component: () => import("../pages/login-page/LoginPage.vue"),
     },
     {
       path: "/account/register",
       name: "register",
-      component: HomePage,
+      component: () => import("../pages/login-page/LoginPage.vue"),
     },
     {
       path: "/products",
@@ -27,18 +27,23 @@ const router = createRouter({
     {
       path: "/product/:id",
       name: "product",
-      component: () => import("../pages/HomePage.vue")
+      component: () => import("../pages/product-detail/ProductDetail.vue"),
     },
     {
       path: "/search",
-      name: "product",
-      component: () => import("../pages/HomePage.vue")
+      name: "search-product",
+      component: () => import("../pages/search-product/SearchProduct.vue"),
     },
     {
       path: "/:pathMatch(.*)*",
       name: "not-found-page",
-      component: () => import("../pages/not-found-page/NotFoundPage.vue")
-    }
+      component: () => import("../pages/not-found-page/NotFoundPage.vue"),
+    },
+    {
+      path: "/contact",
+      name: "contact",
+      component: () => import("../pages/contact-page/ContactUsPage.vue"),
+    },
   ],
 });
 

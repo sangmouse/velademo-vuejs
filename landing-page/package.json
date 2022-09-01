@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
+    "db:serve": "json-server --watch db.json",
     "build": "run-p type-check build-only",
     "preview": "vite preview --port 4173",
     "build-only": "vite build",
@@ -11,6 +12,7 @@
   },
   "dependencies": {
     "ant-design-vue": "^3.2.11",
+    "axios": "^0.27.2",
     "bootstrap": "^5.2.0",
     "bootstrap-vue": "^2.22.0",
     "vue": "^3.2.37",

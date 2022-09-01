@@ -7,49 +7,13 @@
         <div class="product-list">
           <div class="container">
             <div class="row">
-              <div
-                class="col-xxl-3 col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-6"
-                v-for="item in [1, 2, 3, 4, 5, 6, 7, 8]"
-              >
-                <div class="product">
-                  <div class="action">
-                    <button
-                      class="btn btn-add-cart"
-                      v-on:click="handleVisibleCart"
-                    >
-                      <span>
-                        <img
-                          src="../../assets/images/shopping-bag-16.png"
-                          alt="add-cart"
-                        />
-                      </span>
-                    </button>
-                    <button
-                      class="btn btn-view"
-                      v-on:click="handleVisibleViewInfoModal"
-                    >
-                      <span>
-                        <img
-                          src="../../assets/images/search-b-16.png"
-                          alt="add-cart"
-                        />
-                      </span>
-                    </button>
-                  </div>
-                  <RouterLink to="/products">
-                    <div class="image">
-                      <img
-                        src="../../assets/images/products/product_1.jpg"
-                        alt="product"
-                      />
-                    </div>
-                  </RouterLink>
-                  <RouterLink to="/">
-                    <h6 class="name">Arctander Chair</h6>
-                  </RouterLink>
-                  <p class="price">$56.47</p>
-                </div>
-              </div>
+              <Product
+                v-for="product in products"
+                :key="product.id"
+                :product="product"
+                @handleVisibleCart="handleVisibleCart"
+                @handleVisibleViewInfoModal="handleVisibleViewInfoModal"
+              />
             </div>
           </div>
         </div>
@@ -60,7 +24,6 @@
       class="view-cart-drawer"
       title="Shopping Cart"
       @handle-close="handleCloseDrawer"
-      @log="handleLog"
     >
       <div id="view-cart">
         <div class="products">
@@ -69,7 +32,7 @@
               <div class="img">
                 <RouterLink to="/">
                   <img
-                    src="../../assets/images/shopping-bag-16.png"
+                    src="../../assets/images/products/product_3_xs.jpg"
                     alt="product-img"
                   />
                 </RouterLink>
@@ -145,22 +108,22 @@
 <script lang="ts">
 import "./products.scss";
 import Drawer from "../drawer/Drawer.vue";
-// import Loading from "@/components/loading/Loading.vue"
+import http from "@/api/request";
+import Product from "../product/Product.vue";
 
 export default {
   data() {
     return {
       isLoading: false,
       isVisibleDrawer: false,
+      products: [],
     };
   },
   components: {
     Drawer,
+    Product,
   },
   methods: {
-    handleLog(param: string) {
-      console.log(param);
-    },
     handleVisibleCart() {
       this.isVisibleDrawer = true;
     },
@@ -170,6 +133,10 @@ export default {
     handleVisibleViewInfoModal() {
       // this.isVisible = true;
     },
+  },
+  async created() {
+    const response = await http.get("/api/products?page=1&size=8");
+    this.products = response;
   },
 };
 </script>
