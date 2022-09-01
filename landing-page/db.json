@@ -11,16 +11,11 @@
         "../src/assets/images/products/product_3.jpg",
         "../src/assets/images/products/product_4.jpg"
       ],
-      "categories": [
-        "Chair",
-        "Furniture",
-        "Sofa",
-        "Decor Art"
-      ]
+      "categories": ["Chair", "Furniture", "Sofa", "Decor Art"]
     },
     {
       "id": "8d89b7b6-c9ad-46e9-a92c-13d21dae311c",
-      "displayName": "Stainless steel teapot",
+      "displayName": "Stainless steel Teapot",
       "description": "Chiacchera Desk Chair by Casprini is characterized by a modern Italian design. Its solid and graceful shape makes it ideal for working or studying. Chiacchera Desk Chair features a polypropylene shell and a swivel metal base adjustable in height thru gas piston. Chiacchera Desk Chair is ideal to add an extra touch of vivacity to every modern home office.",
       "price": 85.93,
       "images": [
@@ -29,10 +24,7 @@
         "../src/assets/images/products/product_1.jpg",
         "../src/assets/images/products/product_4.jpg"
       ],
-      "categories": [
-        "Chair",
-        "Furniture"
-      ]
+      "categories": ["Chair", "Furniture"]
     },
     {
       "id": "aa963463-83c6-47c4-b919-fb9bf010ba01",
@@ -45,11 +37,7 @@
         "../src/assets/images/products/product_2.jpg",
         "../src/assets/images/products/product_4.jpg"
       ],
-      "categories": [
-        "Furniture",
-        "Sofa",
-        "Decor Art"
-      ]
+      "categories": ["Furniture", "Sofa", "Decor Art"]
     },
     {
       "id": "04c06d1f-c51c-40d4-994f-202c921ba90b",
@@ -62,10 +50,7 @@
         "../src/assets/images/products/product_1.jpg",
         "../src/assets/images/products/product_2.jpg"
       ],
-      "categories": [
-        "Chair",
-        "Decor Art"
-      ]
+      "categories": ["Chair", "Decor Art"]
     },
     {
       "id": "b653a452-491e-4d0f-acf0-709f92a7a636",
@@ -78,10 +63,7 @@
         "../src/assets/images/products/product_3.jpg",
         "../src/assets/images/products/product_1.jpg"
       ],
-      "categories": [
-        "Furniture",
-        "Sofa"
-      ]
+      "categories": ["Furniture", "Sofa"]
     },
     {
       "id": "d52a0d7e-4971-4ca3-9699-edf7bcc928ee",
@@ -94,11 +76,7 @@
         "../src/assets/images/products/product_3.jpg",
         "../src/assets/images/products/product_1.jpg"
       ],
-      "categories": [
-        "Furniture",
-        "Sofa",
-        "Decor Art"
-      ]
+      "categories": ["Furniture", "Sofa", "Decor Art"]
     },
     {
       "id": "17ae835c-d678-4793-af62-3928fb0f5284",
@@ -111,11 +89,7 @@
         "../src/assets/images/products/product_3.jpg",
         "../src/assets/images/products/product_1.jpg"
       ],
-      "categories": [
-        "Chair",
-        "Furniture",
-        "Decor Art"
-      ]
+      "categories": ["Chair", "Furniture", "Decor Art"]
     },
     {
       "id": "16964101-739f-474e-86ea-5a129ab4fc9f",
@@ -128,10 +102,7 @@
         "../src/assets/images/products/product_3.jpg",
         "../src/assets/images/products/product_1.jpg"
       ],
-      "categories": [
-        "Chair",
-        "Furniture"
-      ]
+      "categories": ["Chair", "Furniture"]
     }
   ]
 }
