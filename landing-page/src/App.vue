@@ -8,6 +8,18 @@ export default {
     Header,
     Footer,
   },
+  created() {
+    // if (localStorage.getItem("token") !== null) {
+    //   this.$router.push({
+    //     name: "home",
+    //   });
+    // } else {
+    //   this.$router.push({
+    //     name: "login",
+    //   });
+    // }
+    this.$store.commit("CHECK_IS_LOGIN")
+  },
 };
 </script>
 
@@ -21,6 +33,7 @@ export default {
         'product',
         'search-product',
         'contact',
+        'login',
       ].indexOf($route.name) > -1
     "
   />
@@ -28,6 +41,7 @@ export default {
   <Footer
     v-if="
       [
+        'login',
         'home',
         'register',
         'products',

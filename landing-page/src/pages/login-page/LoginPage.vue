@@ -194,17 +194,18 @@ export default {
       router: useRouter(),
     };
   },
-  created() {
-    if (localStorage.getItem("token") !== null) {
-      this.router.push({
-        name: "home",
-      });
-    } else {
-      this.router.push({
-        name: "login",
-      });
-    }
-  },
+  // created() {
+  //   if (localStorage.getItem("token") !== null) {
+  //     this.router.push({
+  //       name: "home",
+  //     });
+  //   } else {
+  //     this.router.push({
+  //       name: "login",
+  //     });
+  //   }
+  //   this.$store.commit("CHECK_IS_LOGIN")
+  // },
   methods: {
     handleFirstname(e) {
       this.register.firstname = e.target.value;
@@ -266,8 +267,8 @@ export default {
         message.success = false;
       } else {
         try {
-          const response = await http.post("/login", {
-            username: data.email.trim(),
+          const response = await http.post(`/login`, {
+            email: data.email.trim(),
             password: data.password.trim(),
           });
           message.success = true;
