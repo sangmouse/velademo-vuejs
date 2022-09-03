@@ -150,8 +150,7 @@
   </div>
 </template>
 
-<script>
-import http from "@/api/request";
+<script lang="ts">
 import { useRouter } from "vue-router";
 import "./login.scss";
 export default {
@@ -194,18 +193,6 @@ export default {
       router: useRouter(),
     };
   },
-  // created() {
-  //   if (localStorage.getItem("token") !== null) {
-  //     this.router.push({
-  //       name: "home",
-  //     });
-  //   } else {
-  //     this.router.push({
-  //       name: "login",
-  //     });
-  //   }
-  //   this.$store.commit("CHECK_IS_LOGIN")
-  // },
   methods: {
     handleFirstname(e) {
       this.register.firstname = e.target.value;
@@ -248,7 +235,6 @@ export default {
         this.messager.success = true;
       }
     },
-
     async handleSubmitLogin() {
       const data = this.login;
       const message = this.message;
@@ -256,7 +242,6 @@ export default {
         this.messageErrorLogin = "Email must be not empty!";
         message.error = true;
         message.success = false;
-        return console.log("tuancan");
       } else if (!this.validateEmail(data.email)) {
         this.messageErrorLogin = "Invalid email";
         message.error = true;
@@ -266,23 +251,18 @@ export default {
         message.error = true;
         message.success = false;
       } else {
-        try {
-          const response = await http.post(`/login`, {
-            email: data.email.trim(),
-            password: data.password.trim(),
-          });
+        const infor = {
+          email: data.email.trim(),
+          password: data.password.trim(),
+        };
+        await this.$store.dispatch("getLogin", infor);
+        if (localStorage.getItem("token") !== null) {
           message.success = true;
           message.error = false;
-          localStorage.setItem("token", response.token);
           this.$router.push({
             name: "home",
           });
-        } catch (err) {
-          console.log(err);
-          if (err.response.status == 401) {
-            message.error = true;
-            return (this.messageErrorLogin = "Incorect Email or Password!");
-          }
+        } else {
           message.error = true;
         }
       }

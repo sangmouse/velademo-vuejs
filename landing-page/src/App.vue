@@ -9,16 +9,15 @@ export default {
     Footer,
   },
   created() {
-    // if (localStorage.getItem("token") !== null) {
-    //   this.$router.push({
-    //     name: "home",
-    //   });
-    // } else {
-    //   this.$router.push({
-    //     name: "login",
-    //   });
-    // }
-    this.$store.commit("CHECK_IS_LOGIN")
+    if (localStorage.getItem("token") !== null) {
+      this.$router.push({
+        name: "home",
+      });
+    } else {
+      this.$router.push({
+        name: "login",
+      });
+    }
   },
 };
 </script>

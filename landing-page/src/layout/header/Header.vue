@@ -93,10 +93,10 @@
               <img src="../../assets/images/user.png" alt="user-i" />
             </RouterLink>
           </p>
-          <p class="link"  v-if="isLogout">
+          <p class="link" v-if="!IsLogin" >
             <button @click="handleLogout" >Logout</button>
           </p>
-          <p class="link" v-else >
+          <p class="link" v-if="IsLogin" >
             <RouterLink to="/account/login">Login /</RouterLink>
             <RouterLink to="/account/register"> Sign up</RouterLink>
           </p>
@@ -205,11 +205,9 @@
     </Drawer>
   </div>
 </template>
-
-<script lang="ts">
+<script >
 import "./header.scss";
 import Drawer from "../../components/drawer/Drawer.vue";
-import { useRouter } from "vue-router";
 
 export default {
   components: { Drawer },
@@ -219,29 +217,21 @@ export default {
       isVisibleViewCart: false,
       isVisibleInputSearch: false,
       inputSearch: "",
-      isLogout:true,
-      router: useRouter(),
     };
   },
   created() {
-      if (localStorage.getItem("token") !== null) {
-       this.isLogout = true
-      } else {
-         this.isLogout = false
-      }
+      this.$store.commit('CHECK_IS_LOGIN')
   },
   computed:{
-    isLogout(){
-      if (localStorage.getItem("token") !== null) {
-      return this.isLogout = true
-      } 
-      return this.isLogout = false
+    IsLogin(){
+      return this.$store.state.auth.checkIsLogin
     },
   },
   methods: {
     handleLogout(){
       localStorage.removeItem("token")
-      this.router.push("/account/login");
+      this.$router.push("/account/login");
+      this.$store.commit('CHECK_IS_LOGIN')
     },
     handleVisibleMenu() {
       this.isVisible = true;
