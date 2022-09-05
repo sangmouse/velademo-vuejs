@@ -156,7 +156,7 @@ export default {
   data() {
     return {
       messageErrorLogin: "",
-      statusLogin: this.$store.state.auth.statusLogin,
+      statusLoginCurent: this.$store.state.auth.statusLogin,
       isPassword: true,
       login: {
         email: "",
@@ -268,7 +268,7 @@ export default {
   },
   computed: {
     statusLogin(){
-     return this.statusLogin = this.$store.state.auth.statusLogin
+     return this.statusLoginCurent = this.$store.state.auth.statusLogin
     },
     showPassword() {
       return this.isPassword;
