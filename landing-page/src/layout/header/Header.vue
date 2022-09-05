@@ -205,7 +205,7 @@
     </Drawer>
   </div>
 </template>
-<script >
+<script lang="ts">
 import "./header.scss";
 import Drawer from "../../components/drawer/Drawer.vue";
 
@@ -230,7 +230,9 @@ export default {
   methods: {
     handleLogout(){
       localStorage.removeItem("token")
-      this.$router.push("/account/login");
+      this.$router.push({
+            name: "login",
+          });
       this.$store.commit('CHECK_IS_LOGIN')
     },
     handleVisibleMenu() {

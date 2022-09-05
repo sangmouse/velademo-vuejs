@@ -30,8 +30,6 @@
               class="account-alert__error"
               :class="errorMessage ? 'account-alert__error--active' : ''"
             >
-              errorAuth
-              <p>{{ errorAuth }}</p>
               <p>{{ this.messageErrorLogin }}</p>
             </div>
             <div
@@ -191,16 +189,11 @@ export default {
           return false;
         }
       },
-      errorAuth: "",
     };
   },
   methods: {
-    errorAuth() {
-      return (errorAuth = this.$store.state.auth.errorAuth);
-    },
     handleFirstname(e) {
       this.register.firstname = e.target.value;
-      console.log(this.register.firstname);
     },
     handleLastname(e) {
       this.register.lastname = e.target.value;
@@ -267,6 +260,7 @@ export default {
             name: "home",
           });
         } else {
+          this.messageErrorLogin = " Username or password error !";
           message.error = true;
         }
       }

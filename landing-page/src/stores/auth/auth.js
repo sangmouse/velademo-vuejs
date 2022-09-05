@@ -5,7 +5,6 @@ const auth = {
   state: {
     checkIsLogin: true,
     token: "",
-    errorAuth:"Dang nhap that bai, vui long thu lai sau"
   },
   mutations: {
     SET_LOGIN(state, token) {
@@ -30,7 +29,6 @@ const auth = {
 
       } catch (err) {
         console.log(err);
-        state.errorAuth = "Dang nhap that bai, vui long thu lai sau"
       }
     },
   },
