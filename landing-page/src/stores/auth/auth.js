@@ -6,8 +6,12 @@ const auth = {
     messageErrorLogin:"",
     isLogin: true,
     token: "",
+    statusLogin:'login'
   },
   mutations: {
+    STATUS_LOGIN(state, status){
+      state.statusLogin = status
+    },
     INCORECT_LOGIN(state){
       state.messageErrorLogin= 'Incorect Email or Password!'
     },

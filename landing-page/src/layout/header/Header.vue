@@ -97,8 +97,8 @@
             <button @click="handleLogout" >Logout</button>
           </p>
           <p class="link" v-else >
-            <RouterLink to="/account/login">Login /</RouterLink>
-            <RouterLink to="/account/register"> Sign up</RouterLink>
+            <RouterLink to="/account/login" @click="handleStatusLogin('login')">Login /</RouterLink>
+            <RouterLink to="/account/register" @click="handleStatusLogin('register')"> Sign up</RouterLink>
           </p>
         </li>
         <button
@@ -228,6 +228,9 @@ export default {
     },
   },
   methods: {
+    handleStatusLogin(status){
+      this.$store.commit("STATUS_LOGIN", status)
+    },
     handleLogout(){
       localStorage.removeItem("token")
       this.$router.push({

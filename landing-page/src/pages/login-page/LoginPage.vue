@@ -3,21 +3,21 @@
     <div class="container">
       <div class="account">
         <div class="account-nav">
-          <div class="account-nav-login" @click="handleLogin(1)">
+          <div class="account-nav-login" @click="handleLogin('login')">
             <h4
               class="account-nav-login__title"
               v-bind:class="
-                this.numLogin === 2 ? '' : 'account-nav-login__title--active'
+                statusLogin === 'login' ? 'account-nav-login__title--active' : ''
               "
             >
               Login
             </h4>
           </div>
-          <div class="account-nav-create" @click="handleLogin(2)">
+          <div class="account-nav-create" @click="handleLogin('register')">
             <h4
               class="account-nav-create__title"
               v-bind:class="
-                this.numLogin === 1 ? '' : 'account-nav-create__title--active'
+                statusLogin === 'register' ? 'account-nav-create__title--active' : ''
               "
             >
               Create Account
@@ -25,7 +25,7 @@
           </div>
         </div>
         <div class="account-main">
-          <div class="account-content" v-if="this.numLogin === 1">
+          <div class="account-content" v-if="statusLogin === 'login'">
             <div
               class="account-alert__error"
               :class="errorMessage ? 'account-alert__error--active' : ''"
@@ -76,7 +76,7 @@
             </div>
           </div>
 
-          <div class="register-content" v-if="this.numLogin === 2">
+          <div class="register-content" v-if="statusLogin === 'register'">
             <div
               class="register-alert__error"
               :class="errorMessager ? 'register-alert__error--active' : ''"
@@ -156,7 +156,7 @@ export default {
   data() {
     return {
       messageErrorLogin: "",
-      numLogin: 1,
+      statusLogin: this.$store.state.auth.statusLogin,
       isPassword: true,
       login: {
         email: "",
@@ -204,8 +204,8 @@ export default {
     onChangeEmailr(e) {
       this.register.email = e.target.value;
     },
-    handleLogin(value) {
-      this.numLogin = value;
+    handleLogin(status) {
+      this.$store.commit("STATUS_LOGIN", status)
     },
     handleShowPassword() {
       this.isPassword = !this.isPassword;
@@ -267,6 +267,9 @@ export default {
     },
   },
   computed: {
+    statusLogin(){
+     return this.statusLogin = this.$store.state.auth.statusLogin
+    },
     showPassword() {
       return this.isPassword;
     },
