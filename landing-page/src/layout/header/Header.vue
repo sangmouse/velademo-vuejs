@@ -93,10 +93,10 @@
               <img src="../../assets/images/user.png" alt="user-i" />
             </RouterLink>
           </p>
-          <p class="link" v-if="!IsLogin" >
+          <p class="link" v-if="!isLogin" >
             <button @click="handleLogout" >Logout</button>
           </p>
-          <p class="link" v-if="IsLogin" >
+          <p class="link" v-if="isLogin" >
             <RouterLink to="/account/login">Login /</RouterLink>
             <RouterLink to="/account/register"> Sign up</RouterLink>
           </p>
@@ -220,10 +220,10 @@ export default {
     };
   },
   created() {
-      this.$store.commit('CHECK_IS_LOGIN')
+    this.$store.commit('CHECK_IS_LOGIN')
   },
   computed:{
-    IsLogin(){
+    isLogin(){
       return this.$store.state.auth.checkIsLogin
     },
   },

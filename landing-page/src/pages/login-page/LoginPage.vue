@@ -151,7 +151,6 @@
 </template>
 
 <script lang="ts">
-import { useRouter } from "vue-router";
 import "./login.scss";
 export default {
   data() {
@@ -190,7 +189,6 @@ export default {
           return false;
         }
       },
-      router: useRouter(),
     };
   },
   methods: {
@@ -256,7 +254,7 @@ export default {
           password: data.password.trim(),
         };
         await this.$store.dispatch("getLogin", infor);
-        if (localStorage.getItem("token") !== null) {
+        if (!this.$store.state.auth.checkIsLogin) {
           message.success = true;
           message.error = false;
           this.$router.push({
