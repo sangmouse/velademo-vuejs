@@ -96,7 +96,7 @@
           <p class="link" v-if="!isLogin" >
             <button @click="handleLogout" >Logout</button>
           </p>
-          <p class="link" v-if="isLogin" >
+          <p class="link" v-else >
             <RouterLink to="/account/login">Login /</RouterLink>
             <RouterLink to="/account/register"> Sign up</RouterLink>
           </p>
@@ -224,7 +224,7 @@ export default {
   },
   computed:{
     isLogin(){
-      return this.$store.state.auth.checkIsLogin
+      return this.$store.state.auth.isLogin
     },
   },
   methods: {
