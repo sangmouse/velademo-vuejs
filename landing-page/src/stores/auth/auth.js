@@ -3,20 +3,24 @@ import http from "../../api/request";
 
 const auth = {
   state: {
-    checkIsLogin: true,
+    messageErrorLogin:"",
+    isLogin: true,
     token: "",
   },
   mutations: {
+    INCORECT_LOGIN(state){
+      state.messageErrorLogin= 'Incorect Email or Password!'
+    },
     SET_LOGIN(state, token) {
       state.token = token;
       localStorage.setItem("token", token);
-      state.checkIsLogin = false;
+      state.isLogin = false;
     },
     CHECK_IS_LOGIN(state) {
       if (localStorage.getItem("token") !== null) {
-        state.checkIsLogin = false;
+        state.isLogin = false;
       } else {
-        state.checkIsLogin = true;
+        state.isLogin = true;
       }
     },
   },
@@ -28,7 +32,9 @@ const auth = {
         context.commit("SET_LOGIN", token);
 
       } catch (err) {
-        console.log(err);
+        if (err.response.status == 401) {
+          context.commit("INCORECT_LOGIN");
+        }
       }
     },
   },

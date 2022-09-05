@@ -253,14 +253,14 @@ export default {
           password: data.password.trim(),
         };
         await this.$store.dispatch("getLogin", infor);
-        if (!this.$store.state.auth.checkIsLogin) {
+        if (!this.$store.state.auth.isLogin) {
           message.success = true;
           message.error = false;
           this.$router.push({
             name: "home",
           });
         } else {
-          this.messageErrorLogin = " Username or password error !";
+          this.messageErrorLogin = this.$store.state.auth.messageErrorLogin;
           message.error = true;
         }
       }
