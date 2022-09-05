@@ -175,17 +175,11 @@
   display: flex;
   margin-bottom: 30px;
 
-  .register-firstname-control {
+  .register-name-control {
     border: 1px solid var(--vela-border-color) !important;
     border-radius: 3px !important;
-    margin-right: 15px;
   }
 
-  .register-lastname-control {
-    border: 1px solid var(--vela-border-color) !important;
-    border-radius: 3px !important;
-    margin-left: 15px;
-  }
 }
 
 .register-email {
@@ -211,6 +205,18 @@
     cursor: pointer;
   }
 }
+
+.register-confirm-password {
+  margin-bottom: 30px;
+  display: flex;
+  border: 1px solid var(--vela-border-color);
+  border-radius: 3px;
+
+  &-control {
+    border: none !important;
+  }
+}
+
 
 .create-account-btn {
   width: 100%;

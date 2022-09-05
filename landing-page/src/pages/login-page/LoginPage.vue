@@ -7,7 +7,9 @@
             <h4
               class="account-nav-login__title"
               v-bind:class="
-                statusLogin === 'login' ? 'account-nav-login__title--active' : ''
+                statusLogin === 'login'
+                  ? 'account-nav-login__title--active'
+                  : ''
               "
             >
               Login
@@ -17,7 +19,9 @@
             <h4
               class="account-nav-create__title"
               v-bind:class="
-                statusLogin === 'register' ? 'account-nav-create__title--active' : ''
+                statusLogin === 'register'
+                  ? 'account-nav-create__title--active'
+                  : ''
               "
             >
               Create Account
@@ -79,13 +83,17 @@
           <div class="register-content" v-if="statusLogin === 'register'">
             <div
               class="register-alert__error"
-              :class="errorMessager ? 'register-alert__error--active' : ''"
+              :class="
+                errorMessageRegister ? 'register-alert__error--active' : ''
+              "
             >
-              <p>Check again please!</p>
+              <p>{{ this.messageErrorRegister }}</p>
             </div>
             <div
               class="register-alert__success"
-              :class="successMessager ? 'register-alert__success--active' : ''"
+              :class="
+                successMessageRegister ? 'register-alert__success--active' : ''
+              "
             >
               <p>Create account successfully!</p>
             </div>
@@ -94,20 +102,20 @@
               <div class="register-name">
                 <input
                   type="text"
-                  class="form-control register-firstname-control"
+                  class="form-control register-name-control"
                   placeholder="First Name"
                   required
                   autofocus
-                  @change="handleFirstname"
+                  @change="handleName"
                 />
-                <input
+                <!-- <input
                   type="text"
                   class="form-control register-lastname-control"
                   placeholder="Last Name"
                   required
                   autofocus
                   @change="handleLastname"
-                />
+                /> -->
               </div>
               <div class="register-email">
                 <input
@@ -115,7 +123,7 @@
                   class="form-control register-email-control"
                   required
                   placeholder="Email"
-                  v-on:change="onChangeEmailr"
+                  v-on:change="onChangeEmailRegister"
                 />
               </div>
               <div class="register-password">
@@ -124,7 +132,7 @@
                   class="form-control register-password-control"
                   required
                   placeholder="Password"
-                  v-on:change="onChangePasswordr"
+                  v-on:change="onChangePasswordRegister"
                 />
                 <div
                   class="register-password__showbtn"
@@ -133,6 +141,14 @@
                   <span class="showbtn" v-if="isPassword">Hide</span>
                   <span class="showbtn" v-if="!isPassword">Show</span>
                 </div>
+              </div>
+              <div class="register-confirm-password">
+                <input
+                  type="password"
+                  class="form-control register-confirm-password-control"
+                  placeholder="Confirm Password"
+                  v-on:change="onChangeConfirmPassword"
+                />
               </div>
               <div class="register-create-btn">
                 <input
@@ -156,6 +172,7 @@ export default {
   data() {
     return {
       messageErrorLogin: "",
+      messageErrorRegister: "",
       statusLogin: this.$store.state.auth.statusLogin,
       isPassword: true,
       login: {
@@ -166,15 +183,15 @@ export default {
         error: false,
         success: false,
       },
-      messager: {
+      messageRegister: {
         error: false,
         success: false,
       },
       register: {
-        firstname: "",
-        lastname: "",
+        name: "",
         email: "",
         password: "",
+        confirmPassword: "",
       },
       validateEmail(email) {
         if (
@@ -192,20 +209,8 @@ export default {
     };
   },
   methods: {
-    handleFirstname(e) {
-      this.register.firstname = e.target.value;
-    },
-    handleLastname(e) {
-      this.register.lastname = e.target.value;
-    },
-    onChangePasswordr(e) {
-      this.register.password = e.target.value;
-    },
-    onChangeEmailr(e) {
-      this.register.email = e.target.value;
-    },
     handleLogin(status) {
-      this.$store.commit("STATUS_LOGIN", status)
+      this.$store.commit("STATUS_LOGIN", status);
     },
     handleShowPassword() {
       this.isPassword = !this.isPassword;
@@ -216,22 +221,7 @@ export default {
     onChangePassword(e) {
       this.login.password = e.target.value;
     },
-    handleSubmitRegister() {
-      const data = this.register;
-      if (
-        data.email == "" ||
-        data.password == "" ||
-        data.firstname == "" ||
-        data.lastname == "" ||
-        !this.validateEmail(data.email)
-      ) {
-        this.messager.error = true;
-        this.messager.success = false;
-      } else {
-        this.messager.error = false;
-        this.messager.success = true;
-      }
-    },
+
     async handleSubmitLogin() {
       const data = this.login;
       const message = this.message;
@@ -265,10 +255,53 @@ export default {
         }
       }
     },
+
+    handleName(e) {
+      this.register.name = e.target.value;
+      console.log(this.register.name);
+    },
+    onChangeEmailRegister(e) {
+      this.register.email = e.target.value;
+    },
+    onChangePasswordRegister(e) {
+      this.register.password = e.target.value;
+    },
+    onChangeConfirmPassword(e) {
+      this.register.confirmPassword = e.target.value;
+    },
+    handleSubmitRegister() {
+      const data = this.register;
+      const message = this.messageRegister;
+      if (data.name === "") {
+        this.messageErrorRegister = "Name must be not empty!";
+        message.error = true;
+        message.success = false;
+      } else if (data.email == "") {
+        this.messageErrorRegister = "Email must be not empty!";
+        message.error = true;
+        message.success = false;
+        // return console.log("tuancan");
+      } else if (!this.validateEmail(data.email)) {
+        this.messageErrorRegister = "Invalid email";
+        message.error = true;
+        message.success = false;
+      } else if (data.password == "") {
+        this.messageErrorRegister = "Password must be not empty!";
+        message.error = true;
+        message.success = false;
+      } else if (data.confirmPassword != data.password) {
+        this.messageErrorRegister = "Your confirmed password is incorect!";
+        message.error = true;
+        message.success = false;
+      } else {
+        this.messageRegister.error = false;
+        this.messageRegister.success = true;
+      }
+    },
   },
   computed: {
-    statusLogin(){
-     return this.statusLogin = this.$store.state.auth.statusLogin
+    statusLogin() {
+      return (this.statusLogin = this.$store.state.auth.statusLogin);
     },
     showPassword() {
       return this.isPassword;
@@ -279,11 +312,11 @@ export default {
     successMessage() {
       return this.message.success;
     },
-    errorMessager() {
-      return this.messager.error;
+    errorMessageRegister() {
+      return this.messageRegister.error;
     },
-    successMessager() {
-      return this.messager.success;
+    successMessageRegister() {
+      return this.messageRegister.success;
     },
   },
 };
