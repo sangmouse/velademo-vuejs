@@ -150,9 +150,7 @@
   </div>
 </template>
 
-<script>
-import http from "@/api/request";
-import { useRouter } from "vue-router";
+<script lang="ts">
 import "./login.scss";
 export default {
   data() {
@@ -191,24 +189,11 @@ export default {
           return false;
         }
       },
-      router: useRouter(),
     };
-  },
-  created() {
-    if (localStorage.getItem("token") !== null) {
-      this.router.push({
-        name: "home",
-      });
-    } else {
-      this.router.push({
-        name: "login",
-      });
-    }
   },
   methods: {
     handleFirstname(e) {
       this.register.firstname = e.target.value;
-      console.log(this.register.firstname);
     },
     handleLastname(e) {
       this.register.lastname = e.target.value;
@@ -247,7 +232,6 @@ export default {
         this.messager.success = true;
       }
     },
-
     async handleSubmitLogin() {
       const data = this.login;
       const message = this.message;
@@ -255,7 +239,6 @@ export default {
         this.messageErrorLogin = "Email must be not empty!";
         message.error = true;
         message.success = false;
-        return console.log("tuancan");
       } else if (!this.validateEmail(data.email)) {
         this.messageErrorLogin = "Invalid email";
         message.error = true;
@@ -265,23 +248,19 @@ export default {
         message.error = true;
         message.success = false;
       } else {
-        try {
-          const response = await http.post("/login", {
-            username: data.email.trim(),
-            password: data.password.trim(),
-          });
+        const infor = {
+          email: data.email.trim(),
+          password: data.password.trim(),
+        };
+        await this.$store.dispatch("getLogin", infor);
+        if (!this.$store.state.auth.isLogin) {
           message.success = true;
           message.error = false;
-          localStorage.setItem("token", response.token);
           this.$router.push({
             name: "home",
           });
-        } catch (err) {
-          console.log(err);
-          if (err.response.status == 401) {
-            message.error = true;
-            return (this.messageErrorLogin = "Incorect Email or Password!");
-          }
+        } else {
+          this.messageErrorLogin = this.$store.state.auth.messageErrorLogin;
           message.error = true;
         }
       }

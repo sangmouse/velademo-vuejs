@@ -21,6 +21,7 @@ export default {
         'product',
         'search-product',
         'contact',
+        'login',
       ].indexOf($route.name) > -1
     "
   />
@@ -28,6 +29,7 @@ export default {
   <Footer
     v-if="
       [
+        'login',
         'home',
         'register',
         'products',
