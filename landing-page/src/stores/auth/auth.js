@@ -32,7 +32,7 @@ const auth = {
         context.commit("SET_LOGIN", token);
 
       } catch (err) {
-        if (err.response.status == 401) {
+        if (err.response.status === 401) {
           context.commit("INCORECT_LOGIN");
         }
       }
