@@ -64,13 +64,19 @@ export default defineComponent({
       email: "",
       password: "",
     });
-    const onFinish = (values: any) => {
-      console.log("Success:", values);
+    const onFinish = async  (values: any) => {
+
+      this.$store.dispatch('loginSuccess', values )
+      await if( localStorage.getItem('token') !== null){
+        this.$router.push("/")
+      }
+      console.log("Success:", values.email);
     };
 
     const onFinishFailed = (errorInfo: any) => {
       console.log("Failed:", errorInfo);
     };
+
     return {
       formState,
       onFinish,
