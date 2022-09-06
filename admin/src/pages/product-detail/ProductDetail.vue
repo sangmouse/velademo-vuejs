@@ -103,7 +103,6 @@
 </template>
 <script>
 import "./product-detail.scss";
-import Carousel from "../../components/carousel/Carousel.vue";
 const baseUrl =
   '../src/assets/images/product-detail/';
 export default {
