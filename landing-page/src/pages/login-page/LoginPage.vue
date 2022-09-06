@@ -103,19 +103,11 @@
                 <input
                   type="text"
                   class="form-control register-name-control"
-                  placeholder="First Name"
+                  placeholder="Full Name"
                   required
                   autofocus
                   @change="handleName"
                 />
-                <!-- <input
-                  type="text"
-                  class="form-control register-lastname-control"
-                  placeholder="Last Name"
-                  required
-                  autofocus
-                  @change="handleLastname"
-                /> -->
               </div>
               <div class="register-email">
                 <input
@@ -209,6 +201,8 @@ export default {
     };
   },
   methods: {
+    //login methods
+
     handleLogin(status) {
       this.$store.commit("STATUS_LOGIN", status);
     },
@@ -255,6 +249,8 @@ export default {
         }
       }
     },
+
+    //Register methods
 
     handleName(e) {
       this.register.name = e.target.value;
