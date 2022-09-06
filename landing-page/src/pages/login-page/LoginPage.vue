@@ -272,16 +272,15 @@ export default {
         this.messageErrorRegister = "Name must be not empty!";
         message.error = true;
         message.success = false;
-      } else if (data.email == "") {
+      } else if (data.email === "") {
         this.messageErrorRegister = "Email must be not empty!";
         message.error = true;
         message.success = false;
-        // return console.log("tuancan");
       } else if (!this.validateEmail(data.email)) {
         this.messageErrorRegister = "Invalid email";
         message.error = true;
         message.success = false;
-      } else if (data.password == "") {
+      } else if (data.password === "") {
         this.messageErrorRegister = "Password must be not empty!";
         message.error = true;
         message.success = false;
