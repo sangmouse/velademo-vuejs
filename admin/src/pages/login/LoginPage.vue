@@ -1,12 +1,8 @@
 <template>
   <div id="login-page">
     <div class="body">
-      <div class="image">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam
-        provident nemo quam voluptate impedit. Dolor, minima. Adipisci sequi ab
-        fugiat repellendus praesentium consequatur, saepe ut aperiam delectus
-        ratione, voluptatum eos.
-      </div>
+      <div class="overlay"></div>
+      <div class="image"></div>
       <div class="form-login">
         <h2>Welcome to Velademo</h2>
         <p>Please sign-in to your account and start the adventure</p>
