@@ -1,23 +1,24 @@
 <template>
   <div id="home-page">
-    <div class="body">
-      <Record />
+    <div class="container">
+      <div class="header">
+        <div class="left-side">
+          <p>Entries</p>
+          <RouterLink to="add-product"> Add Product </RouterLink>
+        </div>
+        <div class="right-side"></div>
+      </div>
+      <Table />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import Record from "../components/list-record/Record.vue";
-
+import "./home-page.scss";
+import Table from "../components/table/Table.vue";
 export default {
-  components: {
-    Record,
-  },
+  components: { Table },
 };
 </script>
 
-<style lang="scss" scoped>
-#home-page {
-  padding: 0 50px;
-}
-</style>
+<style scoped></style>

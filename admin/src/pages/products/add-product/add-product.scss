@@ -1,0 +1,33 @@
+#add-product {
+  width: 1060px;
+  margin: 0 auto;
+  .container {
+    padding: 30px;
+    .ant-form-item {
+      .ant-form-item-control {
+        .ant-form-item-control-input {
+          .ant-form-item-control-input-content {
+            .dragger-item {
+              .ant-upload-btn {
+                padding: 40px 0;
+                display: flex;
+                align-items: center;
+                flex-flow: column wrap;
+                justify-content: center;
+                .upload-img {
+                  margin: 0 0 20px 0;
+                }
+              }
+            }
+            .btn-create-product {
+              border-radius: 5px;
+              background: #7367f0;
+              border-color: #7367f0;
+              margin: 30px 0 0 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
