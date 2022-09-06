@@ -2,7 +2,7 @@ import http from "../../api/request";
 
 const auth = {
   state: {
-    messageErrorLogin: "tuan",
+    messageErrorLogin: "",
     isLogin: true,
     token: "",
     statusLogin: "login",

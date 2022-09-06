@@ -311,13 +311,13 @@ export default {
           confirmPassword: data.confirmPassword.trim(),
         };
         const response = await http.post("/api/user/register", infor);
-        console.log(response.message);
+        // console.log(response.message);
 
-        // if (response.email != "") {
-        //   this.handleLogin("login");
-        // } else {
-        //   console.log(response.message);
-        // }
+        if (response.email != "") {
+          this.handleLogin("login");
+        } else {
+          console.log(response.message);
+        }
       }
     },
   },
