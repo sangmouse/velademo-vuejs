@@ -34,7 +34,7 @@
               class="account-alert__error"
               :class="errorMessage ? 'account-alert__error--active' : ''"
             >
-              <p>{{ this.messageErrorLogin }}</p>
+            <p v-if="messageErrorLogin.length > 0">{{ this.messageErrorLogin }}</p>
             </div>
             <div
               class="account-alert__success"
@@ -87,7 +87,7 @@
                 errorMessageRegister ? 'register-alert__error--active' : ''
               "
             >
-              <p>{{ this.messageErrorRegister }}</p>
+              <p v-if="messageErrorRegister.length > 0">{{ this.messageErrorRegister }}</p>
             </div>
             <div
               class="register-alert__success"
@@ -200,6 +200,15 @@ export default {
       },
     };
   },
+
+  watch: {
+    statusLogin (newValue, oldValue) {
+      this.messageErrorLogin = "";
+      this.messageErrorRegister = "";
+    }
+  },
+
+
   methods: {
     //login methods
 
