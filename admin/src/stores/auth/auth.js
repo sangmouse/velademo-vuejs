@@ -3,13 +3,22 @@ import http from "../../api/request";
 
 const auth = {
   state: {
-    token:""
+    error_message:"",
+    isLogin:false
   },
   mutations: {
     LOGIN_SUCCESS(state, token){
-      state.token = token
+      state.isLogin = true
       localStorage.setItem('token', token)
-    }
+    },
+    LOGIN_ERROR(state){
+      state.error_message='Misstake'
+      state.isLogin = false
+    },
+    LOGOUT(state){
+      localStorage.removeItem('token')
+      state.isLogin = false
+    },
   },
   actions: {
     async loginSuccess(context, value){
@@ -18,11 +27,9 @@ const auth = {
         const token = response.data.token
         context.commit('LOGIN_SUCCESS', token)
       } catch (error) {
-        alert('co lo say ra')
+        context.commit('LOGIN_ERROR')
       }
-
     }
-    
   },
   getters: {},
 };

@@ -17,7 +17,7 @@
 import "./home-page.scss";
 import Table from "../components/table/Table.vue";
 export default {
-  components: { Table },
+components: { Table },
 
   data() {
     return {

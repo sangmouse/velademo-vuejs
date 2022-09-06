@@ -52,6 +52,8 @@
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
 import "./login.scss";
+import {useStore} from 'vuex'
+import router from "@/router";
 
 interface FormState {
   email: string;
@@ -60,17 +62,19 @@ interface FormState {
 
 export default defineComponent({
   setup() {
+    const store = useStore();
+
     const formState = reactive<FormState>({
       email: "",
       password: "",
     });
-    const onFinish = async  (values: any) => {
-
-      this.$store.dispatch('loginSuccess', values )
-      await if( localStorage.getItem('token') !== null){
-        this.$router.push("/")
+    const onFinish = async (values: any) => {
+      await store.dispatch("loginSuccess", values);
+      if (store.state.auth.isLogin) {
+        router.push("/");
       }
-      console.log("Success:", values.email);
+      console.log("Success:", values);
+      console.log(store.state.auth.error_message , 'succ');
     };
 
     const onFinishFailed = (errorInfo: any) => {
