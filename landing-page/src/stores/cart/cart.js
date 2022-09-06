@@ -12,7 +12,6 @@ const cart = {
     CLOSE_CART(state){
         state.visibleCart = false
     }
-    
   },
   actions: {
    

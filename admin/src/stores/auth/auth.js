@@ -9,14 +9,14 @@ const auth = {
   mutations: {
     LOGIN_SUCCESS(state, token){
       state.isLogin = true
-      localStorage.setItem('token', token)
+      localStorage.setItem('token-admin', token)
     },
     LOGIN_ERROR(state){
       state.error_message='Misstake'
       state.isLogin = false
     },
     LOGOUT(state){
-      localStorage.removeItem('token')
+      localStorage.removeItem('token-admin')
       state.isLogin = false
     },
   },
