@@ -44,6 +44,11 @@ const router = createRouter({
       name: "contact",
       component: () => import("../pages/contact-page/ContactUsPage.vue"),
     },
+    {
+      path: "/cart",
+      name: "cart",
+      component: () => import("../components/cart/Cart.vue"),
+    },
   ],
 });
 

@@ -203,11 +203,15 @@
         <button class="btn-view-cart">View Cart</button>
       </div>
     </Drawer>
+  
+    <!-- <Cart /> -->
+  
   </div>
 </template>
 <script lang="ts">
 import "./header.scss";
 import Drawer from "../../components/drawer/Drawer.vue";
+// import Cart from "../../components/cart/Cart.vue"
 
 export default {
   components: { Drawer },
