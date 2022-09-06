@@ -34,7 +34,9 @@
               class="account-alert__error"
               :class="errorMessage ? 'account-alert__error--active' : ''"
             >
-            <p v-if="messageErrorLogin.length > 0">{{ this.messageErrorLogin }}</p>
+              <p v-if="messageErrorLogin.length > 0">
+                {{ this.messageErrorLogin }}
+              </p>
             </div>
             <div
               class="account-alert__success"
@@ -49,7 +51,7 @@
                   class="form-control account-email-control"
                   required
                   autofocus
-                  placeholder="Email"
+                  placeholder="email"
                   v-on:change="onChangeEmail"
                 />
               </div>
@@ -87,7 +89,9 @@
                 errorMessageRegister ? 'register-alert__error--active' : ''
               "
             >
-              <p v-if="messageErrorRegister.length > 0">{{ this.messageErrorRegister }}</p>
+              <p v-if="messageErrorRegister.length > 0">
+                {{ this.messageErrorRegister }}
+              </p>
             </div>
             <div
               class="register-alert__success"
@@ -159,6 +163,7 @@
 </template>
 
 <script lang="ts">
+import http from "@/api/request";
 import "./login.scss";
 export default {
   data() {
@@ -202,12 +207,11 @@ export default {
   },
 
   watch: {
-    statusLogin (newValue, oldValue) {
+    statusLogin(newValue, oldValue) {
       this.messageErrorLogin = "";
       this.messageErrorRegister = "";
-    }
+    },
   },
-
 
   methods: {
     //login methods
@@ -242,7 +246,7 @@ export default {
         message.success = false;
       } else {
         const infor = {
-          email: data.email.trim(),
+          username: data.email.trim(),
           password: data.password.trim(),
         };
         await this.$store.dispatch("getLogin", infor);
@@ -263,7 +267,6 @@ export default {
 
     handleName(e) {
       this.register.name = e.target.value;
-      console.log(this.register.name);
     },
     onChangeEmailRegister(e) {
       this.register.email = e.target.value;
@@ -274,7 +277,7 @@ export default {
     onChangeConfirmPassword(e) {
       this.register.confirmPassword = e.target.value;
     },
-    handleSubmitRegister() {
+    async handleSubmitRegister() {
       const data = this.register;
       const message = this.messageRegister;
       if (data.name === "") {
@@ -298,8 +301,23 @@ export default {
         message.error = true;
         message.success = false;
       } else {
-        this.messageRegister.error = false;
-        this.messageRegister.success = true;
+        // this.messageRegister.error = false;
+        // this.messageRegister.success = true;
+
+        const infor = {
+          email: data.email.trim(),
+          name: data.name.trim(),
+          password: data.password.trim(),
+          confirmPassword: data.confirmPassword.trim(),
+        };
+        const response = await http.post("/api/user/register", infor);
+        console.log(response.message);
+
+        // if (response.email != "") {
+        //   this.handleLogin("login");
+        // } else {
+        //   console.log(response.message);
+        // }
       }
     },
   },
