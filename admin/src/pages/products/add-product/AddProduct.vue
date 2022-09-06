@@ -45,16 +45,13 @@
             mode="multiple"
             placeholder="Select category"
             v-model:value="formState.categories"
+            :options="
+              filteredOptions.map((item) => ({
+                value: item.value,
+                label: item.label,
+              }))
+            "
           >
-            <a-select-option
-              v-for="category in [
-                { value: '1', label: 'Blue' },
-                { value: '2', label: 'Green' },
-                { value: '3', label: 'Lightblue' },
-              ]"
-              :value="category.value"
-              >{{ category.label }}</a-select-option
-            >
           </a-select>
         </a-form-item>
 
@@ -73,17 +70,14 @@
         <a-upload
           v-model:file-list="fileList"
           name="avatar"
-          list-type="picture-card"
-          class="avatar-uploader"
-          :show-upload-list="false"
-          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+          accept=".jpg, .jpeg, .png"
+          list-type="picture"
+          :multiple="true"
           :before-upload="beforeUpload"
-          @change="handleChange"
+          class="avatar-uploader"
+          @remove="handleRemove"
         >
-          <img v-if="imageUrl" :src="imageUrl" alt="avatar" />
-          <div v-else>
-            <loading-outlined v-if="loading"></loading-outlined>
-            <plus-outlined v-else></plus-outlined>
+          <div>
             <div class="ant-upload-text">Upload</div>
           </div>
         </a-upload>
@@ -108,7 +102,7 @@
 
 <script lang="ts">
 import type { UploadChangeParam, UploadProps } from "ant-design-vue";
-import { defineComponent, reactive, ref } from "vue";
+import { computed, defineComponent, reactive, ref } from "vue";
 import "./add-product.scss";
 
 interface FormState {
@@ -118,54 +112,48 @@ interface FormState {
   categories: string[];
 }
 
-function getBase64(img: Blob, callback: (base64Url: string) => void) {
-  const reader = new FileReader();
-  reader.addEventListener("load", () => callback(reader.result as string));
-  reader.readAsDataURL(img);
-}
+const OPTIONS = [
+  { value: "1", label: "Blue" },
+  { value: "2", label: "Green" },
+  { value: "3", label: "Lightblue" },
+];
 
 export default defineComponent({
   setup() {
-    const fileList = ref([]);
-    const loading = ref<boolean>(false);
-    const imageUrl = ref<string>("");
+    const fileList = ref<any>([]);
     const formState = reactive<FormState>({
       name: "",
       price: "",
       description: "",
       categories: [],
     });
+    const filteredOptions = computed(() =>
+      OPTIONS.filter((o) => !formState.categories.includes(o.value))
+    );
 
-    // const beforeUpload: UploadProps["beforeUpload"] = (file) => {
-    //   formState.dragger = [...formState.dragger, file];
-    //   console.log(formState);
-
-    //   return false;
-    // };
-    const handleChange = (info: UploadChangeParam) => {
-      // console.log(info);
-
-      if (info.file.status === "uploading") {
-        loading.value = true;
-        return;
-      }
-      if (info.file.status === "done") {
-        // console.log(info);
-
-        // Get this url from response in real world.
-        getBase64(info.file.originFileObj, (base64Url: string) => {
-          imageUrl.value = base64Url;
-          loading.value = false;
-          console.log(imageUrl);
-        });
-      }
-      if (info.file.status === "error") {
-        loading.value = false;
-        // message.error("upload error");
-      }
+    const beforeUpload: UploadProps["beforeUpload"] = (file) => {
+      fileList.value = [...fileList.value, file];
+      return false;
     };
+
+    const handleRemove: UploadProps["onRemove"] = (file) => {
+      const index = fileList.value.indexOf(file);
+      const newFileList = fileList.value.slice();
+      newFileList.splice(index, 1);
+      fileList.value = newFileList;
+      console.log(fileList.value);
+    };
+
     const onFinish = (values: any) => {
-      console.log("Success:", values, imageUrl.value);
+      const formData = new FormData();
+      const categories = values.categories.map((item: any) => item);
+      const images = fileList.value.forEach((file) => {
+        formData.append("images", file as any);
+      });
+      console.log("Success:", {
+        ...values,
+        categories,
+      });
     };
 
     const onFinishFailed = (errorInfo: any) => {
@@ -175,8 +163,9 @@ export default defineComponent({
       formState,
       onFinish,
       onFinishFailed,
-      imageUrl,
-      handleChange,
+      beforeUpload,
+      handleRemove,
+      filteredOptions,
       fileList,
     };
   },

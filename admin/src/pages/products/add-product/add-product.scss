@@ -1,9 +1,10 @@
 #add-product {
-  width: 1060px;
+  width: calc(100% - 300px);
   margin: 0 auto;
   .container {
     padding: 30px;
     .ant-form-item {
+      margin: 0 0 15px 0;
       .ant-form-item-control {
         .ant-form-item-control-input {
           .ant-form-item-control-input-content {
@@ -29,5 +30,16 @@
         }
       }
     }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  #add-product {
+    width: calc(100% - 100px);
+  }
+}
+@media screen and (max-width: 768px) {
+  #add-product {
+    width: calc(100% - 50px);
   }
 }

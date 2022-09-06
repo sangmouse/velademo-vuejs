@@ -11,8 +11,7 @@
     align-items: center;
     background: var(--vela-body-bg);
     padding: 20px 50px;
-    .logo {
-    }
+
     .menus {
       ul {
         list-style-type: none;
@@ -25,7 +24,79 @@
         }
       }
     }
-    .profile {
+    .btn-burger {
+      display: none;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #header {
+    .body {
+      padding: 20px;
+    }
+  }
+}
+@media screen and (max-width: 576px) {
+  #header {
+    .body {
+      .profile {
+        p {
+          display: none;
+        }
+      }
+      .btn-burger {
+        display: inline-flex;
+      }
+    }
+  }
+}
+
+.ant-drawer-left {
+  &.menu-drawer {
+    .ant-drawer-header {
+      border: none;
+      .ant-drawer-header-title {
+        flex-direction: row-reverse;
+        .ant-drawer-close {
+          margin: 0;
+        }
+        .ant-drawer-title {
+          font-family: RedHatBold;
+          font-size: 20px;
+        }
+      }
+    }
+    .ant-drawer-body {
+      #menu-mobile {
+        .body {
+          .item {
+            p {
+              color: var(--vela-text-color-primary);
+              margin: 0 0 15px 0;
+            }
+            .ant-collapse {
+              &-item {
+                border: none;
+                .ant-collapse-header {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  flex-direction: row-reverse;
+                  padding: 0;
+                  & + div {
+                    display: inline-flex;
+                    .ant-collapse-arrow {
+                      display: inline-flex;
+                      margin: 0;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
