@@ -1,8 +1,11 @@
 <template>
-  <div style="height: 100px" />
-  <Header />
+  <div
+    style="height: 100px"
+    v-if="['home-page', 'add-product'].indexOf($route.name) > -1"
+  />
+  <Header v-if="['home-page', 'add-product'].indexOf($route.name) > -1" />
   <RouterView />
-  <Footer />
+  <Footer v-if="['home-page', 'add-product'].indexOf($route.name) > -1" />
 </template>
 
 <script lang="ts">

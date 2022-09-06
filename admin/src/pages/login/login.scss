@@ -1,0 +1,51 @@
+#login-page {
+  min-height: 100vh;
+  overflow: hidden;
+  .body {
+    display: flex;
+    justify-content: space-between;
+    min-height: 100vh;
+    .image {
+    }
+    .form-login {
+      min-width: 700px;
+      background: var(--vela-body-bg);
+      padding: 200px 60px 0 60px;
+      h2 {
+        font-size: 30px;
+        font-family: RedHatBold;
+      }
+      h2 + p {
+        font-size: 14px;
+        margin: 0 0 20px 0;
+      }
+      .account-placeholder {
+        background: rgba(115, 103, 240, 0.12);
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 13px;
+        color: #7367f0;
+        margin: 0 0 30px 0;
+      }
+      .login-form {
+        .ant-form-item {
+          .ant-form-item-control {
+            .ant-form-item-control-input {
+              .ant-form-item-control-input-content {
+                text-align: center;
+                .ant-btn-primary {
+                  background: #7367f0;
+                  border-color: #7367f0;
+                  width: 100%;
+                  border-radius: 5px;
+                  padding: 10px 0;
+                  height: auto;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
