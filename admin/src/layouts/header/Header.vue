@@ -9,7 +9,7 @@
       <div class="menus">
         <ul>
           <li>
-            <RouterLink to="/products">Products</RouterLink>
+            <RouterLink to="/">Products</RouterLink>
           </li>
           <li>
             <RouterLink to="/user">User</RouterLink>
