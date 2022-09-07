@@ -9,6 +9,12 @@
         <div class="account-placeholder">
           <b>Admin: </b> admin@demo.com | admin
         </div>
+        <div
+          class="account-alert__error"
+          :class="errorMessage.length == 0 ? '' : 'account-alert__error--active'"
+        >
+          <p>{{ errorMessage }}</p>
+        </div>
         <a-form
           :model="formState"
           name="basic"
@@ -49,33 +55,34 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, reactive } from "vue";
-import "./login.scss";
-
-interface FormState {
-  email: string;
-  password: string;
-}
-
-export default defineComponent({
-  setup() {
-    const formState = reactive<FormState>({
-      email: "",
-      password: "",
-    });
-    const onFinish = (values: any) => {
-      console.log("Success:", values);
-    };
-
-    const onFinishFailed = (errorInfo: any) => {
-      console.log("Failed:", errorInfo);
-    };
-    return {
-      formState,
-      onFinish,
-      onFinishFailed,
-    };
-  },
-});
-</script>
+<script>
+  import "./login.scss";
+  import router from "@/router";
+  export default {
+    data() {
+      return {
+        errorMessage: '',
+        formState: {
+          email: "",
+          password: "",
+        },
+      };
+    },
+    methods: {
+      async onFinish(values) {
+        await this.$store.dispatch("loginSuccess", values);
+        if (this.$store.state.auth.isLogin) {
+          this.$router.push("/");
+        }
+      },
+      onFinishFailed(errorInfo) {
+        console.log("Failed:", errorInfo);
+      },
+    },
+    computed: {
+      errorMessage(){
+        return this.errorMessage = this.$store.state.auth.error_message
+      },
+    },
+  };
+  </script>
