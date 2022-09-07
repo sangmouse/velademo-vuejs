@@ -44,8 +44,3 @@ npm run build
 ```sh
 npm run lint
 ```
-admin@dentity.com
-
-admin123A#@
-
-https://api.dev.dentity.com/core/api/v1/admin/login

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://api.dev.dentity.com/core/api/v1/admin";
+const API_URL = "http://localhost:8081";
 
 const http = axios.create({
   baseURL: API_URL,

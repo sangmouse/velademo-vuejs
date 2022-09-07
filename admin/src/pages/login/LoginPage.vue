@@ -11,7 +11,7 @@
         </div>
         <div
           class="account-alert__error"
-          :class="isErrorMessage ? 'account-alert__error--active' : ''"
+          :class="errorMessage.length == 0 ? '' : 'account-alert__error--active'"
         >
           <p>{{ errorMessage }}</p>
         </div>
@@ -66,7 +66,6 @@ export default {
         email: "",
         password: "",
       },
-      isError: false,
     };
   },
   methods: {
@@ -83,13 +82,6 @@ export default {
   computed: {
     errorMessage(){
       return this.errorMessage = this.$store.state.auth.error_message
-    },
-    isErrorMessage() {
-      if (this.$store.state.auth.error_message === "") {
-        return (this.isError = false);
-      } else {
-        return (this.isError = true);
-      }
     },
   },
 };
