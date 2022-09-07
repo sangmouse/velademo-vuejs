@@ -19,10 +19,10 @@
           </li>
         </ul>
       </div>
-      <div class="profile">
-        <RouterLink to="/sign-out">
+      <div class="profile"
+      @click="handleLogout"
+      >
           <p>Sign out</p>
-        </RouterLink>
       </div>
     </div>
   </div>
@@ -30,4 +30,20 @@
 
 <script lang="ts">
 import "./header.scss";
+export default {
+  name:'Header',
+  data(){
+    return{
+
+    }
+  },
+  methods: {
+    handleLogout(){
+    this.$store.commit('LOGOUT')
+    if(!this.$store.state.auth.isLogin){
+      this.$router.push('/login')
+    }
+    },
+  },  
+}
 </script>
