@@ -33,7 +33,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script >
 import "./home-page.scss";
 import Table from "../components/table/Table.vue";
 import http from "@/api/request";
@@ -60,7 +60,7 @@ export default {
       ],
       columns: [
         {
-          title: "ID",
+          title: "id",
           dataIndex: "id",
           key: "id",
           width: 200,
@@ -68,15 +68,15 @@ export default {
         {
           title: "Name",
           dataIndex: "name",
-          key: "name",
+          key: "displayName",
         },
         {
-          title: "Price",
+          title: "price",
           dataIndex: "price",
           key: "price",
         },
         {
-          title: "Categories",
+          title: "categories",
           dataIndex: "categories",
           key: "categories",
         },
@@ -100,32 +100,44 @@ export default {
           key: "action",
         },
       ],
-      source: [
-        {
-          id: "1",
-          name: "John Brown",
-          address: "New York No. 1 Lake Park",
-          price: 100,
-          categories: ["sofa", "furniture"].toString(),
-          createdDate: "16 Mar, 2022",
-          updatedDate: "16 Mar, 2022",
-          createdUser: "Long",
-        },
-      ],
+      source: [],
     };
   },
 
   created() {
     http
-      .get("/api/admin/products?page=1&size=10", {
+      .get("/api/productsAdmin?page=1&&size=10", {
         headers: { Authorization: `Bearer ${token?.length && token}` },
       })
-      .then((res) => {})
-      .catch((err) => {});
+      .then((res) => {
+        console.log(res);
+        const data = this.transformData(res)
+        console.log(data);
+        this.source = data
+      } )
+      .catch((err) => 
+      console.log(err)
+      );
   },
-
+  computed:{
+    source(){
+      return this.source
+    }
+  },
   methods: {
-    async handleChange(value: string) {
+
+    transformData(arr){
+      return arr.map(item => ({
+        id: item?.id,
+        name: item?.name,
+        price: item?.price,
+        categories: item?.categories.map(item => item.name).toString(),
+        createdDate: item.createdDtm.slice(0,10).split('-').reverse().join("-"),
+        updatedDate: item.updatedDtm,
+        createdUser: item.creator.name,
+      }))
+    },
+    async handleChange(value) {
       console.log(Number(value));
       const response = await http.get("/products");
       this.source = response;

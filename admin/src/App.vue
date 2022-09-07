@@ -18,11 +18,11 @@ export default {
     Footer,
   },
   created() {
-    if (localStorage.getItem("token-admin") !== null) {
-      this.$router.push("/");
-    } else {
-      this.$router.push("/login");
-    }
+    // if (localStorage.getItem("token-admin") !== null) {
+    //   this.$router.push("/");
+    // } else {
+    //   this.$router.push("/login");
+    // }
   },
 };
 </script>
