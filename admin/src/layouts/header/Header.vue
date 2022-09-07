@@ -20,10 +20,8 @@
             </li>
           </ul>
         </div>
-        <div class="profile">
-          <RouterLink to="/sign-out">
-            <p>Sign out</p>
-          </RouterLink>
+        <div class="profile" @click="handleLogout">
+          <p>Sign out</p>
         </div>
         <button type="button" class="btn-burger" v-on:click="handleVisibleMenu">
           <span>
@@ -58,26 +56,10 @@
 </template>
 
 <script lang="ts">
+import Drawer from "../../components/drawer/Drawer.vue";
 import "./header.scss";
 export default {
   name: "Header",
-  data() {
-    return {};
-  },
-  methods: {
-    handleLogout() {
-      this.$store.commit("LOGOUT");
-      if (!this.$store.state.auth.isLogin) {
-        this.$router.push("/login");
-      }
-    },
-  },
-};
-import Drawer from "../../components/drawer/Drawer.vue";
-export default {
-  components: {
-    Drawer,
-  },
   data() {
     return {
       isVisible: false,
@@ -90,6 +72,13 @@ export default {
     handleClose() {
       this.isVisible = false;
     },
+    handleLogout() {
+      this.$store.commit("LOGOUT");
+      if (!this.$store.state.auth.isLogin) {
+        this.$router.push("/login");
+      }
+    },
   },
+  components: { Drawer },
 };
 </script>
