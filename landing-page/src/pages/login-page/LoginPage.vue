@@ -257,11 +257,9 @@ export default {
         if (!this.$store.state.auth.isLogin) {
           message.success = true;
           message.error = false;
-          setTimeout(() => {
-            this.$router.push({
-              name: "home",
-            });
-          }, 1500);
+          this.$router.push({
+            name: "home",
+          });
         } else {
           this.messageErrorLogin = this.$store.state.auth.messageErrorLogin;
           message.error = true;
@@ -318,9 +316,7 @@ export default {
           const response = await http.post("/api/user/register", infor);
 
           if (response.email != "") {
-            setTimeout(() => {
-              this.handleLogin("login");
-            }, 1500);
+            this.handleLogin("login");
             this.messageSuccessRegister = "Create Account Successfully!";
             this.messageRegister.error = false;
             this.messageRegister.success = true;
