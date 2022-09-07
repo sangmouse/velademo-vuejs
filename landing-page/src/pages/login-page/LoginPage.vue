@@ -51,7 +51,7 @@
                   class="form-control account-email-control"
                   required
                   autofocus
-                  placeholder="email"
+                  placeholder="Email"
                   v-on:change="onChangeEmail"
                 />
               </div>
@@ -99,7 +99,9 @@
                 successMessageRegister ? 'register-alert__success--active' : ''
               "
             >
-              <p>Create account successfully!</p>
+              <p v-if="messageSuccessRegister.length > 0">
+                {{ this.messageSuccessRegister }}
+              </p>
             </div>
 
             <div>
@@ -170,6 +172,7 @@ export default {
     return {
       messageErrorLogin: "",
       messageErrorRegister: "",
+      messageSuccessRegister: "",
       statusLogin: this.$store.state.auth.statusLogin,
       isPassword: true,
       login: {
@@ -210,6 +213,7 @@ export default {
     statusLogin(newValue, oldValue) {
       this.messageErrorLogin = "";
       this.messageErrorRegister = "";
+      this.messageSuccessRegister = "";
     },
   },
 
@@ -232,7 +236,7 @@ export default {
     async handleSubmitLogin() {
       const data = this.login;
       const message = this.message;
-      if (data.email == "") {
+      if (data.email === "") {
         this.messageErrorLogin = "Email must be not empty!";
         message.error = true;
         message.success = false;
@@ -240,7 +244,7 @@ export default {
         this.messageErrorLogin = "Invalid email";
         message.error = true;
         message.success = false;
-      } else if (data.password == "") {
+      } else if (data.password === "") {
         this.messageErrorLogin = "Password must be not empty!";
         message.error = true;
         message.success = false;
@@ -253,9 +257,11 @@ export default {
         if (!this.$store.state.auth.isLogin) {
           message.success = true;
           message.error = false;
-          this.$router.push({
-            name: "home",
-          });
+          setTimeout(() => {
+            this.$router.push({
+              name: "home",
+            });
+          }, 1500);
         } else {
           this.messageErrorLogin = this.$store.state.auth.messageErrorLogin;
           message.error = true;
@@ -301,22 +307,30 @@ export default {
         message.error = true;
         message.success = false;
       } else {
-        // this.messageRegister.error = false;
-        // this.messageRegister.success = true;
-
         const infor = {
           email: data.email.trim(),
           name: data.name.trim(),
           password: data.password.trim(),
           confirmPassword: data.confirmPassword.trim(),
         };
-        const response = await http.post("/api/user/register", infor);
-        // console.log(response.message);
 
-        if (response.email != "") {
-          this.handleLogin("login");
-        } else {
-          console.log(response.message);
+        try {
+          const response = await http.post("/api/user/register", infor);
+
+          if (response.email != "") {
+            setTimeout(() => {
+              this.handleLogin("login");
+            }, 1500);
+            this.messageSuccessRegister = "Create Account Successfully!";
+            this.messageRegister.error = false;
+            this.messageRegister.success = true;
+          }
+        } catch (error) {
+          if (error.response.status === 500) {
+            this.messageErrorRegister = "Email has been used";
+            message.error = true;
+            message.success = false;
+          }
         }
       }
     },
