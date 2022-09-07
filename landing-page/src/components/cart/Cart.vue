@@ -61,7 +61,6 @@ export default {
         this.$store.commit('CLOSE_CART')
     },
     handleDelete(){
-      // console.log(status);
     },
     handleInscreQty(){
       this.quantity += 1 
