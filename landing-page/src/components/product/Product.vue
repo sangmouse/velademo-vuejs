@@ -4,7 +4,7 @@
       <div class="action">
         <button
           class="btn btn-add-cart"
-          v-on:click="$emit('handleVisibleCart')"
+          v-on:click="$emit('showCart')"
         >
           <span>
             <img src="../../assets/images/shopping-bag-16.png" alt="add-cart" />

@@ -111,7 +111,7 @@
         <button
           class="btn-shop-bag"
           type="button"
-          v-on:click="handleVisibleViewCart"
+          @click="showCart"
         >
           <img src="../../assets/images/shopping-bag.png" alt="shop-bag" />
           <small class="quantity">o</small>
@@ -158,63 +158,19 @@
         </div>
       </div>
     </Drawer>
-
-    <!-- view cart drawer -->
-    <Drawer
-      :isVisible="isVisibleViewCart"
-      class="view-cart-drawer"
-      title="Shopping Cart"
-      @handle-close="handleCloseDrawer"
-    >
-      <div id="view-cart">
-        <div class="products">
-          <div class="item">
-            <div class="info">
-              <div class="img">
-                <RouterLink to="/">
-                  <img
-                    src="../../assets/images/shopping-bag-16.png"
-                    alt="product-img"
-                  />
-                </RouterLink>
-              </div>
-              <div class="order">
-                <RouterLink to="/">
-                  <h5>Outdoor Dining Table</h5>
-                </RouterLink>
-                <p>$85.52</p>
-                <div class="action">
-                  <button class="btn btn-increment">-</button>
-                  <p class="quantity">2</p>
-                  <button class="btn btn-increment">+</button>
-                </div>
-              </div>
-            </div>
-            <button class="btn-remove">X</button>
-          </div>
-        </div>
-        <div class="total-price">
-          <p>Subtotal</p>
-          <h5>$987.34</h5>
-        </div>
-        <p class="privacy">
-          Shipping, taxes, and discounts will be calculated at checkout.
-        </p>
-        <button class="btn-view-cart">View Cart</button>
-      </div>
-    </Drawer>
+    <Cart />
   </div>
 </template>
 <script lang="ts">
 import "./header.scss";
 import Drawer from "../../components/drawer/Drawer.vue";
+import Cart from "../../components/cart/Cart.vue";
 
 export default {
-  components: { Drawer },
+  components: { Drawer, Cart },
   data() {
     return {
       isVisible: false,
-      isVisibleViewCart: false,
       isVisibleInputSearch: false,
       inputSearch: "",
     };
@@ -228,6 +184,9 @@ export default {
     },
   },
   methods: {
+    showCart() {
+      this.$store.commit("ISVISIBLE_CART");
+    },
     handleStatusLogin(status){
       this.$store.commit("STATUS_LOGIN", status)
     },
@@ -243,12 +202,6 @@ export default {
     },
     handleClose() {
       this.isVisible = false;
-    },
-    handleVisibleViewCart() {
-      this.isVisibleViewCart = true;
-    },
-    handleCloseDrawer() {
-      this.isVisibleViewCart = false;
     },
     handleVisibleInputSearch() {
       this.isVisibleInputSearch = !this.isVisibleInputSearch;
