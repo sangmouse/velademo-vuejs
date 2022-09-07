@@ -82,7 +82,9 @@ export default {
     Product,
   },
   methods: {
-    showCart() {
+    showCart(id) {
+      const index = this.products.findIndex( item => item.id === id)
+      this.$store.commit("ADD_PRODUCT_ONE", this.products[index])
       this.$store.commit("ISVISIBLE_CART");
     },
     handleCloseDrawer(event: any) {
@@ -93,7 +95,8 @@ export default {
     },
   },
   async created() {
-    const response = await http.get("/api/products?page=1&size=8");
+    // const response = await http.get("/api/products?page=1&size=8");
+    const response = await http.get("/products");
     this.products = response;
   },
 };

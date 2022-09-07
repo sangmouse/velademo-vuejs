@@ -8,7 +8,93 @@
   >
     <div id="view-cart">
       <div class="products">
-        <div class="item">
+        <div class="item" v-for="product in cart" :key="product.id">
+          <div class="info">
+            <div class="img">
+              <RouterLink to="/">
+                <img
+                  src="../../assets/images/products/product_3_xs.jpg"
+                  alt="product-img"
+                />
+              </RouterLink>
+            </div>
+            <div class="order">
+              <RouterLink to="/sdfdsf">
+                <h5>{{product.displayName}}</h5>
+              </RouterLink>
+              <p>$ {{product.price}}</p>
+              <div class="action">
+                <button class="btn btn-increment" @click="handleDiminishQty">-</button>
+                <p class="quantity">{{quantity}}</p>
+                <button class="btn btn-increment" @click="handleInscreQty">+</button>
+              </div>
+            </div>
+          </div>
+          <button class="btn-remove"
+          @click="handleDelete(product.id)"
+          >X</button>
+        </div>
+      </div>
+      <div class="total-price">
+        <p>Subtotal</p>
+        <h5>$987.34</h5>
+      </div>
+      <p class="privacy">
+        Shipping, taxes, and discounts will be calculated at checkout.
+      </p>
+      <button class="btn-view-cart">Update Cart</button>
+    </div>
+  </a-drawer>
+</template>
+  <script lang="ts">
+import "./cart.scss";
+export default {
+    name:'Cart',
+  data() {
+    return {
+      visible: false,
+      quantity: 1,
+      cart:[],
+    };
+  },
+  methods: {
+    handleCloseCart(){
+        this.$store.commit('CLOSE_CART')
+    },
+    handleDelete(id){
+      this.$store.commit("DELETE_ITEM_CART", id)
+    },
+    handleInscreQty(){
+      this.quantity += 1 
+    },
+    handleDiminishQty(){
+      this.quantity -= 1 
+    }
+  },
+  computed:{
+    visible(){
+      console.log(this.$store.state.cart.cart)
+        return this.$store.state.cart.visibleCart
+    },
+    quantity(){
+      if(this.quantity < 1 ){
+        return this.quantity = 1
+      }
+      return this.quantity
+    },    
+    cart(){
+      return this.$store.state.cart.cart
+    }
+  },
+  // created() {
+  //   console.log(this.$store.state.cart.cart);
+    
+  // },
+};
+</script>
+  
+
+ <!-- <div class="item">
           <div class="info">
             <div class="img">
               <RouterLink to="/">
@@ -33,53 +119,4 @@
           <button class="btn-remove"
           @click="handleDelete"
           >X</button>
-        </div>
-      </div>
-      <div class="total-price">
-        <p>Subtotal</p>
-        <h5>$987.34</h5>
-      </div>
-      <p class="privacy">
-        Shipping, taxes, and discounts will be calculated at checkout.
-      </p>
-      <button class="btn-view-cart">Update Cart</button>
-    </div>
-  </a-drawer>
-</template>
-  <script lang="ts">
-import "./cart.scss";
-export default {
-    name:'Cart',
-  data() {
-    return {
-      visible: false,
-      quantity: 1,
-    };
-  },
-  methods: {
-    handleCloseCart(){
-        this.$store.commit('CLOSE_CART')
-    },
-    handleDelete(){
-    },
-    handleInscreQty(){
-      this.quantity += 1 
-    },
-    handleDiminishQty(){
-      this.quantity -= 1 
-    }
-  },
-  computed:{
-    visible(){
-        return this.$store.state.cart.visibleCart
-    },
-    quantity(){
-      if(this.quantity < 1 ){
-        return this.quantity = 1
-      }
-      return this.quantity
-    }
-  }
-};
-</script>
-  
+        </div> -->
