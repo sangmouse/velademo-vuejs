@@ -30,12 +30,9 @@
           align-items: center;
           justify-content: space-around;
           font-family: RedHatBold;
-          input {
-            width: 100%;
-            background-color: transparent;
-            border: none;
-            outline: none;
-            text-align: center;
+          p {
+            margin: 0;
+            font-size: 1.3rem;
           }
           .btn {
             font-size: 25px;

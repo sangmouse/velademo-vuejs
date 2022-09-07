@@ -32,7 +32,7 @@
                 <div class="action">
                   <div class="quantity">
                     <button class="btn" @click="handleDiminishQty">-</button>
-                    <input  v-model="quantity" />
+                    <p>{{quantity}}</p>
                     <button class="btn" @click="handleInscreQty">+</button>
                   </div>
                   <button

@@ -25,7 +25,7 @@
               <p>$85.52</p>
               <div class="action">
                 <button class="btn btn-increment" @click="handleDiminishQty">-</button>
-                <input class="quantity" v-model="quantity" />
+                <p class="quantity">{{quantity}}</p>
                 <button class="btn btn-increment" @click="handleInscreQty">+</button>
               </div>
             </div>
