@@ -104,6 +104,10 @@
   --vela-parag-purple: #7367f0;
   --table-list-bgcolor: #f3f2f7;
   --parag-txtcolor: #858585;
+  --productdetail-txtcolor: #495057;
+  --productdetail-boxshaw: #38414a26;
+  --productdetail-txtmute: #878a99;
+  --productdetail-txtlist: #212529;
 }
 
 html {
