@@ -2,8 +2,13 @@ import axios from "axios";
 
 const API_URL = "http://localhost:8081";
 
+const token = localStorage.getItem("token-admin");
+
 const http = axios.create({
   baseURL: API_URL,
+  headers: {
+    Authorization: !!token && `Bearer ${token}`,
+  },
 });
 
 http.interceptors.request.use(

@@ -80,3 +80,14 @@
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  #table-record {
+    .paginate {
+      flex-direction: column;
+      p {
+        margin: 0 0 20px 0;
+      }
+    }
+  }
+}

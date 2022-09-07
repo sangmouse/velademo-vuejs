@@ -1,6 +1,11 @@
 <template>
   <div id="table-record">
-    <a-table :columns="columns" :data-source="source" :pagination="false">
+    <a-table
+      :columns="columns"
+      :data-source="source"
+      :pagination="false"
+      :scroll="{ x: 1600 }"
+    >
       <template #headerCell="{ column }"> </template>
 
       <template #bodyCell="{ column, record }">
@@ -11,11 +16,6 @@
                 <img src="../../assets/images/eye.png" alt="view-record" />
               </p>
             </router-link>
-            <!-- <router-link to="/edit-record">
-              <p class="edit-record">
-                <img src="../../assets/images/edit.png" alt="edit-record" />
-              </p>
-            </router-link> -->
             <button type="button" class="btn-remove-record">
               <img src="../../assets/images/trash.png" alt="remove-record" />
             </button>
