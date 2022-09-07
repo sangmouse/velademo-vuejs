@@ -38,7 +38,7 @@
         border-radius: 5px;
         font-size: 13px;
         color: #7367f0;
-        margin: 0 0 30px 0;
+        margin: 0 0 20px 0;
       }
       .login-form {
         .ant-form-item {
@@ -87,4 +87,18 @@
       }
     }
   }
+}
+
+.account-alert__error{
+  background-color: #e26868;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  color: var(  --button_one_txtcolor);
+  font-size: 1rem;
+  font-weight: 400;
+  display: none;
+}
+.account-alert__error--active{
+  display: block;
 }

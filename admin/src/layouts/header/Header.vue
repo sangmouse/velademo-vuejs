@@ -59,6 +59,20 @@
 
 <script lang="ts">
 import "./header.scss";
+export default {
+  name: "Header",
+  data() {
+    return {};
+  },
+  methods: {
+    handleLogout() {
+      this.$store.commit("LOGOUT");
+      if (!this.$store.state.auth.isLogin) {
+        this.$router.push("/login");
+      }
+    },
+  },
+};
 import Drawer from "../../components/drawer/Drawer.vue";
 export default {
   components: {
