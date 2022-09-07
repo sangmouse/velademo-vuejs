@@ -12,12 +12,13 @@ const auth = {
       localStorage.setItem('token-admin', token)
     },
     LOGIN_ERROR(state){
-      state.error_message='Misstake'
+      state.error_message='Username or password is incorrect'
       state.isLogin = false
     },
     LOGOUT(state){
       localStorage.removeItem('token-admin')
       state.isLogin = false
+      state.error_message=""
     },
   },
   actions: {
@@ -27,7 +28,9 @@ const auth = {
         const token = response.data.token
         context.commit('LOGIN_SUCCESS', token)
       } catch (error) {
-        context.commit('LOGIN_ERROR')
+        if (error.response.status === 400) {
+          context.commit("LOGIN_ERROR");
+        }
       }
     }
   },

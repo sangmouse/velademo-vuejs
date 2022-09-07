@@ -9,6 +9,12 @@
         <div class="account-placeholder">
           <b>Admin: </b> admin@demo.com | admin
         </div>
+        <div
+          class="account-alert__error"
+          :class="isErrorMessage ? 'account-alert__error--active' : ''"
+        >
+          <p>{{ errorMessage }}</p>
+        </div>
         <a-form
           :model="formState"
           name="basic"
@@ -49,43 +55,42 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, reactive } from "vue";
+<script>
 import "./login.scss";
-import {useStore} from 'vuex'
 import router from "@/router";
-
-interface FormState {
-  email: string;
-  password: string;
-}
-
-export default defineComponent({
-  setup() {
-    const store = useStore();
-
-    const formState = reactive<FormState>({
-      email: "",
-      password: "",
-    });
-    const onFinish = async (values: any) => {
-      await store.dispatch("loginSuccess", values);
-      if (store.state.auth.isLogin) {
-        router.push("/");
-      }
-      console.log("Success:", values);
-      console.log(store.state.auth.error_message , 'succ');
-    };
-
-    const onFinishFailed = (errorInfo: any) => {
-      console.log("Failed:", errorInfo);
-    };
-
+export default {
+  data() {
     return {
-      formState,
-      onFinish,
-      onFinishFailed,
+      errorMessage: '',
+      formState: {
+        email: "",
+        password: "",
+      },
+      isError: false,
     };
   },
-});
+  methods: {
+    async onFinish(values) {
+      await this.$store.dispatch("loginSuccess", values);
+      if (this.$store.state.auth.isLogin) {
+        this.$router.push("/");
+      }
+    },
+    onFinishFailed(errorInfo) {
+      console.log("Failed:", errorInfo);
+    },
+  },
+  computed: {
+    errorMessage(){
+      return this.errorMessage = this.$store.state.auth.error_message
+    },
+    isErrorMessage() {
+      if (this.$store.state.auth.error_message === "") {
+        return (this.isError = false);
+      } else {
+        return (this.isError = true);
+      }
+    },
+  },
+};
 </script>
