@@ -24,11 +24,11 @@ const auth = {
   actions: {
     async loginSuccess(context, value){
       try {
-        const response = await http.post('/login', value )
-        const token = response.data.token
+        const response = await http.post('/api/login', value )
+        const token = response?.access_token
         context.commit('LOGIN_SUCCESS', token)
       } catch (error) {
-        if (error.response.status === 400) {
+        if (error.response.status === 401) {
           context.commit("LOGIN_ERROR");
         }
       }
