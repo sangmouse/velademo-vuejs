@@ -31,9 +31,9 @@
                 <h5>${{ productDetail?.price }}</h5>
                 <div class="action">
                   <div class="quantity">
-                    <button class="btn">-</button>
-                    <p>1</p>
-                    <button class="btn">+</button>
+                    <button class="btn" @click="handleDiminishQty">-</button>
+                    <input  v-model="quantity" />
+                    <button class="btn" @click="handleInscreQty">+</button>
                   </div>
                   <button
                     class="btn-add-to-cart"
@@ -139,6 +139,7 @@ export default {
       productDetail: null,
       products: [],
       isVisibleDrawer: false,
+      quantity: 1
     };
   },
   methods: {
@@ -148,6 +149,20 @@ export default {
     handleCloseDrawer() {
       this.isVisibleDrawer = false;
     },
+    handleInscreQty(){
+      this.quantity += 1 
+    },
+    handleDiminishQty(){
+      this.quantity -= 1 
+    }
+  },
+  computed:{
+    quantity(){
+      if(this.quantity < 1 ){
+        return this.quantity = 1
+      }
+      return this.quantity
+    }
   },
   async created() {
     const products = await http.get("/api/products?page=1&size=8");

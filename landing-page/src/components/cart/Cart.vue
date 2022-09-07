@@ -24,13 +24,15 @@
               </RouterLink>
               <p>$85.52</p>
               <div class="action">
-                <button class="btn btn-increment">-</button>
-                <p class="quantity">2</p>
-                <button class="btn btn-increment">+</button>
+                <button class="btn btn-increment" @click="handleDiminishQty">-</button>
+                <input class="quantity" v-model="quantity" />
+                <button class="btn btn-increment" @click="handleInscreQty">+</button>
               </div>
             </div>
           </div>
-          <button class="btn-remove">X</button>
+          <button class="btn-remove"
+          @click="handleDelete('tuancan')"
+          >X</button>
         </div>
       </div>
       <div class="total-price">
@@ -40,7 +42,7 @@
       <p class="privacy">
         Shipping, taxes, and discounts will be calculated at checkout.
       </p>
-      <button class="btn-view-cart">View Cart</button>
+      <button class="btn-view-cart">Update Cart</button>
     </div>
   </a-drawer>
 </template>
@@ -51,16 +53,32 @@ export default {
   data() {
     return {
       visible: false,
+      quantity: 1,
     };
   },
   methods: {
     handleCloseCart(){
         this.$store.commit('CLOSE_CART')
+    },
+    handleDelete(status){
+      console.log(status);
+    },
+    handleInscreQty(){
+      this.quantity += 1 
+    },
+    handleDiminishQty(){
+      this.quantity -= 1 
     }
   },
   computed:{
     visible(){
         return this.$store.state.cart.visibleCart
+    },
+    quantity(){
+      if(this.quantity < 1 ){
+        return this.quantity = 1
+      }
+      return this.quantity
     }
   }
 };
