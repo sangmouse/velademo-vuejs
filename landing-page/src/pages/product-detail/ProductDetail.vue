@@ -145,9 +145,6 @@ export default {
     showCart() {
       this.$store.commit("ISVISIBLE_CART");
     },
-    handleVisibleCart() {
-      this.isVisibleDrawer = true;
-    },
     handleCloseDrawer() {
       this.isVisibleDrawer = false;
     },

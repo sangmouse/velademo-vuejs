@@ -74,7 +74,6 @@ export default {
   data() {
     return {
       isLoading: false,
-      isVisibleDrawer: false,
       products: [],
     };
   },
@@ -85,9 +84,6 @@ export default {
   methods: {
     showCart() {
       this.$store.commit("ISVISIBLE_CART");
-    },
-    handleVisibleCart() {
-      this.isVisibleDrawer = true;
     },
     handleCloseDrawer(event: any) {
       this.isVisibleDrawer = false;

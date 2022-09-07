@@ -69,7 +69,6 @@ export default {
     return {
       search: this.$route.query.q,
       searchResult: [],
-      isVisibleViewCart: false,
     };
   },
   methods: {
@@ -83,9 +82,6 @@ export default {
           q: this.search,
         },
       });
-    },
-    handleVisibleCart(){
-      this.isVisibleViewCart = true;
     },
     handleCloseDrawer(){
       this.isVisibleViewCart = false;

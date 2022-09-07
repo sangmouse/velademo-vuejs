@@ -171,7 +171,6 @@ export default {
   data() {
     return {
       isVisible: false,
-      isVisibleViewCart: false,
       isVisibleInputSearch: false,
       inputSearch: "",
     };
@@ -203,12 +202,6 @@ export default {
     },
     handleClose() {
       this.isVisible = false;
-    },
-    handleVisibleViewCart() {
-      this.isVisibleViewCart = true;
-    },
-    handleCloseDrawer() {
-      this.isVisibleViewCart = false;
     },
     handleVisibleInputSearch() {
       this.isVisibleInputSearch = !this.isVisibleInputSearch;
