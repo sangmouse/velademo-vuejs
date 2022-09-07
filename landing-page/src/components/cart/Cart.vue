@@ -31,7 +31,7 @@
             </div>
           </div>
           <button class="btn-remove"
-          @click="handleDelete('tuancan')"
+          @click="handleDelete"
           >X</button>
         </div>
       </div>
@@ -60,8 +60,8 @@ export default {
     handleCloseCart(){
         this.$store.commit('CLOSE_CART')
     },
-    handleDelete(status){
-      console.log(status);
+    handleDelete(){
+      // console.log(status);
     },
     handleInscreQty(){
       this.quantity += 1 
