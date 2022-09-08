@@ -26,13 +26,17 @@
             />
           </div>
         </div>
-        <Table :columns="columns" :source="source" @handleChangePage="handleChangePage" />
+        <Table
+          :columns="columns"
+          :source="source"
+          @handleChangePage="handleChangePage"
+        />
       </div>
     </div>
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import "./home-page.scss";
 import Table from "../components/table/Table.vue";
 import http from "@/api/request";
@@ -141,18 +145,8 @@ export default {
         createdUser: item.creator?.name,
       }));
     },
-    async search(e) {
-      this.searchProduct = e.target.value.trim();
-      if (this.searchProduct === "") {
-        try {
-          const res = await http.get(`/api/productsAdmin?page=1&&size=8`);
-          const data = this.transformData(res);
-          return (this.source = data);
-        } catch (error) {
-          console.log(error);
-        }
-      } else{
-        try {
+    async startListSearch() {
+      try {
         const res = await http.get(
           `/api/search?page=${this.pageNumber}&size=${this.pageSize}&name=${this.searchProduct}`
         );
@@ -161,59 +155,43 @@ export default {
       } catch (error) {
         this.source = [];
       }
+    },
+    async startListProduct() {
+      try {
+        const response = await http.get(
+          `/api/productsAdmin?page=${this.pageNumber}&&size=${this.pageSize}`
+        );
+        const data = this.transformData(response);
+        this.source = data;
+      } catch (error) {
+        this.source = [];
       }
-      
+    },
+    async search(e) {
+      this.searchProduct = e.target.value.trim();
+      if (this.searchProduct === "") {
+        this.startListProduct();
+      } else {
+        this.startListSearch();
+      }
     },
     async handleChange(value) {
       this.pageSize = value;
       if (this.searchProduct !== "") {
-        try {
-          const res = await http.get(
-            `/api/search?page=${this.pageNumber}&size=${this.pageSize}&name=${this.searchProduct}`
-          );
-          const data = this.transformData(res);
-          return (this.source = data);
-        } catch (error) {
-          this.source = [];
-        }
+        this.startListSearch();
       } else {
-        try {
-          const response = await http.get(
-            `/api/productsAdmin?page=${this.pageNumber}&&size=${this.pageSize}`
-          );
-          const data = this.transformData(response);
-          this.source = data;
-        } catch (error) {
-          this.source = [];
-        }
+        this.startListProduct();
       }
     },
     async handleChangePage(pageNumbervalue) {
       this.pageNumber = pageNumbervalue;
       if (this.searchProduct !== "") {
-        try {
-          const res = await http.get(
-            `/api/search?page=${this.pageNumber}&size=${this.pageSize}&name=${this.searchProduct}`
-          );
-          const data = this.transformData(res);
-          return (this.source = data);
-        } catch (error) {
-          console.log(error);
-        }
+        this.startListSearch();
       } else {
-        try {
-          const response = await http.get(
-            `/api/productsAdmin?page=${this.pageNumber}&&size=${this.pageSize}`
-          );
-          const data = this.transformData(response);
-          this.source = data;
-        } catch (error) {
-          this.source = [];
-        }
+        this.startListProduct();
       }
     },
   },
- 
 };
 </script>
 
