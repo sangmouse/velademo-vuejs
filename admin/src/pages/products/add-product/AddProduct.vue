@@ -1,6 +1,7 @@
 <template>
   <div id="add-product">
     <div class="container">
+      <p v-if="message.length" class="message">{{ message }}</p>
       <a-form
         :model="formState"
         name="basic"
@@ -27,6 +28,7 @@
           <a-input
             v-model:value="formState.price"
             placeholder="Enter product price"
+            type="number"
           />
         </a-form-item>
 
@@ -45,12 +47,7 @@
             mode="multiple"
             placeholder="Select category"
             v-model:value="formState.categories"
-            :options="
-              filteredOptions.map((item) => ({
-                value: item.value,
-                label: item.label,
-              }))
-            "
+            :options="categories"
           >
           </a-select>
         </a-form-item>
@@ -69,7 +66,6 @@
 
         <a-upload
           v-model:file-list="fileList"
-          name="avatar"
           accept=".jpg, .jpeg, .png"
           list-type="picture"
           :multiple="true"
@@ -77,13 +73,27 @@
           class="avatar-uploader"
           @remove="handleRemove"
         >
-          <div>
-            <div class="ant-upload-text">Upload</div>
+          <p style="margin: 0 0 10px 0">
+            <span
+              style="
+                display: inline-block;
+                margin: 0 5px 0 0;
+                vertical-align: middle;
+              "
+              ><img
+                src="../../../assets/images/asterik.png"
+                width="5"
+                alt="asterik" /></span
+            >Upload Photo
+          </p>
+          <div class="upload-file">
+            <div class="img">
+              <img src="../../../assets/images/cloud-upload.png" alt="icon" />
+            </div>
+            <p>Click to upload images</p>
           </div>
         </a-upload>
-        <!-- <p style="margin: -20px 0 0 0; color: #ff4d4f">
-          This field is required
-        </p> -->
+        <p style="color: red">{{ msgUpload }}</p>
 
         <a-form-item>
           <p style="text-align: center">
@@ -91,7 +101,7 @@
               type="primary"
               html-type="submit"
               class="btn-create-product"
-              >Create New</a-button
+              ><sync-outlined spin v-if="loading" />Create New</a-button
             >
           </p>
         </a-form-item>
@@ -101,9 +111,14 @@
 </template>
 
 <script lang="ts">
+import http from "@/api/request";
 import type { UploadChangeParam, UploadProps } from "ant-design-vue";
 import { computed, defineComponent, reactive, ref } from "vue";
+import { useRouter } from "vue-router";
+import { SyncOutlined } from "@ant-design/icons-vue";
 import "./add-product.scss";
+
+const token = localStorage.getItem("token-admin");
 
 interface FormState {
   name: string;
@@ -119,8 +134,25 @@ const OPTIONS = [
 ];
 
 export default defineComponent({
+  components: {
+    SyncOutlined,
+  },
+
+  created() {
+    http.get("/api/categories").then((res) => {
+      this.categories = res?.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+    });
+  },
   setup() {
+    const msgUpload = ref<string>("");
+    const categories = ref<any>([]);
+    const loading = ref<boolean>(false);
     const fileList = ref<any>([]);
+    const message = ref<string>("");
+    const router = useRouter();
     const formState = reactive<FormState>({
       name: "",
       price: "",
@@ -133,6 +165,9 @@ export default defineComponent({
 
     const beforeUpload: UploadProps["beforeUpload"] = (file) => {
       fileList.value = [...fileList.value, file];
+      if (!!fileList.value.length) {
+        msgUpload.value = "";
+      }
       return false;
     };
 
@@ -141,32 +176,68 @@ export default defineComponent({
       const newFileList = fileList.value.slice();
       newFileList.splice(index, 1);
       fileList.value = newFileList;
-      console.log(fileList.value);
     };
 
-    const onFinish = (values: any) => {
-      const formData = new FormData();
-      const categories = values.categories.map((item: any) => item);
-      const images = fileList.value.forEach((file) => {
-        formData.append("images", file as any);
-      });
-      console.log("Success:", {
-        ...values,
-        categories,
-      });
+    const onFinish = (values) => {
+      if (!fileList.value.length) {
+        msgUpload.value = "This field is required";
+      } else {
+        loading.value = true;
+        const formData = new FormData();
+        fileList.value.forEach((file: any) => {
+          formData.append("files", file?.originFileObj as any);
+        });
+
+        const jsonFile = {
+          displayName: values?.name?.trim(),
+          price: values?.price?.trim(),
+          description: values?.description?.trim(),
+          categories: values?.categories,
+        };
+
+        const postData = JSON.stringify(jsonFile);
+        formData.append("jsonFile", postData);
+
+        http
+          .post("/api/admin/addProduct", formData, {
+            headers: { Authorization: `Bearer ${token?.length && token}` },
+          })
+          .then((res) => {
+            setTimeout(() => {
+              loading.value = false;
+              message.value = "Create product successfully!";
+            }, 500);
+            setTimeout(() => {
+              router.push({
+                name: "home-page",
+              });
+            }, 2000);
+          })
+          .catch((err) => {
+            setTimeout(() => {
+              loading.value = false;
+            }, 500);
+          });
+      }
     };
 
     const onFinishFailed = (errorInfo: any) => {
-      console.log("Failed:", errorInfo);
+      if (!fileList.value.length) {
+        msgUpload.value = "This field is required";
+      }
     };
     return {
       formState,
       onFinish,
       onFinishFailed,
+      message,
       beforeUpload,
       handleRemove,
       filteredOptions,
+      loading,
       fileList,
+      msgUpload,
+      categories,
     };
   },
 });
