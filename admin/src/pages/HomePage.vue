@@ -21,19 +21,22 @@
             <a-input
               class="input-search"
               size="large"
-              v-model:value="searchProduct"
-              @change="handleSearchProduct"
+              @input="search"
               placeholder="Searching..."
             />
           </div>
         </div>
-        <Table :columns="columns" :source="source" />
+        <Table
+          :columns="columns"
+          :source="source"
+          @handleChangePage="handleChangePage"
+        />
       </div>
     </div>
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import "./home-page.scss";
 import Table from "../components/table/Table.vue";
 import http from "@/api/request";
@@ -45,38 +48,47 @@ export default {
 
   data() {
     return {
-      pageSize: 8,
+      pageSize: 10,
+      pageNumber: 1,
       searchProduct: "",
       debounce: null,
       options: [
+        {
+          value: 5,
+          label: 5,
+        },
         {
           value: 10,
           label: 10,
         },
         {
-          value: 8,
-          label: 8,
+          value: 20,
+          label: 20,
+        },
+        {
+          value: 50,
+          label: 50,
         },
       ],
       columns: [
         {
-          title: "ID",
+          title: "id",
           dataIndex: "id",
           key: "id",
           width: 200,
         },
         {
           title: "Name",
-          dataIndex: "name",
-          key: "name",
+          dataIndex: "displayName",
+          key: "displayName",
         },
         {
-          title: "Price",
+          title: "price",
           dataIndex: "price",
           key: "price",
         },
         {
-          title: "Categories",
+          title: "categories",
           dataIndex: "categories",
           key: "categories",
         },
@@ -100,42 +112,101 @@ export default {
           key: "action",
         },
       ],
-      source: [
-        {
-          id: "1",
-          name: "John Brown",
-          address: "New York No. 1 Lake Park",
-          price: 100,
-          categories: ["sofa", "furniture"].toString(),
-          createdDate: "16 Mar, 2022",
-          updatedDate: "16 Mar, 2022",
-          createdUser: "Long",
-        },
-      ],
+      source: [],
     };
   },
 
   created() {
     http
-      .get("/api/admin/products?page=1&size=10", {
-        headers: { Authorization: `Bearer ${token?.length && token}` },
+      .get("/api/productsAdmin?page=1&&size=10", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
-      .then((res) => {})
-      .catch((err) => {});
+      .then((res) => {
+        const data = this.transformData(res);
+        this.source = data;
+      })
+      .catch((err) => console.log(err));
   },
-
-  methods: {
-    async handleChange(value: string) {
-      console.log(Number(value));
-      const response = await http.get("/products");
-      this.source = response;
+  computed: {
+    source() {
+      return this.source;
     },
-
-    async handleSearchProduct(event) {
-      clearTimeout(this.debounce);
-      this.debounce = setTimeout(() => {
-        console.log(event.target.value);
-      }, 600);
+  },
+  methods: {
+    transformData(arr) {
+      return arr.map((item) => ({
+        id: item?.id,
+        displayName: item?.displayName,
+        price: new Intl.NumberFormat("de-DE", {
+          style: "currency",
+          currency: "USD",
+        }).format(item?.price),
+        categories: item?.categories.map((item) => item.name).toString(),
+        createdDate: item.createdDtm
+          ?.slice(0, 10)
+          .split("-")
+          .reverse()
+          .join("-"),
+        updatedDate: item.updatedDtm
+          ?.slice(0, 10)
+          .split("-")
+          .reverse()
+          .join("-"),
+        createdUser: item.creator?.name,
+      }));
+    },
+    async startListSearch() {
+      try {
+        const res = await http.get(
+          `/api/search?page=${this.pageNumber}&size=${this.pageSize}&name=${this.searchProduct}`
+        );
+        const data = this.transformData(res);
+        return (this.source = data);
+      } catch (error) {
+        this.source = [];
+      }
+    },
+    async startListProduct() {
+      try {
+        const response = await http.get(
+          `/api/productsAdmin?page=${this.pageNumber}&&size=${this.pageSize}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const data = this.transformData(response);
+        this.source = data;
+      } catch (error) {
+        this.source = [];
+      }
+    },
+    async search(e) {
+      this.searchProduct = e.target.value.trim();
+      if (this.searchProduct === "") {
+        this.startListProduct();
+      } else {
+        this.startListSearch();
+      }
+    },
+    async handleChange(value) {
+      this.pageSize = value;
+      if (this.searchProduct !== "") {
+        this.startListSearch();
+      } else {
+        this.startListProduct();
+      }
+    },
+    async handleChangePage(pageNumbervalue) {
+      this.pageNumber = pageNumbervalue;
+      if (this.searchProduct !== "") {
+        this.startListSearch();
+      } else {
+        this.startListProduct();
+      }
     },
   },
 };
