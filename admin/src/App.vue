@@ -17,9 +17,7 @@ export default {
     Footer,
   },
   created() {
-    if (localStorage.getItem("token-admin") !== null) {
-      this.$router.push("/");
-    } else {
+    if (localStorage.getItem("token-admin") === null) {
       this.$router.push("/login");
     }
   },
