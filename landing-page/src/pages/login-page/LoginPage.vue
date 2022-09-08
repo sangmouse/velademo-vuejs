@@ -31,19 +31,14 @@
         <div class="account-main">
           <div class="account-content" v-if="statusLogin === 'login'">
             <div
-              class="account-alert__error"
-              :class="errorMessage ? 'account-alert__error--active' : ''"
+              class="login-alert"
+              :class="alertLogin ? 'alert-success' : 'alert-error'"
             >
-              <p v-if="messageErrorLogin.length > 0">
-                {{ this.messageErrorLogin }}
+              <p v-if="messageAlertLogin.length > 0">
+                {{ messageAlertLogin }}
               </p>
             </div>
-            <div
-              class="account-alert__success"
-              :class="successMessage ? 'account-alert__success--active' : ''"
-            >
-              <p>Successfully!</p>
-            </div>
+
             <div>
               <div class="account-email">
                 <input
@@ -84,23 +79,11 @@
 
           <div class="register-content" v-if="statusLogin === 'register'">
             <div
-              class="register-alert__error"
-              :class="
-                errorMessageRegister ? 'register-alert__error--active' : ''
-              "
+              class="register-alert"
+              :class="alertRegister ? 'alert-success' : 'alert-error'"
             >
-              <p v-if="messageErrorRegister.length > 0">
-                {{ this.messageErrorRegister }}
-              </p>
-            </div>
-            <div
-              class="register-alert__success"
-              :class="
-                successMessageRegister ? 'register-alert__success--active' : ''
-              "
-            >
-              <p v-if="messageSuccessRegister.length > 0">
-                {{ this.messageSuccessRegister }}
+              <p v-if="messageAlertRegister.length > 0">
+                {{ messageAlertRegister }}
               </p>
             </div>
 
@@ -170,22 +153,15 @@ import "./login.scss";
 export default {
   data() {
     return {
-      messageErrorLogin: "",
-      messageErrorRegister: "",
-      messageSuccessRegister: "",
+      alertLogin: true,
+      messageAlertLogin: "",
+      alertRegister: true,
+      messageAlertRegister: "",
       statusLogin: this.$store.state.auth.statusLogin,
       isPassword: true,
       login: {
         email: "",
         password: "",
-      },
-      message: {
-        error: false,
-        success: false,
-      },
-      messageRegister: {
-        error: false,
-        success: false,
       },
       register: {
         name: "",
@@ -211,9 +187,8 @@ export default {
 
   watch: {
     statusLogin(newValue, oldValue) {
-      this.messageErrorLogin = "";
-      this.messageErrorRegister = "";
-      this.messageSuccessRegister = "";
+      this.messageAlertLogin = "";
+      this.messageAlertRegister = "";
     },
   },
 
@@ -235,19 +210,15 @@ export default {
 
     async handleSubmitLogin() {
       const data = this.login;
-      const message = this.message;
       if (data.email === "") {
-        this.messageErrorLogin = "Email must be not empty!";
-        message.error = true;
-        message.success = false;
+        this.alertLogin = false;
+        this.messageAlertLogin = "Email must be not empty!";
       } else if (!this.validateEmail(data.email)) {
-        this.messageErrorLogin = "Invalid email";
-        message.error = true;
-        message.success = false;
+        this.alertLogin = false;
+        this.messageAlertLogin = "Invalid email";
       } else if (data.password === "") {
-        this.messageErrorLogin = "Password must be not empty!";
-        message.error = true;
-        message.success = false;
+        this.alertLogin = false;
+        this.messageAlertLogin = "Password must be not empty!";
       } else {
         const infor = {
           username: data.email.trim(),
@@ -255,14 +226,17 @@ export default {
         };
         await this.$store.dispatch("getLogin", infor);
         if (!this.$store.state.auth.isLogin) {
-          message.success = true;
-          message.error = false;
-          this.$router.push({
+          this.alertLogin = true;
+          this.messageAlertLogin = "Successfully!"
+
+          setTimeout(() => {
+            this.$router.push({
             name: "home",
           });
+          }, 1500);
         } else {
-          this.messageErrorLogin = this.$store.state.auth.messageErrorLogin;
-          message.error = true;
+          this.alertLogin = false;
+          this.messageAlertLogin = this.$store.state.auth.messageErrorLogin;
         }
       }
     },
@@ -283,27 +257,21 @@ export default {
     },
     async handleSubmitRegister() {
       const data = this.register;
-      const message = this.messageRegister;
       if (data.name === "") {
-        this.messageErrorRegister = "Name must be not empty!";
-        message.error = true;
-        message.success = false;
+        this.alertRegister = false;
+        this.messageAlertRegister = "Name must be not empty!";
       } else if (data.email === "") {
-        this.messageErrorRegister = "Email must be not empty!";
-        message.error = true;
-        message.success = false;
+        this.alertRegister = false;
+        this.messageAlertRegister = "Email must be not empty!";
       } else if (!this.validateEmail(data.email)) {
-        this.messageErrorRegister = "Invalid email";
-        message.error = true;
-        message.success = false;
+        this.alertRegister = false;
+        this.messageAlertRegister = "Invalid email";
       } else if (data.password === "") {
-        this.messageErrorRegister = "Password must be not empty!";
-        message.error = true;
-        message.success = false;
+        this.alertRegister = false;
+        this.messageAlertRegister = "Password must be not empty!";
       } else if (data.confirmPassword != data.password) {
-        this.messageErrorRegister = "Your confirmed password is incorect!";
-        message.error = true;
-        message.success = false;
+        this.alertRegister = false;
+        this.messageAlertRegister = "Your confirmed password is incorect!";
       } else {
         const infor = {
           email: data.email.trim(),
@@ -316,16 +284,16 @@ export default {
           const response = await http.post("/api/user/register", infor);
 
           if (response.email != "") {
-            this.handleLogin("login");
-            this.messageSuccessRegister = "Create Account Successfully!";
-            this.messageRegister.error = false;
-            this.messageRegister.success = true;
+            setTimeout(() => {
+              this.handleLogin("login");
+            }, 1500);
+            this.alertRegister = true;
+            this.messageAlertRegister = "Create Account Successfully!";
           }
         } catch (error) {
-          if (error.response.status === 500) {
-            this.messageErrorRegister = "Email has been used";
-            message.error = true;
-            message.success = false;
+          if (error.response.status === 400) {
+            this.alertRegister = false;
+            this.messageAlertRegister = "Email has been used";
           }
         }
       }
@@ -338,17 +306,12 @@ export default {
     showPassword() {
       return this.isPassword;
     },
-    errorMessage() {
-      return this.message.error;
+    
+    alertRegister() {
+      return this.alertRegister;
     },
-    successMessage() {
-      return this.message.success;
-    },
-    errorMessageRegister() {
-      return this.messageRegister.error;
-    },
-    successMessageRegister() {
-      return this.messageRegister.success;
+    alertLogin() {
+      return this.alertLogin;
     },
   },
 };

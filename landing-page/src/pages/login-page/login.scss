@@ -70,45 +70,36 @@
   }
 }
 
-.account-alert__error,
-.register-alert__error {
+.login-alert {
+  display: none;
+
+  p {
+    color: var(--vela-footer-titlecolor);
+    margin: 0;
+    padding: 8px 10px;
+  }
+}
+
+.register-alert {
+  display: none;
+
+  p {
+    color: var(--vela-footer-titlecolor);
+    margin: 0;
+    padding: 8px 10px;
+  }
+}
+
+.alert-error {
+  margin-bottom: 30px;
   background-color: #e26868;
-  display: none;
-}
-
-.account-alert__error--active {
   display: block;
-  margin-bottom: 30px;
 }
 
-.register-alert__error--active {
-  display: block;
+.alert-success {
   margin-bottom: 30px;
-}
-
-.account-alert__success,
-.register-alert__success {
   background-color: #5cb85c;
-  display: none;
-}
-
-.account-alert__success--active {
   display: block;
-  margin-bottom: 30px;
-}
-
-.register-alert__success--active {
-  display: block;
-  margin-bottom: 30px;
-}
-
-.account-alert__error p,
-.account-alert__success p,
-.register-alert__error p,
-.register-alert__success p {
-  color: var(--vela-footer-titlecolor);
-  margin: 0;
-  padding: 8px 10px;
 }
 
 .account-email {
