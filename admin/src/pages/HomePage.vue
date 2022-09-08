@@ -171,7 +171,12 @@ export default {
     async startListProduct() {
       try {
         const response = await http.get(
-          `/api/productsAdmin?page=${this.pageNumber}&&size=${this.pageSize}`
+          `/api/productsAdmin?page=${this.pageNumber}&&size=${this.pageSize}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         const data = this.transformData(response);
         this.source = data;
