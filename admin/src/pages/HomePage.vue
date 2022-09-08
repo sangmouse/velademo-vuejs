@@ -67,7 +67,7 @@ export default {
         },
         {
           title: "Name",
-          dataIndex: "name",
+          dataIndex: "displayName",
           key: "displayName",
         },
         {
@@ -106,9 +106,7 @@ export default {
 
   created() {
     http
-      .get("/api/productsAdmin?page=1&&size=10", {
-        headers: { Authorization: `Bearer ${token?.length && token}` },
-      })
+      .get("/api/productsAdmin?page=1&&size=10")
       .then((res) => {
         console.log(res);
         const data = this.transformData(res)
@@ -129,7 +127,7 @@ export default {
     transformData(arr){
       return arr.map(item => ({
         id: item?.id,
-        name: item?.name,
+        displayName: item?.displayName,
         price: item?.price,
         categories: item?.categories.map(item => item.name).toString(),
         createdDate: item.createdDtm.slice(0,10).split('-').reverse().join("-"),
@@ -139,7 +137,7 @@ export default {
     },
     async handleChange(value) {
       console.log(Number(value));
-      const response = await http.get("/products");
+      const response = await http.get("/api/productsAdmin?page=1&&size=10");
       this.source = response;
     },
 
