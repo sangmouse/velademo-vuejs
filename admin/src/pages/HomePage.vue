@@ -48,19 +48,27 @@ export default {
 
   data() {
     return {
-      pageSize: 8,
+      pageSize: 10,
       pageNumber: 1,
       searchProduct: "",
       debounce: null,
       options: [
+      {
+          value: 5,
+          label: 5,
+        },
         {
           value: 10,
           label: 10,
         },
         {
-          value: 8,
-          label: 8,
+          value: 20,
+          label: 20,
         },
+        {
+          value: 50,
+          label: 50,
+        }
       ],
       columns: [
         {
@@ -110,7 +118,7 @@ export default {
 
   created() {
     http
-      .get("/api/productsAdmin?page=1&&size=8")
+      .get("/api/productsAdmin?page=1&&size=10")
       .then((res) => {
         const data = this.transformData(res);
         this.source = data;
