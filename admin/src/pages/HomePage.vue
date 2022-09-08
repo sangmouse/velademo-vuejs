@@ -53,7 +53,7 @@ export default {
       searchProduct: "",
       debounce: null,
       options: [
-      {
+        {
           value: 5,
           label: 5,
         },
@@ -68,11 +68,11 @@ export default {
         {
           value: 50,
           label: 50,
-        }
+        },
       ],
       columns: [
         {
-          title: "ID",
+          title: "id",
           dataIndex: "id",
           key: "id",
           width: 200,
@@ -83,12 +83,12 @@ export default {
           key: "displayName",
         },
         {
-          title: "Price",
+          title: "price",
           dataIndex: "price",
           key: "price",
         },
         {
-          title: "Categories",
+          title: "categories",
           dataIndex: "categories",
           key: "categories",
         },
@@ -118,7 +118,11 @@ export default {
 
   created() {
     http
-      .get("/api/productsAdmin?page=1&&size=10")
+      .get("/api/productsAdmin?page=1&&size=10", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         const data = this.transformData(res);
         this.source = data;

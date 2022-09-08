@@ -16,7 +16,7 @@
                 <img src="../../assets/images/eye.png" alt="view-record" />
               </p>
             </router-link>
-            <button type="button" class="btn-remove-record">
+            <button type="button" class="btn-remove-record" @click="handleDeteteList(record.id)">
               <img src="../../assets/images/trash.png" alt="remove-record" />
             </button>
           </span>
