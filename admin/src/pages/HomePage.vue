@@ -21,13 +21,12 @@
             <a-input
               class="input-search"
               size="large"
-              v-model:value="searchProduct"
-              @change="handleSearchProduct"
+              @input="search"
               placeholder="Searching..."
             />
           </div>
         </div>
-        <Table :columns="columns" :source="source" />
+        <Table :columns="columns" :source="source" @handleChangePage="handleChangePage" />
       </div>
     </div>
   </div>
@@ -46,6 +45,7 @@ export default {
   data() {
     return {
       pageSize: 8,
+      pageNumber: 1,
       searchProduct: "",
       debounce: null,
       options: [
@@ -67,8 +67,8 @@ export default {
         },
         {
           title: "Name",
-          dataIndex: "name",
-          key: "name",
+          dataIndex: "displayName",
+          key: "displayName",
         },
         {
           title: "Price",
@@ -100,44 +100,120 @@ export default {
           key: "action",
         },
       ],
-      source: [
-        {
-          id: "1",
-          name: "John Brown",
-          address: "New York No. 1 Lake Park",
-          price: 100,
-          categories: ["sofa", "furniture"].toString(),
-          createdDate: "16 Mar, 2022",
-          updatedDate: "16 Mar, 2022",
-          createdUser: "Long",
-        },
-      ],
+      source: [],
     };
   },
 
   created() {
     http
-      .get("/api/admin/products?page=1&size=10", {
-        headers: { Authorization: `Bearer ${token?.length && token}` },
+      .get("/api/productsAdmin?page=1&&size=8")
+      .then((res) => {
+        const data = this.transformData(res);
+        this.source = data;
       })
-      .then((res) => {})
-      .catch((err) => {});
+      .catch((err) => console.log(err));
   },
-
+  computed: {
+    source() {
+      return this.source;
+    },
+  },
   methods: {
-    async handleChange(value: string) {
-      console.log(Number(value));
-      const response = await http.get("/products");
-      this.source = response;
+    transformData(arr) {
+      return arr.map((item) => ({
+        id: item?.id,
+        displayName: item?.displayName,
+        price: new Intl.NumberFormat("de-DE", {
+          style: "currency",
+          currency: "USD",
+        }).format(item?.price),
+        categories: item?.categories.map((item) => item.name).toString(),
+        createdDate: item.createdDtm
+          ?.slice(0, 10)
+          .split("-")
+          .reverse()
+          .join("-"),
+        updatedDate: item.updatedDtm
+          ?.slice(0, 10)
+          .split("-")
+          .reverse()
+          .join("-"),
+        createdUser: item.creator?.name,
+      }));
     },
-
-    async handleSearchProduct(event) {
-      clearTimeout(this.debounce);
-      this.debounce = setTimeout(() => {
-        console.log(event.target.value);
-      }, 600);
+    async search(e) {
+      this.searchProduct = e.target.value.trim();
+      if (this.searchProduct == "") {
+        try {
+          const res = await http.get(`/api/productsAdmin?page=1&&size=8`);
+          const data = this.transformData(res);
+          return (this.source = data);
+        } catch (error) {
+          console.log(error);
+        }
+      } else{
+        try {
+        const res = await http.get(
+          `/api/search?page=${this.pageNumber}&size=${this.pageSize}&name=${this.searchProduct}`
+        );
+        const data = this.transformData(res);
+        return (this.source = data);
+      } catch (error) {
+        this.source = [];
+      }
+      }
+      
+    },
+    async handleChange(value) {
+      this.pageSize = value;
+      if (this.searchProduct != "") {
+        try {
+          const res = await http.get(
+            `/api/search?page=${this.pageNumber}&size=${this.pageSize}&name=${this.searchProduct}`
+          );
+          const data = this.transformData(res);
+          return (this.source = data);
+        } catch (error) {
+          this.source = [];
+        }
+      } else {
+        try {
+          const response = await http.get(
+            `/api/productsAdmin?page=${this.pageNumber}&&size=${this.pageSize}`
+          );
+          const data = this.transformData(response);
+          this.source = data;
+        } catch (error) {
+          this.source = [];
+        }
+      }
+    },
+    async handleChangePage(pageNumbervalue) {
+      this.pageNumber = pageNumbervalue;
+      if (this.searchProduct != "") {
+        try {
+          const res = await http.get(
+            `/api/search?page=${this.pageNumber}&size=${this.pageSize}&name=${this.searchProduct}`
+          );
+          const data = this.transformData(res);
+          return (this.source = data);
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        try {
+          const response = await http.get(
+            `/api/productsAdmin?page=${this.pageNumber}&&size=${this.pageSize}`
+          );
+          const data = this.transformData(response);
+          this.source = data;
+        } catch (error) {
+          this.source = [];
+        }
+      }
     },
   },
+ 
 };
 </script>
 
