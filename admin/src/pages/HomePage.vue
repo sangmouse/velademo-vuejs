@@ -143,7 +143,7 @@ export default {
     },
     async search(e) {
       this.searchProduct = e.target.value.trim();
-      if (this.searchProduct == "") {
+      if (this.searchProduct === "") {
         try {
           const res = await http.get(`/api/productsAdmin?page=1&&size=8`);
           const data = this.transformData(res);
@@ -166,7 +166,7 @@ export default {
     },
     async handleChange(value) {
       this.pageSize = value;
-      if (this.searchProduct != "") {
+      if (this.searchProduct !== "") {
         try {
           const res = await http.get(
             `/api/search?page=${this.pageNumber}&size=${this.pageSize}&name=${this.searchProduct}`
@@ -190,7 +190,7 @@ export default {
     },
     async handleChangePage(pageNumbervalue) {
       this.pageNumber = pageNumbervalue;
-      if (this.searchProduct != "") {
+      if (this.searchProduct !== "") {
         try {
           const res = await http.get(
             `/api/search?page=${this.pageNumber}&size=${this.pageSize}&name=${this.searchProduct}`
