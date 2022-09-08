@@ -211,6 +211,7 @@ export default {
 
   methods: {
     //login methods
+    //test
 
     handleLogin(status) {
       this.$store.commit("STATUS_LOGIN", status);
