@@ -25,7 +25,7 @@
     </a-table>
     <div class="paginate">
       <p>Showing 41 to 50 of 50 entries</p>
-      <a-pagination showLessItems :total="50" :showSizeChanger="false" />
+      <a-pagination showLessItems :total="50" :showSizeChanger="false" @change="handleChangePage" />
     </div>
   </div>
 </template>
@@ -38,6 +38,10 @@ export default {
  methods: {
   handleDeteteList(id){
     console.log(id)
+  },
+  handleChangePage(pageNumber){
+    this.$emit('handleChangePage', pageNumber )
+    
   }
  },
   props: {
