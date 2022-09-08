@@ -118,7 +118,7 @@ export default {
 
   created() {
     http
-      .get("/api/productsAdmin?page=1&&size=10", {
+      .get("/api/admin/products?page=1&&size=10", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
