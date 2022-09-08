@@ -16,7 +16,7 @@
                 <img src="../../assets/images/eye.png" alt="view-record" />
               </p>
             </router-link>
-            <button type="button" class="btn-remove-record">
+            <button type="button" class="btn-remove-record" @click="handleDeteteList(record.id)">
               <img src="../../assets/images/trash.png" alt="remove-record" />
             </button>
           </span>
@@ -25,7 +25,7 @@
     </a-table>
     <div class="paginate">
       <p>Showing 41 to 50 of 50 entries</p>
-      <a-pagination showLessItems :total="50" :showSizeChanger="false" />
+      <a-pagination showLessItems :total="50" :showSizeChanger="false" @change="handleChangePage" />
     </div>
   </div>
 </template>
@@ -35,6 +35,15 @@ import { SmileOutlined, DownOutlined } from "@ant-design/icons-vue";
 import "./table.scss";
 
 export default {
+ methods: {
+  handleDeteteList(id){
+    console.log(id)
+  },
+  handleChangePage(pageNumber){
+    this.$emit('handleChangePage', pageNumber )
+    
+  }
+ },
   props: {
     columns: Array,
     source: Array,
