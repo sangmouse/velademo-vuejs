@@ -37,6 +37,9 @@
 import "./home-page.scss";
 import Table from "../components/table/Table.vue";
 import http from "@/api/request";
+
+const token = localStorage.getItem("token-admin");
+
 export default {
   components: { Table },
 
@@ -110,6 +113,15 @@ export default {
         },
       ],
     };
+  },
+
+  created() {
+    http
+      .get("/api/admin/products?page=1&size=10", {
+        headers: { Authorization: `Bearer ${token?.length && token}` },
+      })
+      .then((res) => {})
+      .catch((err) => {});
   },
 
   methods: {
