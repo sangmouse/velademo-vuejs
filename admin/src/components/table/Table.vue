@@ -35,15 +35,12 @@ import { SmileOutlined, DownOutlined } from "@ant-design/icons-vue";
 import "./table.scss";
 
 export default {
- methods: {
-  handleDeteteList(id){
-    console.log(id)
-  },
-  handleChangePage(pageNumber){
+  methods: {
+    handleChangePage(pageNumber){
     this.$emit('handleChangePage', pageNumber )
     
   }
- },
+  },
   props: {
     columns: Array,
     source: Array,
