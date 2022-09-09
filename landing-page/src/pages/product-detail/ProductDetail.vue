@@ -32,7 +32,7 @@
                 <div class="action">
                   <div class="quantity">
                     <button class="btn" @click="handleDiminishQty">-</button>
-                    <p>{{quantity}}</p>
+                    <p>{{ quantity }}</p>
                     <button class="btn" @click="handleInscreQty">+</button>
                   </div>
                   <button
@@ -75,10 +75,7 @@
                     v-bind:key="product.id"
                   >
                     <div class="action">
-                      <button
-                        class="btn btn-add-cart"
-                        @click="showCart"
-                      >
+                      <button class="btn btn-add-cart" @click="showCart">
                         <span>
                           <img
                             src="../../assets/images/shopping-bag-16.png"
@@ -139,7 +136,7 @@ export default {
       productDetail: null,
       products: [],
       isVisibleDrawer: false,
-      quantity: 1
+      quantity: 1,
     };
   },
   methods: {
@@ -149,30 +146,30 @@ export default {
     handleCloseDrawer() {
       this.isVisibleDrawer = false;
     },
-    handleInscreQty(){
-      this.quantity += 1 
+    handleInscreQty() {
+      this.quantity += 1;
     },
-    handleDiminishQty(){
-      this.quantity -= 1 
-    }
+    handleDiminishQty() {
+      this.quantity -= 1;
+    },
   },
-  computed:{
-    quantity(){
-      if(this.quantity < 1 ){
-        return this.quantity = 1
+  computed: {
+    quantity() {
+      if (this.quantity < 1) {
+        return (this.quantity = 1);
       }
-      return this.quantity
-    }
+      return this.quantity;
+    },
   },
   async created() {
     const products = await http.get("/api/products?page=1&size=8");
     this.products = products;
-    const response = await http.get(`/api/products/${this.$route.params.id}`);
+    const response = await http.get(`/api/product/${this.$route.params.id}`);
     this.productDetail = response;
     this.$watch(
       () => this.$route.params.id,
       async (value, _) => {
-        const response = await http.get(`/api/products/${value}`);
+        const response = await http.get(`/api/product/${value}`);
         this.productDetail = response;
       }
     );
