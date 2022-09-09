@@ -1,106 +1,147 @@
 <template>
-    <div id="product-detail">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-xl-4 col-md-8 mx-auto">
-                    <a-carousel
-                        dots-class="slick-dots slick-thumb"
-                        effect="fade"
-                    >
-                        <template #customPaging="props">
-                            <a>
-                            <img :src="getImgUrl(props.i)" />
-                            </a>
-                        </template>
-                        <div v-for="item in productDetail?.images" :key="item">
-                            <img :src="item.url" />
-                        </div>
-                    </a-carousel>
-                </div>
-                <div class="col-xl-8">
-                    <div class="mt-xl-0 mt-5">
-                        <div class="d-flex">
-                            <div class="flex-grow-1">
-                                <h4 class="title-desc">{{ productDetail?.displayName }}</h4>
-                                <div class="hstack gap-3 flex-wrap mb-3">
-                                    <div class="fs-15 text-muted">Created User : <span class="text-body fw-medium">{{ productDetail?.creator.name }}</span></div>
-                                    <div class="vr"></div>
-                                    <div class="fs-15 text-muted">Updated Date : <span class="text-body fw-medium">{{ productDetail?.updatedDtm }}</span></div>
-                                    <div class="vr"></div>
-                                    <div class="fs-15 text-muted">ID : <span class="text-body fw-medium">{{ productDetail?.id }}</span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4 col-sm-6 mb-3">
-                                <div class="p-2 border border-dashed rounded">
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar-sm me-2">
-                                            <div class="avatar-title rounded bg-transparent text-success fs-24">
-                                                <img src="../../assets/images/usd-circle-free-icon-font.png" alt="" class="img-fluid d-block">
-                                            </div>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <p class="text-muted mb-1 fs-15">Price :</p>
-                                            <h5 class="mb-0 fs-15">${{ productDetail?.price }}</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-sm-6 mb-3">
-                                <div class="p-2 border border-dashed rounded">
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar-sm me-2">
-                                            <div class="avatar-title rounded bg-transparent text-success fs-24">
-                                                <img src="../../assets/images/document-free-icon-font.png" alt="" class="img-fluid d-block">
-                                            </div>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <p class="text-muted mb-1 fs-15">Created Date :</p>
-                                            <h5 class="mb-0 fs-15">{{ productDetail?.createdDtm }}</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-sm-6 mb-3">
-                                <div class="p-2 border border-dashed rounded">
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar-sm me-2">
-                                            <div class="avatar-title rounded bg-transparent text-success fs-24">
-                                                <img src="../../assets/images/id-badge-free-icon-font.png" alt="" class="img-fluid d-block">
-                                            </div>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <p class="text-muted mb-1 fs-15">Category ID :</p>
-                                            <h5 class="mb-0 fs-15">{{ productDetail?.id }}</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-4 text-muted">
-                            <h5 class="title-desc">Description :</h5>
-                            <p class="text-muted fs-15">{{ productDetail?.description ?? "" }}</p>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="mt-4">
-                                    <h5 class="title-desc">Categories :</h5>
-                                    <ul v-for="item in productDetail?.categories" :key="item" class="fs-15 list-unstyled">
-                                        <li class="p-1 text-list">{{item.name}}</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  <div id="product-detail">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xl-4 col-md-8 mx-auto">
+          <a-carousel dots-class="slick-dots slick-thumb" effect="fade">
+            <template #customPaging="props">
+              <a>
+                <img :src="getImgUrl(props.i)" />
+              </a>
+            </template>
+            <div v-for="item in productDetail?.images" :key="item">
+              <img :src="item.url" />
             </div>
+          </a-carousel>
         </div>
+        <div class="col-xl-8">
+          <div class="mt-xl-0 mt-5">
+            <div class="d-flex">
+              <div class="flex-grow-1">
+                <h4 class="title-desc">{{ productDetail?.displayName }}</h4>
+                <div class="hstack gap-3 flex-wrap mb-3">
+                  <div class="fs-15 text-muted">
+                    Created User :
+                    <span class="text-body fw-medium">{{
+                      productDetail?.creator.name
+                    }}</span>
+                  </div>
+                  <div class="vr"></div>
+                  <div class="fs-15 text-muted">
+                    Updated Date :
+                    <span class="text-body fw-medium">{{
+                      productDetail?.updatedDtm
+                    }}</span>
+                  </div>
+                  <div class="vr"></div>
+                  <div class="fs-15 text-muted">
+                    ID :
+                    <span class="text-body fw-medium">{{
+                      productDetail?.id
+                    }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-4 col-sm-6 mb-3">
+                <div class="p-2 border border-dashed rounded">
+                  <div class="d-flex align-items-center">
+                    <div class="avatar-sm me-2">
+                      <div
+                        class="avatar-title rounded bg-transparent text-success fs-24"
+                      >
+                        <img
+                          src="../../assets/images/usd-circle-free-icon-font.png"
+                          alt=""
+                          class="img-fluid d-block"
+                        />
+                      </div>
+                    </div>
+                    <div class="flex-grow-1">
+                      <p class="text-muted mb-1 fs-15">Price :</p>
+                      <h5 class="mb-0 fs-15">${{ productDetail?.price }}</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-6 mb-3">
+                <div class="p-2 border border-dashed rounded">
+                  <div class="d-flex align-items-center">
+                    <div class="avatar-sm me-2">
+                      <div
+                        class="avatar-title rounded bg-transparent text-success fs-24"
+                      >
+                        <img
+                          src="../../assets/images/document-free-icon-font.png"
+                          alt=""
+                          class="img-fluid d-block"
+                        />
+                      </div>
+                    </div>
+                    <div class="flex-grow-1">
+                      <p class="text-muted mb-1 fs-15">Created Date :</p>
+                      <h5 class="mb-0 fs-15">
+                        {{ productDetail?.createdDtm }}
+                      </h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-6 mb-3">
+                <div class="p-2 border border-dashed rounded">
+                  <div class="d-flex align-items-center">
+                    <div class="avatar-sm me-2">
+                      <div
+                        class="avatar-title rounded bg-transparent text-success fs-24"
+                      >
+                        <img
+                          src="../../assets/images/id-badge-free-icon-font.png"
+                          alt=""
+                          class="img-fluid d-block"
+                        />
+                      </div>
+                    </div>
+                    <div class="flex-grow-1">
+                      <p class="text-muted mb-1 fs-15">Category ID :</p>
+                      <h5 class="mb-0 fs-15">{{ productDetail?.id }}</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 text-muted">
+              <h5 class="title-desc">Description :</h5>
+              <p class="text-muted fs-15">
+                {{ productDetail?.description ?? "" }}
+              </p>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="mt-4">
+                  <h5 class="title-desc">Categories :</h5>
+                  <ul
+                    v-for="item in productDetail?.categories"
+                    :key="item"
+                    class="fs-15 list-unstyled"
+                  >
+                    <li class="p-1 text-list">{{ item.name }}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 <script lang="ts">
 import http from "@/api/request";
+import { API } from "@/constants/api";
 import "./product-detail.scss";
+
+const token = localStorage.getItem("token-admin");
 export default {
   data() {
     const getImgUrl = (i: number) => {
@@ -112,7 +153,14 @@ export default {
     };
   },
   async created() {
-    const response = await http.get(`/api/admin/product/${this.$route.params.id}`);
+    const response = await http.get(
+      `${API.ADMIN.PRODUCT_DETAIL}/${this.$route.params.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     this.productDetail = response;
     this.$watch(
       () => this.$route.params.id,
@@ -149,7 +197,7 @@ export default {
   width: 100%;
   height: 100%;
   filter: grayscale(100%);
-  background:  #f3f6f9;
+  background: #f3f6f9;
 }
 .ant-carousel >>> .slick-thumb .slick-active {
   background-color: #f3f6f9;
