@@ -139,12 +139,18 @@ export default defineComponent({
   },
 
   created() {
-    http.get("/api/categories").then((res) => {
-      this.categories = res?.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-    });
+    http
+      .get("/api/categories", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        this.categories = res?.map((item) => ({
+          value: item.id,
+          label: item.name,
+        }));
+      });
   },
   setup() {
     const msgUpload = ref<string>("");

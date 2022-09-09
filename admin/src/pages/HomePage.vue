@@ -40,6 +40,7 @@
 import "./home-page.scss";
 import Table from "../components/table/Table.vue";
 import http from "@/api/request";
+import { API } from "@/constants/api";
 
 const token = localStorage.getItem("token-admin");
 
@@ -118,7 +119,7 @@ export default {
 
   created() {
     http
-      .get("/api/productsAdmin?page=1&&size=10", {
+      .get(`${API.ADMIN.PRODUCT_LIST}?page=1&&size=10`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -160,7 +161,12 @@ export default {
     async startListSearch() {
       try {
         const res = await http.get(
-          `/api/search?page=${this.pageNumber}&size=${this.pageSize}&name=${this.searchProduct}`
+          `/api/search?page=${this.pageNumber}&size=${this.pageSize}&name=${this.searchProduct}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         const data = this.transformData(res);
         return (this.source = data);
@@ -171,7 +177,7 @@ export default {
     async startListProduct() {
       try {
         const response = await http.get(
-          `/api/productsAdmin?page=${this.pageNumber}&&size=${this.pageSize}`,
+          `${API.ADMIN.PRODUCT_LIST}?page=${this.pageNumber}&&size=${this.pageSize}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -193,6 +199,7 @@ export default {
       }
     },
     async handleChange(value) {
+      console.log(value);
       this.pageSize = value;
       if (this.searchProduct !== "") {
         this.startListSearch();
