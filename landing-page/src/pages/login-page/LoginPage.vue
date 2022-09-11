@@ -147,7 +147,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import http from "@/api/request";
 import "./login.scss";
 export default {
@@ -227,12 +227,12 @@ export default {
         await this.$store.dispatch("getLogin", infor);
         if (!this.$store.state.auth.isLogin) {
           this.alertLogin = true;
-          this.messageAlertLogin = "Successfully!"
+          this.messageAlertLogin = "Sign in Successfully!";
 
           setTimeout(() => {
             this.$router.push({
-            name: "home",
-          });
+              name: "home",
+            });
           }, 1500);
         } else {
           this.alertLogin = false;
@@ -306,7 +306,7 @@ export default {
     showPassword() {
       return this.isPassword;
     },
-    
+
     alertRegister() {
       return this.alertRegister;
     },
