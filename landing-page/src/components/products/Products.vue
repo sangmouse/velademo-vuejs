@@ -20,7 +20,6 @@
       </div>
     </div>
     <Cart />
-  
   </div>
 
   <!-- modal view info -->
@@ -67,8 +66,8 @@
 <script lang="ts">
 import "./products.scss";
 import Drawer from "../drawer/Drawer.vue";
-import http from "@/api/request";
 import Product from "../product/Product.vue";
+import requestUnauthorized from "@/api/request";
 
 export default {
   data() {
@@ -93,7 +92,9 @@ export default {
     },
   },
   async created() {
-    const response = await http.get("/api/products?page=1&size=8");
+    const response = await requestUnauthorized.get(
+      "/api/products?page=1&size=8"
+    );
     this.products = response;
   },
 };

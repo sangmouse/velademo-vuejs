@@ -24,15 +24,17 @@
               </RouterLink>
               <p>$85.52</p>
               <div class="action">
-                <button class="btn btn-increment" @click="handleDiminishQty">-</button>
-                <p class="quantity">{{quantity}}</p>
-                <button class="btn btn-increment" @click="handleInscreQty">+</button>
+                <button class="btn btn-increment" @click="handleDiminishQty">
+                  -
+                </button>
+                <p class="quantity">{{ quantity }}</p>
+                <button class="btn btn-increment" @click="handleInscreQty">
+                  +
+                </button>
               </div>
             </div>
           </div>
-          <button class="btn-remove"
-          @click="handleDelete"
-          >X</button>
+          <button class="btn-remove" @click="handleDelete">X</button>
         </div>
       </div>
       <div class="total-price">
@@ -42,14 +44,16 @@
       <p class="privacy">
         Shipping, taxes, and discounts will be calculated at checkout.
       </p>
-      <button class="btn-view-cart">Update Cart</button>
+      <button class="btn-view-cart" v-on:click="handleUpdateCart">
+        Update Cart
+      </button>
     </div>
   </a-drawer>
 </template>
-  <script lang="ts">
+<script lang="ts">
 import "./cart.scss";
 export default {
-    name:'Cart',
+  name: "Cart",
   data() {
     return {
       visible: false,
@@ -57,29 +61,36 @@ export default {
     };
   },
   methods: {
-    handleCloseCart(){
-        this.$store.commit('CLOSE_CART')
+    handleCloseCart() {
+      this.$store.commit("CLOSE_CART");
     },
-    handleDelete(){
+    handleDelete() {},
+    handleInscreQty() {
+      this.quantity += 1;
     },
-    handleInscreQty(){
-      this.quantity += 1 
+    handleDiminishQty() {
+      this.quantity -= 1;
     },
-    handleDiminishQty(){
-      this.quantity -= 1 
-    }
-  },
-  computed:{
-    visible(){
-        return this.$store.state.cart.visibleCart
-    },
-    quantity(){
-      if(this.quantity < 1 ){
-        return this.quantity = 1
+    handleUpdateCart() {
+      if (this.$store.state.auth.isLogin) {
+        this.$store.commit("CLOSE_CART");
+
+        this.$router.push({
+          name: "login",
+        });
       }
-      return this.quantity
-    }
-  }
+    },
+  },
+  computed: {
+    visible() {
+      return this.$store.state.cart.visibleCart;
+    },
+    quantity() {
+      if (this.quantity < 1) {
+        return (this.quantity = 1);
+      }
+      return this.quantity;
+    },
+  },
 };
 </script>
-  

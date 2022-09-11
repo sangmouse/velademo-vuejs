@@ -93,12 +93,19 @@
               <img src="../../assets/images/user.png" alt="user-i" />
             </RouterLink>
           </p>
-          <p class="link" v-if="!isLogin" >
-            <button @click="handleLogout" >Logout</button>
+          <p class="link" v-if="!isLogin">
+            <button @click="handleLogout">Logout</button>
           </p>
-          <p class="link" v-else >
-            <RouterLink to="/account/login" @click="handleStatusLogin('login')">Login /</RouterLink>
-            <RouterLink to="/account/register" @click="handleStatusLogin('register')"> Sign up</RouterLink>
+          <p class="link" v-else>
+            <RouterLink to="/account/login" @click="handleStatusLogin('login')"
+              >Login /</RouterLink
+            >
+            <RouterLink
+              to="/account/register"
+              @click="handleStatusLogin('register')"
+            >
+              Sign up</RouterLink
+            >
           </p>
         </li>
         <button
@@ -108,11 +115,7 @@
         >
           <img src="../../assets/images/search.png" alt="search-i" />
         </button>
-        <button
-          class="btn-shop-bag"
-          type="button"
-          @click="showCart"
-        >
+        <button class="btn-shop-bag" type="button" @click="showCart">
           <img src="../../assets/images/shopping-bag.png" alt="shop-bag" />
           <small class="quantity">o</small>
         </button>
@@ -165,6 +168,7 @@
 import "./header.scss";
 import Drawer from "../../components/drawer/Drawer.vue";
 import Cart from "../../components/cart/Cart.vue";
+import { setJwtToken } from "@/utils/helpers";
 
 export default {
   components: { Drawer, Cart },
@@ -176,26 +180,24 @@ export default {
     };
   },
   created() {
-    this.$store.commit('CHECK_IS_LOGIN')
+    this.$store.commit("CHECK_IS_LOGIN");
   },
-  computed:{
-    isLogin(){
-      return this.$store.state.auth.isLogin
+  computed: {
+    isLogin() {
+      return this.$store.state.auth.isLogin;
     },
   },
   methods: {
     showCart() {
       this.$store.commit("ISVISIBLE_CART");
     },
-    handleStatusLogin(status){
-      this.$store.commit("STATUS_LOGIN", status)
+    handleStatusLogin(status) {
+      this.$store.commit("STATUS_LOGIN", status);
     },
-    handleLogout(){
-      localStorage.removeItem("token")
-      this.$router.push({
-            name: "login",
-          });
-      this.$store.commit('CHECK_IS_LOGIN')
+    handleLogout() {
+      setJwtToken("");
+      window.localStorage.setItem("logout", "false");
+      this.$store.commit("CHECK_IS_LOGIN");
     },
     handleVisibleMenu() {
       this.isVisible = true;
