@@ -42,6 +42,7 @@ import Table from "../components/table/Table.vue";
 import http from "@/api/request";
 import { API } from "@/constants/api";
 import requestUnauthorized from "./../api/request";
+import { getJwtToken } from "./../utils/helpers";
 
 const token = localStorage.getItem("token-admin");
 
@@ -119,13 +120,19 @@ export default {
   },
 
   created() {
-    requestUnauthorized
-      .get(`${API.ADMIN.PRODUCT_LIST}?page=1&&size=10`)
-      .then((res) => {
-        const data = this.transformData(res);
-        this.source = data;
-      })
-      .catch((err) => console.log(err));
+    if (!getJwtToken()) {
+      this.$router.push({
+        name: "login-page",
+      });
+    } else {
+      requestUnauthorized
+        .get(`${API.ADMIN.PRODUCT_LIST}?page=1&&size=10`)
+        .then((res) => {
+          const data = this.transformData(res);
+          this.source = data;
+        })
+        .catch((err) => console.log(err));
+    }
   },
   computed: {
     source() {

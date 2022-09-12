@@ -119,8 +119,6 @@ import { SyncOutlined } from "@ant-design/icons-vue";
 import requestUnauthorized from "./../../../api/request";
 import "./add-product.scss";
 
-const token = localStorage.getItem("token-admin");
-
 interface FormState {
   name: string;
   price: string;
@@ -188,21 +186,16 @@ export default defineComponent({
         fileList.value.forEach((file: any) => {
           formData.append("files", file?.originFileObj as any);
         });
-
         const jsonFile = {
           displayName: values?.name?.trim(),
           price: values?.price?.trim(),
           description: values?.description?.trim(),
           categories: values?.categories,
         };
-
         const postData = JSON.stringify(jsonFile);
         formData.append("jsonFile", postData);
-
-        http
-          .post("/api/admin/addProduct", formData, {
-            headers: { Authorization: `Bearer ${token?.length && token}` },
-          })
+        requestUnauthorized
+          .post("/api/admin/addProduct", formData)
           .then((res) => {
             setTimeout(() => {
               loading.value = false;

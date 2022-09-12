@@ -21,11 +21,24 @@
 <script lang="ts">
 import Header from "./layouts/header/Header.vue";
 import Footer from "./layouts/footer/Footer.vue";
-import { getJwtToken } from "./utils/helpers";
+import { getJwtToken, setJwtToken } from "./utils/helpers";
 export default {
   components: {
     Header,
     Footer,
+  },
+  methods: {
+    syncLogout(event) {
+      if (event.key === "logout") {
+        setJwtToken("");
+        this.$router.push({
+          name: "login-page",
+        });
+      }
+    },
+  },
+  updated() {
+    window.addEventListener("storage", this.syncLogout);
   },
 };
 </script>

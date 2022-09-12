@@ -137,12 +137,10 @@
   </div>
 </template>
 <script lang="ts">
-import http from "@/api/request";
 import { API } from "@/constants/api";
 import "./product-detail.scss";
 import requestUnauthorized from "./../../api/request";
 
-const token = localStorage.getItem("token-admin");
 export default {
   data() {
     const getImgUrl = (i: number) => {

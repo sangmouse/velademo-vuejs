@@ -20,9 +20,9 @@
             </li>
           </ul>
         </div>
-        <div class="profile" @click="handleLogout">
+        <button type="button" class="profile" @click="handleLogout">
           <p>Sign out</p>
-        </div>
+        </button>
         <button type="button" class="btn-burger" v-on:click="handleVisibleMenu">
           <span>
             <img src="../../assets/images/menu-burger.png" alt="btn-burger" />
@@ -56,6 +56,7 @@
 </template>
 
 <script lang="ts">
+import { setJwtToken } from "@/utils/helpers";
 import Drawer from "../../components/drawer/Drawer.vue";
 import "./header.scss";
 export default {
@@ -73,6 +74,8 @@ export default {
       this.isVisible = false;
     },
     handleLogout() {
+      setJwtToken("");
+      window.localStorage.setItem("logout", "false");
       this.$store.commit("LOGOUT");
       if (!this.$store.state.auth.isLogin) {
         this.$router.push("/login");
