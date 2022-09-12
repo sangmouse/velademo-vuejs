@@ -38,7 +38,7 @@
                   <button
                     class="btn-add-to-cart"
                     type="button"
-                    @click="showCart"
+                    @click="showCartDetail(productDetail?.id)"
                   >
                     <p class="icon">
                       <img
@@ -75,7 +75,10 @@
                     v-bind:key="product.id"
                   >
                     <div class="action">
-                      <button class="btn btn-add-cart" @click="showCart">
+                      <button
+                        class="btn btn-add-cart"
+                        @click="showCart(product.id)"
+                      >
                         <span>
                           <img
                             src="../../assets/images/shopping-bag-16.png"
@@ -140,7 +143,22 @@ export default {
     };
   },
   methods: {
-    showCart() {
+    showCartDetail(id) {
+      const index = this.products.findIndex((item) => item.id === id);
+      const data = this.products[index];
+      const quantity = this.quantity;
+      // console.log(quantity);
+      this.$store.commit("ADD_PRODUCT_DETAIL", {
+        id: id,
+        quantity: quantity,
+        data: data,
+      });
+      this.$store.commit("ISVISIBLE_CART");
+    },
+    showCart(id) {
+      const index = this.products.findIndex((item) => item.id === id);
+      const data = this.products[index];
+      this.$store.commit("ADD_PRODUCT_ONE", data);
       this.$store.commit("ISVISIBLE_CART");
     },
     handleCloseDrawer() {

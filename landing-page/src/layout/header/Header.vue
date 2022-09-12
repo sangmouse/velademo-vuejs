@@ -93,12 +93,19 @@
               <img src="../../assets/images/user.png" alt="user-i" />
             </RouterLink>
           </p>
-          <p class="link" v-if="!isLogin" >
-            <button @click="handleLogout" >Logout</button>
+          <p class="link" v-if="!isLogin">
+            <button @click="handleLogout">Logout</button>
           </p>
-          <p class="link" v-else >
-            <RouterLink to="/account/login" @click="handleStatusLogin('login')">Login /</RouterLink>
-            <RouterLink to="/account/register" @click="handleStatusLogin('register')"> Sign up</RouterLink>
+          <p class="link" v-else>
+            <RouterLink to="/account/login" @click="handleStatusLogin('login')"
+              >Login /</RouterLink
+            >
+            <RouterLink
+              to="/account/register"
+              @click="handleStatusLogin('register')"
+            >
+              Sign up</RouterLink
+            >
           </p>
         </li>
         <button
@@ -108,13 +115,9 @@
         >
           <img src="../../assets/images/search.png" alt="search-i" />
         </button>
-        <button
-          class="btn-shop-bag"
-          type="button"
-          @click="showCart"
-        >
+        <button class="btn-shop-bag" type="button" @click="showCart">
           <img src="../../assets/images/shopping-bag.png" alt="shop-bag" />
-          <small class="quantity">o</small>
+          <small class="quantity">{{ qty }}</small>
         </button>
       </ul>
     </div>
@@ -173,29 +176,34 @@ export default {
       isVisible: false,
       isVisibleInputSearch: false,
       inputSearch: "",
+      qty: 0,
     };
   },
   created() {
-    this.$store.commit('CHECK_IS_LOGIN')
+    this.$store.commit("CHECK_IS_LOGIN");
+    this.qty = this.$store.state.cart.cart.length;
   },
-  computed:{
-    isLogin(){
-      return this.$store.state.auth.isLogin
+  computed: {
+    isLogin() {
+      return this.$store.state.auth.isLogin;
+    },
+    qty() {
+      return (this.qty = this.$store.state.cart.cart.length);
     },
   },
   methods: {
     showCart() {
       this.$store.commit("ISVISIBLE_CART");
     },
-    handleStatusLogin(status){
-      this.$store.commit("STATUS_LOGIN", status)
+    handleStatusLogin(status) {
+      this.$store.commit("STATUS_LOGIN", status);
     },
-    handleLogout(){
-      localStorage.removeItem("token")
+    handleLogout() {
+      localStorage.removeItem("token");
       this.$router.push({
-            name: "login",
-          });
-      this.$store.commit('CHECK_IS_LOGIN')
+        name: "login",
+      });
+      this.$store.commit("CHECK_IS_LOGIN");
     },
     handleVisibleMenu() {
       this.isVisible = true;

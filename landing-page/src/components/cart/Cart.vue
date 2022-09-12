@@ -8,78 +8,114 @@
   >
     <div id="view-cart">
       <div class="products">
-        <div class="item">
+        <div class="item" v-for="product in cart" :key="product.id">
           <div class="info">
             <div class="img">
               <RouterLink to="/">
-                <img
-                  src="../../assets/images/products/product_3_xs.jpg"
-                  alt="product-img"
-                />
+                <img src="" alt="product-img" />
               </RouterLink>
             </div>
             <div class="order">
               <RouterLink to="/sdfdsf">
-                <h5>Outdoor Dining Table</h5>
+                <h5>{{ product.name }}</h5>
               </RouterLink>
-              <p>$85.52</p>
+              <p>$ {{ product.price }}</p>
               <div class="action">
-                <button class="btn btn-increment" @click="handleDiminishQty">-</button>
-                <p class="quantity">{{quantity}}</p>
-                <button class="btn btn-increment" @click="handleInscreQty">+</button>
+                <button
+                  class="btn btn-increment"
+                  @click="handleDiminishQty(product.id)"
+                >
+                  -
+                </button>
+                <p class="quantity">{{ product.quantity }}</p>
+                <button
+                  class="btn btn-increment"
+                  @click="handleInscreQty(product.id)"
+                >
+                  +
+                </button>
               </div>
             </div>
           </div>
-          <button class="btn-remove"
-          @click="handleDelete"
-          >X</button>
+          <button class="btn-remove" @click="handleDelete(product.id)">
+            X
+          </button>
         </div>
       </div>
       <div class="total-price">
         <p>Subtotal</p>
-        <h5>$987.34</h5>
+        <h5>${{ totalCoin }}</h5>
       </div>
       <p class="privacy">
         Shipping, taxes, and discounts will be calculated at checkout.
       </p>
-      <button class="btn-view-cart">Update Cart</button>
+      <button class="btn-view-cart" @click="handleUpdateCart">
+        Update Cart
+      </button>
     </div>
   </a-drawer>
 </template>
-  <script lang="ts">
+<script lang="ts">
+import http from "@/api/request";
 import "./cart.scss";
+const token = localStorage.getItem("token-admin");
 export default {
-    name:'Cart',
+  name: "Cart",
   data() {
     return {
       visible: false,
       quantity: 1,
+      cart: [],
     };
   },
   methods: {
-    handleCloseCart(){
-        this.$store.commit('CLOSE_CART')
+    handleCloseCart() {
+      this.$store.commit("CLOSE_CART");
     },
-    handleDelete(){
+    handleDelete(id) {
+      this.$store.commit("DELETE_ITEM_CART", id);
     },
-    handleInscreQty(){
-      this.quantity += 1 
+    handleInscreQty(id) {
+      const index = this.cart.findIndex((item) => item.id == id);
+      this.cart[index].quantity = this.cart[index].quantity + 1;
     },
-    handleDiminishQty(){
-      this.quantity -= 1 
-    }
-  },
-  computed:{
-    visible(){
-        return this.$store.state.cart.visibleCart
-    },
-    quantity(){
-      if(this.quantity < 1 ){
-        return this.quantity = 1
+    handleDiminishQty(id) {
+      const index = this.cart.findIndex((item) => item.id == id);
+      if (this.cart[index].quantity <= 2) {
+        this.cart[index].quantity = 1;
       }
-      return this.quantity
-    }
-  }
+      this.cart[index].quantity = this.cart[index].quantity - 1;
+    },
+    handleUpdateCart() {
+      this.$store.dispatch("updateCart", this.cart);
+    },
+  },
+  computed: {
+    totalCoin() {
+      const total = this.cart.map((item) => item.quantity * item.price);
+      return total
+        .reduce((total, currentValue) => {
+          return total + currentValue;
+        }, 0)
+        .toFixed(2);
+    },
+    visible() {
+      return this.$store.state.cart.visibleCart;
+    },
+    quantity() {
+      if (this.quantity < 1) {
+        return (this.quantity = 1);
+      }
+      return this.quantity;
+    },
+    cart() {
+      return this.$store.state.cart.cart;
+    },
+  },
+  async created() {
+    await this.$store.dispatch("updateCartCurrent");
+    this.cart = this.$store.state.cart.cart;
+    // console.log(this.cart);
+  },
 };
 </script>
-  

@@ -12,12 +12,6 @@
             <li>
               <RouterLink to="/">Products</RouterLink>
             </li>
-            <li>
-              <RouterLink to="/user">User</RouterLink>
-            </li>
-            <li>
-              <RouterLink to="/cart">Cart</RouterLink>
-            </li>
           </ul>
         </div>
         <div class="profile" @click="handleLogout">

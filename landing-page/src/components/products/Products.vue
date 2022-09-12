@@ -20,7 +20,6 @@
       </div>
     </div>
     <Cart />
-  
   </div>
 
   <!-- modal view info -->
@@ -82,15 +81,22 @@ export default {
     Product,
   },
   methods: {
-    showCart() {
+    showCart(id) {
+      const index = this.products.findIndex((item) => item.id === id);
+      const infor = this.products[index];
+      const data = {
+        listImg: infor.images,
+        id: infor.id,
+        name: infor.displayName,
+        price: infor.price,
+      };
+      this.$store.commit("ADD_PRODUCT_ONE", data);
       this.$store.commit("ISVISIBLE_CART");
     },
     handleCloseDrawer(event: any) {
       this.isVisibleDrawer = false;
     },
-    handleVisibleViewInfoModal() {
-      // this.isVisible = true;
-    },
+    handleVisibleViewInfoModal() {},
   },
   async created() {
     const response = await http.get("/api/products?page=1&size=8");

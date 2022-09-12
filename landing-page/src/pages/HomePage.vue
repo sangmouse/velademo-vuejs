@@ -14,5 +14,6 @@ export default {
     SlideShow,
     Products,
   },
+
 };
 </script>
