@@ -1,6 +1,8 @@
 import { getJwtToken } from "@/utils/helpers";
 import axios from "axios";
 import { useRouter } from "vue-router";
+import { toastError } from "@/utils/toast";
+import { store } from "../stores";
 
 const API_URL = "http://localhost:8081";
 
@@ -36,11 +38,15 @@ requestUnauthorized.interceptors.response.use(
   },
   (error) => {
     const router = useRouter();
-    if (error?.response?.data?.message === "No authorization token was found") {
-      sessionStorage.removeItem("jwt");
-      window.localStorage.setItem("logout", "false");
-      // this.$store.commit("CHECK_IS_LOGIN");
-      router.push("/login");
+    if (
+      error?.response?.data?.error_message?.includes("The Token has expired")
+    ) {
+      // window.localStorage.setItem("logout", "false");
+      store.commit("LOGOUT");
+      toastError("Session Expired");
+      router?.push({
+        name: "login-page",
+      });
     }
     return Promise.reject(error);
   }

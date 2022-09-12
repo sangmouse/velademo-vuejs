@@ -86,8 +86,14 @@ export default {
       this.cart[index].quantity = this.cart[index].quantity - 1;
     },
     handleUpdateCart() {
+      if (this.$store.state.auth.isLogin) {
+        this.$router.push({
+          name: "login",
+        });
+      } else {
+        this.$store.dispatch("updateCart", this.cart);
+      }
       this.handleCloseCart();
-      this.$store.dispatch("updateCart", this.cart);
     },
   },
   computed: {
@@ -109,7 +115,7 @@ export default {
       return this.quantity;
     },
     cart() {
-      return this.cart = this.$store.state.cart.cart;
+      return (this.cart = this.$store.state.cart.cart);
     },
   },
 };

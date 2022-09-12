@@ -7,13 +7,13 @@
             <img src="../../assets/images/logo.png" alt="logo" />
           </RouterLink>
         </div>
-        <div class="menus">
+        <!-- <div class="menus">
           <ul>
             <li>
               <RouterLink to="/">Products</RouterLink>
             </li>
           </ul>
-        </div>
+        </div> -->
         <button type="button" class="profile" @click="handleLogout">
           <p>Sign out</p>
         </button>
@@ -35,14 +35,17 @@
       <div id="menu-mobile">
         <div class="body">
           <div class="item">
-            <RouterLink to="/"><p>Products</p></RouterLink>
+            <!-- <RouterLink to="/"><p>Products</p></RouterLink> -->
+            <button type="button" class="profile" @click="handleLogout">
+              <p>Sign out</p>
+            </button>
           </div>
-          <div class="item">
+          <!-- <div class="item">
             <RouterLink to="/user"><p>User</p></RouterLink>
           </div>
           <div class="item">
             <RouterLink to="/cart"><p>Cart</p></RouterLink>
-          </div>
+          </div> -->
         </div>
       </div>
     </Drawer>

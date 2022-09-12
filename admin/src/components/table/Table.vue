@@ -24,8 +24,13 @@
       </template>
     </a-table>
     <div class="paginate">
-      <p>Showing 41 to 50 of 50 entries</p>
-      <a-pagination showLessItems :total="50" :showSizeChanger="false" @change="handleChangePage" />
+      <p></p>
+      <a-pagination
+        showLessItems
+        :total="50"
+        :showSizeChanger="false"
+        @change="handleChangePage"
+      />
     </div>
   </div>
 </template>
@@ -36,10 +41,9 @@ import "./table.scss";
 
 export default {
   methods: {
-    handleChangePage(pageNumber){
-    this.$emit('handleChangePage', pageNumber )
-    
-  }
+    handleChangePage(pageNumber) {
+      this.$emit("handleChangePage", pageNumber);
+    },
   },
   props: {
     columns: Array,

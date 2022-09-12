@@ -1,5 +1,7 @@
 import { getJwtToken } from "@/utils/helpers";
+import { toastError } from "@/utils/toast";
 import axios from "axios";
+import { store } from "../stores";
 
 const API_URL = "http://localhost:8081";
 
@@ -34,10 +36,14 @@ requestUnauthorized.interceptors.response.use(
     return response.data;
   },
   (error) => {
-    if (error?.response?.data?.message === "No authorization token was found") {
+    if (
+      error?.response?.data?.error_message?.includes("The Token has expired") ||
+      error?.response?.status === 403
+    ) {
       sessionStorage.removeItem("jwt");
       window.localStorage.setItem("logout", "false");
-      // this.$store.commit("CHECK_IS_LOGIN");
+      toastError("Session Expired");
+      store.commit("CHECK_IS_LOGIN");
     }
     return Promise.reject(error);
   }

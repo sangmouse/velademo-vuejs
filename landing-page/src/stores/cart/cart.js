@@ -1,4 +1,4 @@
-import http from "../../api/request";
+import requestUnauthorized from "../../api/request";
 import { arraymove } from "../../components/comon/common";
 
 const cart = {
@@ -47,12 +47,7 @@ const cart = {
   actions: {
     async updateCartCurrent(context) {
       try {
-        const token = localStorage.getItem("token");
-        const response = await http.get("/api/cart/62", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await requestUnauthorized.get("/api/cart/62");
         const data = response;
         context.commit("UPDATE_CART_CURRENT", data);
       } catch (error) {
@@ -66,13 +61,10 @@ const cart = {
           count: item?.quantity,
         }));
         const dataSubmit = {
-          userid: 62,
+          userid: 2,
           productRequestList: dataUdpateCart,
         };
-        console.log(dataUdpateCart);
-        const token = localStorage.getItem("token");
         const response = await http.post(`/api/cart/add`, dataSubmit);
-        console.log(response, "response");
       } catch (err) {
         console.log(err);
       }

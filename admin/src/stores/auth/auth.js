@@ -12,12 +12,12 @@ const auth = {
       setJwtToken(token);
       window.localStorage.removeItem("logout");
     },
-    LOGIN_ERROR(state) {
-      state.error_message = "Username or password is incorrect";
+    LOGIN_ERROR(state, msg) {
+      state.error_message = msg;
       state.isLogin = false;
     },
     LOGOUT(state) {
-      localStorage.removeItem("token-admin");
+      sessionStorage.removeItem("jwt");
       state.isLogin = false;
       state.error_message = "";
     },
@@ -29,8 +29,13 @@ const auth = {
         const token = response?.access_token;
         context.commit("LOGIN_SUCCESS", token);
       } catch (error) {
-        if (error.response.status === 401) {
-          context.commit("LOGIN_ERROR");
+        if (
+          error.response.status === 404 ||
+          error?.response?.data?.Message?.includes(
+            "Username password incorrect"
+          )
+        ) {
+          context.commit("LOGIN_ERROR", error?.response?.data?.Message || "");
         }
       }
     },
