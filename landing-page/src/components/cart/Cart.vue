@@ -109,13 +109,8 @@ export default {
       return this.quantity;
     },
     cart() {
-      return this.$store.state.cart.cart;
+      return this.cart = this.$store.state.cart.cart;
     },
-  },
-  async created() {
-    await this.$store.dispatch("updateCartCurrent");
-    this.cart = this.$store.state.cart.cart;
-    console.log(this.cart);
   },
 };
 </script>

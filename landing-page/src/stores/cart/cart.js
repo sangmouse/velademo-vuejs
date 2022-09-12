@@ -53,7 +53,6 @@ const cart = {
             Authorization: `Bearer ${token}`,
           },
         });
-        // console.log(response, "updateCartCurrent");
         const data = response;
         context.commit("UPDATE_CART_CURRENT", data);
       } catch (error) {
@@ -61,7 +60,6 @@ const cart = {
       }
     },
     async updateCart(_, data) {
-      // console.log(data, "data");
       try {
         const dataUdpateCart = data?.map((item) => ({
           id: item?.id,
@@ -73,17 +71,10 @@ const cart = {
         };
         console.log(dataUdpateCart);
         const token = localStorage.getItem("token");
-        const response = await http.post(
-          `/api/cart/add`,
-          dataSubmit
-          // ,{headers: { Authorization: `Bearer ${token?.length && token}` },}
-        );
+        const response = await http.post(`/api/cart/add`, dataSubmit);
         console.log(response, "response");
       } catch (err) {
         console.log(err);
-        // if (err.response.status === 401) {
-        // context.commit("INCORECT_LOGIN");
-        // }
       }
     },
   },

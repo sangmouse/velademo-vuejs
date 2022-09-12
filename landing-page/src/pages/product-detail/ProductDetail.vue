@@ -147,7 +147,6 @@ export default {
       console.log(id);
       const index = this.products.findIndex((item) => item.id === id);
       const infor = this.products[index];
-      console.log(infor);
       const data = {
         listImg: infor.images,
         id: infor.id,
@@ -194,8 +193,12 @@ export default {
   },
   async created() {
     const products = await http.get("/api/products?page=1&size=8");
+
     this.products = products;
     const response = await http.get(`/api/product/${this.$route.params.id}`);
+    if (response) {
+      this.products.push(response);
+    }
     this.productDetail = response;
     this.$watch(
       () => this.$route.params.id,

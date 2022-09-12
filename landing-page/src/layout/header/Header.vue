@@ -117,7 +117,7 @@
         </button>
         <button class="btn-shop-bag" type="button" @click="showCart">
           <img src="../../assets/images/shopping-bag.png" alt="shop-bag" />
-          <small class="quantity">{{ qty }}</small>
+          <small class="quantity">{{ qty || "o" }}</small>
         </button>
       </ul>
     </div>
@@ -182,7 +182,6 @@ export default {
   },
   created() {
     this.$store.commit("CHECK_IS_LOGIN");
-    this.qty = this.$store.state.cart.cart.length;
   },
   computed: {
     isLogin() {
