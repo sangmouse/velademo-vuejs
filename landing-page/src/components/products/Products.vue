@@ -67,7 +67,7 @@
 import "./products.scss";
 import Drawer from "../drawer/Drawer.vue";
 import Product from "../product/Product.vue";
-import requestUnauthorized from "@/api/request";
+import requestAuthorized from "@/api/requestAuthorized";
 
 export default {
   data() {
@@ -100,9 +100,7 @@ export default {
     handleVisibleViewInfoModal() {},
   },
   async created() {
-    const response = await requestUnauthorized.get(
-      "/api/products?page=1&size=8"
-    );
+    const response = await requestAuthorized.get("/api/products?page=1&size=8");
     this.products = response;
   },
 };

@@ -192,6 +192,14 @@ export default {
     },
   },
 
+  created() {
+    if (!this.$store.state.auth.isLogin) {
+      this.$router.push({
+        name: "home",
+      });
+    }
+  },
+
   methods: {
     //login methods
 
@@ -291,9 +299,9 @@ export default {
             this.messageAlertRegister = "Create Account Successfully!";
           }
         } catch (error) {
-          if (error.response.status === 400) {
+          if (error?.response?.data?.Errors?.includes("Email đã tồn tại!")) {
             this.alertRegister = false;
-            this.messageAlertRegister = "Email has been used";
+            this.messageAlertRegister = error?.response?.data?.Errors || "";
           }
         }
       }

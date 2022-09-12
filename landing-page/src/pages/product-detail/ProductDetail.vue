@@ -123,11 +123,11 @@
 </template>
 
 <script lang="ts">
-import http from "@/api/request";
 import "./product-detail.scss";
 import Carousel from "../../components/carousel/Carousel.vue";
 import Drawer from "../../components/drawer/Drawer.vue";
 import Cart from "../../components/cart/Cart.vue";
+import requestAuthorized from "@/api/requestAuthorized";
 
 export default {
   data() {
@@ -192,10 +192,12 @@ export default {
     },
   },
   async created() {
-    const products = await http.get("/api/products?page=1&size=8");
+    const products = await requestAuthorized.get("/api/products?page=1&size=8");
 
     this.products = products;
-    const response = await http.get(`/api/product/${this.$route.params.id}`);
+    const response = await requestAuthorized.get(
+      `/api/product/${this.$route.params.id}`
+    );
     if (response) {
       this.products.push(response);
     }
@@ -203,7 +205,7 @@ export default {
     this.$watch(
       () => this.$route.params.id,
       async (value, _) => {
-        const response = await http.get(`/api/product/${value}`);
+        const response = await requestAuthorized.get(`/api/product/${value}`);
         this.productDetail = response;
         this.quantity = 1;
       }

@@ -210,6 +210,7 @@ export default {
       this.isVisible = false;
     },
     handleVisibleInputSearch() {
+      this.inputSearch = "";
       this.isVisibleInputSearch = !this.isVisibleInputSearch;
     },
     handleSearchProduct() {

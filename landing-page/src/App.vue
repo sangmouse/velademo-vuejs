@@ -23,7 +23,7 @@ export default {
     },
   },
   updated() {
-    window.addEventListener("storage", this.syncLogout);
+    // window.addEventListener("storage", this.syncLogout);
   },
   async created() {
     await this.$store.dispatch("updateCartCurrent");

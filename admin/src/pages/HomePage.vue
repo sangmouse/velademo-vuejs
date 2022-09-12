@@ -21,7 +21,7 @@
             <a-input
               class="input-search"
               size="large"
-              @input="search"
+              @input="debounceSearch"
               placeholder="Searching..."
             />
           </div>
@@ -43,8 +43,6 @@ import http from "@/api/request";
 import { API } from "@/constants/api";
 import requestUnauthorized from "./../api/request";
 import { getJwtToken } from "./../utils/helpers";
-
-const token = localStorage.getItem("token-admin");
 
 export default {
   components: { Table },
@@ -133,12 +131,23 @@ export default {
         })
         .catch((err) => console.log(err));
     }
+    this.$watch(
+      () => this.$store.state.auth.isLogin,
+      (value, _) => {
+        if (!this.$store.state.auth.isLogin) {
+          this.$router.push({
+            name: "login-page",
+          });
+        }
+      }
+    );
   },
   computed: {
     source() {
       return this.source;
     },
   },
+
   methods: {
     transformData(arr) {
       return arr.map((item) => ({
@@ -184,14 +193,18 @@ export default {
         this.source = [];
       }
     },
-    async search(e) {
-      this.searchProduct = e.target.value.trim();
-      if (this.searchProduct === "") {
-        this.startListProduct();
-      } else {
-        this.startListSearch();
-      }
+    debounceSearch(e) {
+      clearTimeout(this.debounce);
+      this.debounce = setTimeout(() => {
+        this.searchProduct = e.target.value.trim();
+        if (this.searchProduct === "") {
+          this.startListProduct();
+        } else {
+          this.startListSearch();
+        }
+      }, 600);
     },
+
     async handleChange(value) {
       // console.log(value);
       this.pageSize = value;

@@ -40,14 +40,14 @@
   </div>
 </template>
 <script lang="ts">
-import http from "@/api/request";
 import "./search-product.scss";
 import Product from "../../components/product/Product.vue";
 import Drawer from "../../components/drawer/Drawer.vue";
+import requestAuthorized from "@/api/requestAuthorized";
 export default {
   async created() {
     if (this.$route.query.q.length) {
-      this.searchResult = await http.get(
+      this.searchResult = await requestAuthorized.get(
         `/api/search?page=1&size=8&name=${this.$route.query.q}`
       );
     }
@@ -57,7 +57,7 @@ export default {
       async (value, _) => {
         this.search = value;
         if (value.trim().length > 0) {
-          this.searchResult = await http.get(
+          this.searchResult = await requestAuthorized.get(
             `/api/search?page=1&size=8&name=${this.$route.query.q}`
           );
         } else {

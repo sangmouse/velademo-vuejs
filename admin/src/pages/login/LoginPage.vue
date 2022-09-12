@@ -23,13 +23,18 @@
           layout="vertical"
           autocomplete="off"
           @finish="onFinish"
+          :validate-messages="validateMessages"
           class="login-form"
-          @finishFailed="onFinishFailed"
         >
           <a-form-item
+            :name="['email']"
             label="Email"
-            name="email"
-            :rules="[{ required: true, message: 'This field is required' }]"
+            :rules="[
+              {
+                required: true,
+                type: 'email',
+              },
+            ]"
           >
             <a-input
               v-model:value="formState.email"
@@ -38,9 +43,9 @@
           </a-form-item>
 
           <a-form-item
+            :name="['password']"
             label="Password"
-            name="password"
-            :rules="[{ required: true, message: 'This field is required' }]"
+            :rules="[{ required: true }]"
           >
             <a-input-password
               v-model:value="formState.password"
@@ -69,6 +74,12 @@ export default {
         email: "",
         password: "",
       },
+      validateMessages: {
+        required: "${label} is required",
+        types: {
+          email: "${label} is not valid",
+        },
+      },
     };
   },
   created() {
@@ -88,9 +99,6 @@ export default {
       if (this.$store.state.auth.isLogin) {
         this.$router.push("/");
       }
-    },
-    onFinishFailed(errorInfo) {
-      console.log("Failed:", errorInfo);
     },
   },
   computed: {

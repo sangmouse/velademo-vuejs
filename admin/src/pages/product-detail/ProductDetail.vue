@@ -30,7 +30,7 @@
                   <div class="fs-15 text-muted">
                     Updated Date :
                     <span class="text-body fw-medium">{{
-                      productDetail?.updatedDtm
+                      moment(productDetail?.updatedDtm).format("ll")
                     }}</span>
                   </div>
                   <div class="vr"></div>
@@ -82,7 +82,7 @@
                     <div class="flex-grow-1">
                       <p class="text-muted mb-1 fs-15">Created Date :</p>
                       <h5 class="mb-0 fs-15">
-                        {{ productDetail?.createdDtm }}
+                        {{ moment(productDetail?.createdDtm).format("ll") }}
                       </h5>
                     </div>
                   </div>
@@ -140,6 +140,7 @@
 import { API } from "@/constants/api";
 import "./product-detail.scss";
 import requestUnauthorized from "./../../api/request";
+import moment from "moment";
 
 export default {
   data() {
@@ -150,6 +151,11 @@ export default {
       getImgUrl,
       productDetail: null,
     };
+  },
+  methods: {
+    moment: function (date) {
+      return moment(date);
+    },
   },
   async created() {
     const response = await requestUnauthorized.get(

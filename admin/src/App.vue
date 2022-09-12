@@ -38,7 +38,7 @@ export default {
     },
   },
   updated() {
-    window.addEventListener("storage", this.syncLogout);
+    // window.addEventListener("storage", this.syncLogout);
   },
 };
 </script>
