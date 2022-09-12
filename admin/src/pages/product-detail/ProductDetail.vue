@@ -9,8 +9,8 @@
                 <img :src="getImgUrl(props.i)" />
               </a>
             </template>
-            <div v-for="item in productDetail?.images" :key="item">
-              <img :src="item.url" />
+            <div v-for="(item, index) in productDetail?.images" :key="item">
+              <img :src="getImgUrl(index)" />
             </div>
           </a-carousel>
         </div>
@@ -145,7 +145,7 @@ const token = localStorage.getItem("token-admin");
 export default {
   data() {
     const getImgUrl = (i: number) => {
-      return `../src/assets/images/products/product_${i + 1}.jpg`;
+      return this.productDetail?.images[i]?.url;
     };
     return {
       getImgUrl,

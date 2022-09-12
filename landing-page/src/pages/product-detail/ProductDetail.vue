@@ -38,7 +38,7 @@
                   <button
                     class="btn-add-to-cart"
                     type="button"
-                    @click="showCart"
+                    @click="showCartDetail(productDetail?.id)"
                   >
                     <p class="icon">
                       <img
@@ -75,7 +75,10 @@
                     v-bind:key="product.id"
                   >
                     <div class="action">
-                      <button class="btn btn-add-cart" @click="showCart">
+                      <button
+                        class="btn btn-add-cart"
+                        @click="showCart(product.id)"
+                      >
                         <span>
                           <img
                             src="../../assets/images/shopping-bag-16.png"
@@ -140,7 +143,34 @@ export default {
     };
   },
   methods: {
-    showCart() {
+    showCartDetail(id) {
+      console.log(id);
+      const index = this.products.findIndex((item) => item.id === id);
+      const infor = this.products[index];
+      const data = {
+        listImg: infor.images,
+        id: infor.id,
+        name: infor.displayName,
+        price: infor.price,
+        quantity: this.quantity,
+      };
+      this.$store.commit("ADD_PRODUCT_DETAIL", {
+        id: id,
+        data: data,
+      });
+      this.$store.commit("ISVISIBLE_CART");
+    },
+    showCart(id) {
+      const index = this.products.findIndex((item) => item.id === id);
+      const infor = this.products[index];
+      const data = {
+        listImg: infor.images,
+        id: infor.id,
+        name: infor.displayName,
+        price: infor.price,
+        quantity: 1,
+      };
+      this.$store.commit("ADD_PRODUCT_ONE", data);
       this.$store.commit("ISVISIBLE_CART");
     },
     handleCloseDrawer() {
@@ -163,14 +193,19 @@ export default {
   },
   async created() {
     const products = await http.get("/api/products?page=1&size=8");
+
     this.products = products;
     const response = await http.get(`/api/product/${this.$route.params.id}`);
+    if (response) {
+      this.products.push(response);
+    }
     this.productDetail = response;
     this.$watch(
       () => this.$route.params.id,
       async (value, _) => {
         const response = await http.get(`/api/product/${value}`);
         this.productDetail = response;
+        this.quantity = 1;
       }
     );
   },

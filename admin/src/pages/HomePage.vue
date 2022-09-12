@@ -93,21 +93,21 @@ export default {
           dataIndex: "categories",
           key: "categories",
         },
-        {
-          title: "Created Date",
-          dataIndex: "createdDate",
-          key: "createdDate",
-        },
-        {
-          title: "Updated Date",
-          dataIndex: "updatedDate",
-          key: "updatedDate",
-        },
-        {
-          title: "Created User",
-          dataIndex: "createdUser",
-          key: "createdUser",
-        },
+        // {
+        //   title: "Created Date",
+        //   dataIndex: "createdDate",
+        //   key: "createdDate",
+        // },
+        // {
+        //   title: "Updated Date",
+        //   dataIndex: "updatedDate",
+        //   key: "updatedDate",
+        // },
+        // {
+        //   title: "Created User",
+        //   dataIndex: "createdUser",
+        //   key: "createdUser",
+        // },
         {
           title: "Actions",
           key: "action",
@@ -145,17 +145,17 @@ export default {
           currency: "USD",
         }).format(item?.price),
         categories: item?.categories.map((item) => item.name).toString(),
-        createdDate: item.createdDtm
-          ?.slice(0, 10)
-          .split("-")
-          .reverse()
-          .join("-"),
-        updatedDate: item.updatedDtm
-          ?.slice(0, 10)
-          .split("-")
-          .reverse()
-          .join("-"),
-        createdUser: item.creator?.name,
+        // createdDate: item.createdDtm
+        //   ?.slice(0, 10)
+        //   .split("-")
+        //   .reverse()
+        //   .join("-"),
+        // updatedDate: item.updatedDtm
+        //   ?.slice(0, 10)
+        //   .split("-")
+        //   .reverse()
+        //   .join("-"),
+        // createdUser: item.creator?.name,
       }));
     },
     async startListSearch() {
@@ -199,7 +199,7 @@ export default {
       }
     },
     async handleChange(value) {
-      console.log(value);
+      // console.log(value);
       this.pageSize = value;
       if (this.searchProduct !== "") {
         this.startListSearch();

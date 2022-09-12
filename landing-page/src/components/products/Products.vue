@@ -81,15 +81,23 @@ export default {
     Product,
   },
   methods: {
-    showCart() {
+    showCart(id) {
+      const index = this.products.findIndex((item) => item.id === id);
+      const infor = this.products[index];
+      const data = {
+        listImg: infor.images,
+        id: infor.id,
+        name: infor.displayName,
+        price: infor.price,
+        quantity: 1,
+      };
+      this.$store.commit("ADD_PRODUCT_ONE", data);
       this.$store.commit("ISVISIBLE_CART");
     },
     handleCloseDrawer(event: any) {
       this.isVisibleDrawer = false;
     },
-    handleVisibleViewInfoModal() {
-      // this.isVisible = true;
-    },
+    handleVisibleViewInfoModal() {},
   },
   async created() {
     const response = await requestUnauthorized.get(

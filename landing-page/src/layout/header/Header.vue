@@ -117,7 +117,7 @@
         </button>
         <button class="btn-shop-bag" type="button" @click="showCart">
           <img src="../../assets/images/shopping-bag.png" alt="shop-bag" />
-          <small class="quantity">o</small>
+          <small class="quantity">{{ qty || "o" }}</small>
         </button>
       </ul>
     </div>
@@ -177,6 +177,7 @@ export default {
       isVisible: false,
       isVisibleInputSearch: false,
       inputSearch: "",
+      qty: 0,
     };
   },
   created() {
@@ -185,6 +186,9 @@ export default {
   computed: {
     isLogin() {
       return this.$store.state.auth.isLogin;
+    },
+    qty() {
+      return (this.qty = this.$store.state.cart.cart.length);
     },
   },
   methods: {
