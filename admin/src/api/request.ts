@@ -1,31 +1,45 @@
+import { getJwtToken } from "@/utils/helpers";
 import axios from "axios";
 
 const API_URL = "http://localhost:8081";
 
-const http = axios.create({
+const requestUnauthorized = axios.create({
   baseURL: API_URL,
+  timeout: 1000,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-http.interceptors.request.use(
-  (config) => {
-    // Do something before request is sent
-    return { ...config };
+requestUnauthorized.interceptors.request.use(
+  (request) => {
+    const token = getJwtToken();
+    if (token) {
+      request.headers["Authorization"] = `Bearer ${token}`;
+    }
+    // Edit request config
+    return request;
   },
-  (err) => {
-    // Do something with request errorgi
-    return Promise.reject(err);
+  (error) => {
+    // console.log(error);
+    return Promise.reject(error);
   }
 );
 
-http.interceptors.response.use(
+requestUnauthorized.interceptors.response.use(
   (response) => {
-    // Do something with response data
+    // console.log(response);
+    // Edit response config
+
     return response.data;
   },
-  (err) => {
-    // Do something with response error
-    return Promise.reject(err);
+  (error) => {
+    if (error?.response?.data?.message === "No authorization token was found") {
+      sessionStorage.removeItem("jwt");
+      window.localStorage.setItem("logout", "false");
+      // this.$store.commit("CHECK_IS_LOGIN");
+    }
+    return Promise.reject(error);
   }
 );
-
-export default http;
+export default requestUnauthorized;

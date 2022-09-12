@@ -116,6 +116,7 @@ import type { UploadChangeParam, UploadProps } from "ant-design-vue";
 import { computed, defineComponent, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { SyncOutlined } from "@ant-design/icons-vue";
+import requestUnauthorized from "./../../../api/request";
 import "./add-product.scss";
 
 const token = localStorage.getItem("token-admin");
@@ -139,18 +140,12 @@ export default defineComponent({
   },
 
   created() {
-    http
-      .get("/api/categories", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        this.categories = res?.map((item) => ({
-          value: item.id,
-          label: item.name,
-        }));
-      });
+    requestUnauthorized.get("/api/categories").then((res) => {
+      this.categories = res?.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+    });
   },
   setup() {
     const msgUpload = ref<string>("");
