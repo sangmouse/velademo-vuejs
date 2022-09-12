@@ -60,6 +60,7 @@
 <script>
 import "./login.scss";
 import router from "@/router";
+import { getJwtToken } from "./../../utils/helpers";
 export default {
   data() {
     return {
@@ -69,6 +70,13 @@ export default {
         password: "",
       },
     };
+  },
+  created() {
+    if (!getJwtToken()) {
+      this.$router.push("/login");
+    } else {
+      this.$router.push("/");
+    }
   },
   methods: {
     async onFinish(values) {

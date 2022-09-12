@@ -41,6 +41,8 @@ import "./home-page.scss";
 import Table from "../components/table/Table.vue";
 import http from "@/api/request";
 import { API } from "@/constants/api";
+import requestUnauthorized from "./../api/request";
+import { getJwtToken } from "./../utils/helpers";
 
 const token = localStorage.getItem("token-admin");
 
@@ -118,17 +120,19 @@ export default {
   },
 
   created() {
-    http
-      .get(`${API.ADMIN.PRODUCT_LIST}?page=1&&size=10`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        const data = this.transformData(res);
-        this.source = data;
-      })
-      .catch((err) => console.log(err));
+    if (!getJwtToken()) {
+      this.$router.push({
+        name: "login-page",
+      });
+    } else {
+      requestUnauthorized
+        .get(`${API.ADMIN.PRODUCT_LIST}?page=1&&size=10`)
+        .then((res) => {
+          const data = this.transformData(res);
+          this.source = data;
+        })
+        .catch((err) => console.log(err));
+    }
   },
   computed: {
     source() {
@@ -160,13 +164,8 @@ export default {
     },
     async startListSearch() {
       try {
-        const res = await http.get(
-          `/api/search?page=${this.pageNumber}&size=${this.pageSize}&name=${this.searchProduct}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+        const res = await requestUnauthorized.get(
+          `/api/search?page=${this.pageNumber}&size=${this.pageSize}&name=${this.searchProduct}`
         );
         const data = this.transformData(res);
         return (this.source = data);
@@ -176,13 +175,8 @@ export default {
     },
     async startListProduct() {
       try {
-        const response = await http.get(
-          `${API.ADMIN.PRODUCT_LIST}?page=${this.pageNumber}&&size=${this.pageSize}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+        const response = await requestUnauthorized.get(
+          `${API.ADMIN.PRODUCT_LIST}?page=${this.pageNumber}&&size=${this.pageSize}`
         );
         const data = this.transformData(response);
         this.source = data;

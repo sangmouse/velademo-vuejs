@@ -137,11 +137,10 @@
   </div>
 </template>
 <script lang="ts">
-import http from "@/api/request";
 import { API } from "@/constants/api";
 import "./product-detail.scss";
+import requestUnauthorized from "./../../api/request";
 
-const token = localStorage.getItem("token-admin");
 export default {
   data() {
     const getImgUrl = (i: number) => {
@@ -153,19 +152,16 @@ export default {
     };
   },
   async created() {
-    const response = await http.get(
-      `${API.ADMIN.PRODUCT_DETAIL}/${this.$route.params.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+    const response = await requestUnauthorized.get(
+      `${API.ADMIN.PRODUCT_DETAIL}/${this.$route.params.id}`
     );
     this.productDetail = response;
     this.$watch(
       () => this.$route.params.id,
       async (value, _) => {
-        const response = await http.get(`/api/admin/product/${value}`);
+        const response = await requestUnauthorized.get(
+          `/api/admin/product/${value}`
+        );
         this.productDetail = response;
       }
     );

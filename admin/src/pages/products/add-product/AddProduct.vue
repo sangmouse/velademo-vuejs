@@ -116,9 +116,8 @@ import type { UploadChangeParam, UploadProps } from "ant-design-vue";
 import { computed, defineComponent, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { SyncOutlined } from "@ant-design/icons-vue";
+import requestUnauthorized from "./../../../api/request";
 import "./add-product.scss";
-
-const token = localStorage.getItem("token-admin");
 
 interface FormState {
   name: string;
@@ -139,18 +138,12 @@ export default defineComponent({
   },
 
   created() {
-    http
-      .get("/api/categories", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        this.categories = res?.map((item) => ({
-          value: item.id,
-          label: item.name,
-        }));
-      });
+    requestUnauthorized.get("/api/categories").then((res) => {
+      this.categories = res?.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+    });
   },
   setup() {
     const msgUpload = ref<string>("");
@@ -193,21 +186,16 @@ export default defineComponent({
         fileList.value.forEach((file: any) => {
           formData.append("files", file?.originFileObj as any);
         });
-
         const jsonFile = {
           displayName: values?.name?.trim(),
           price: values?.price?.trim(),
           description: values?.description?.trim(),
           categories: values?.categories,
         };
-
         const postData = JSON.stringify(jsonFile);
         formData.append("jsonFile", postData);
-
-        http
-          .post("/api/admin/addProduct", formData, {
-            headers: { Authorization: `Bearer ${token?.length && token}` },
-          })
+        requestUnauthorized
+          .post("/api/admin/addProduct", formData)
           .then((res) => {
             setTimeout(() => {
               loading.value = false;
