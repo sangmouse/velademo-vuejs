@@ -56,7 +56,10 @@
   </a-drawer>
 </template>
 <script lang="ts">
+<<<<<<< HEAD
 import http from "@/api/request";
+=======
+>>>>>>> 515f640e2f759d01705f713ca5400538143df9ff
 import "./cart.scss";
 const token = localStorage.getItem("token-admin");
 export default {
