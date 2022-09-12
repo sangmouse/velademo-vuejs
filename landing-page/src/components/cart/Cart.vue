@@ -12,7 +12,7 @@
           <div class="info">
             <div class="img">
               <RouterLink to="/">
-                <img src="" alt="product-img" />
+                <img :src="product.listImg[0].url" alt="product-img" />
               </RouterLink>
             </div>
             <div class="order">
@@ -114,7 +114,7 @@ export default {
   async created() {
     await this.$store.dispatch("updateCartCurrent");
     this.cart = this.$store.state.cart.cart;
-    // console.log(this.cart);
+    console.log(this.cart);
   },
 };
 </script>

@@ -50,7 +50,7 @@ const cart = {
     async updateCartCurrent(context) {
       try {
         const token = localStorage.getItem("token");
-        const response = await http.get("/api/cart/2", {
+        const response = await http.get("/api/cart/62", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -59,7 +59,7 @@ const cart = {
         const data = response;
         context.commit("UPDATE_CART_CURRENT", data);
       } catch (error) {
-        alert("chua co du lieu trong gio hang");
+        console.log("chua co du lieu trong gio hang");
       }
     },
     async updateCart(_, data) {
@@ -69,11 +69,12 @@ const cart = {
           id: item?.id,
           count: item?.quantity,
         }));
+        console.log(dataUdpateCart);
         const token = localStorage.getItem("token");
-        const response = await http.post(`/api/cart/add`, dataUdpateCart, {
-          headers: { Authorization: `Bearer ${token?.length && token}` },
-        });
-        // console.log(response, "response");
+        const response = await http.post(`/api/cart/add`, dataUdpateCart
+          // ,{headers: { Authorization: `Bearer ${token?.length && token}` },}
+        );
+        console.log(response, "response");
       } catch (err) {
         console.log(err);
         // if (err.response.status === 401) {
