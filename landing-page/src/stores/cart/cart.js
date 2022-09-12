@@ -19,7 +19,6 @@ const cart = {
     ADD_PRODUCT_ONE(state, data) {
       const index = state.cart.findIndex((item) => item.id === data.id);
       if (index === -1) {
-        data.quantity = 1;
         state.cart.unshift(data);
       } else {
         state.cart[index].quantity = state.cart[index].quantity + 1;
@@ -31,11 +30,10 @@ const cart = {
     ADD_PRODUCT_DETAIL(state, payload) {
       const index = state.cart.findIndex((item) => item.id === payload.id);
       if (index === -1) {
-        payload.quantity = 1;
         state.cart.unshift(payload.data);
       } else {
         state.cart[index].quantity =
-          state.cart[index].quantity + payload.quantity;
+          state.cart[index].quantity + payload.data.quantity;
         if (state.cart.length > 1) {
           arraymove(state.cart, index, 0);
         }
@@ -69,9 +67,15 @@ const cart = {
           id: item?.id,
           count: item?.quantity,
         }));
+        const dataSubmit = {
+          userid: 62,
+          productRequestList: dataUdpateCart,
+        };
         console.log(dataUdpateCart);
         const token = localStorage.getItem("token");
-        const response = await http.post(`/api/cart/add`, dataUdpateCart
+        const response = await http.post(
+          `/api/cart/add`,
+          dataSubmit
           // ,{headers: { Authorization: `Bearer ${token?.length && token}` },}
         );
         console.log(response, "response");

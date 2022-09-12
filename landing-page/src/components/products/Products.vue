@@ -89,6 +89,7 @@ export default {
         id: infor.id,
         name: infor.displayName,
         price: infor.price,
+        quantity: 1,
       };
       this.$store.commit("ADD_PRODUCT_ONE", data);
       this.$store.commit("ISVISIBLE_CART");

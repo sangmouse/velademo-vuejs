@@ -12,7 +12,7 @@
           <div class="info">
             <div class="img">
               <RouterLink to="/">
-                <img :src="product.listImg[0].url" alt="product-img" />
+                <img :src="product?.listImg[0]?.url" alt="product-img" />
               </RouterLink>
             </div>
             <div class="order">
@@ -80,12 +80,13 @@ export default {
     },
     handleDiminishQty(id) {
       const index = this.cart.findIndex((item) => item.id == id);
-      if (this.cart[index].quantity <= 2) {
-        this.cart[index].quantity = 1;
+      if (this.cart[index].quantity <= 1) {
+        return (this.cart[index].quantity = 1);
       }
       this.cart[index].quantity = this.cart[index].quantity - 1;
     },
     handleUpdateCart() {
+      this.handleCloseCart();
       this.$store.dispatch("updateCart", this.cart);
     },
   },

@@ -1,40 +1,41 @@
 <template>
   <div>
-  <div class="container">
-    <div class="search">
-      <h1 class="search__title">
-        Search for
-        <span> "{{ search }}" </span> products on our site
-      </h1>
-      <div class="search-group">
-        <input
-          type="text"
-          v-model="search"
-          placeholder="Enter keywords to search..."
-          class="search-group__input form-control"
-        />
-        <div class="search-group-addon">
-          <button
-            class="btn search-group-addon__btn"
-            @click="handleSearch"
-            type="button"
-          >
-            <img src="../../assets/images/search.png" alt="search-i" />
-          </button>
-        </div>
-      </div>
-      <div class="search-list">
-        <div class="row">
-          <Product
-            v-for="product in searchResult"
-            v-bind:key="product.id"
-            :product="product"
-            @showCart="showCart"
+    <div class="container">
+      <div class="search">
+        <h1 class="search__title">
+          Search for
+          <span> "{{ search }}" </span> products on our site
+        </h1>
+        <div class="search-group">
+          <input
+            type="text"
+            v-model="search"
+            placeholder="Enter keywords to search..."
+            class="search-group__input form-control"
           />
+          <div class="search-group-addon">
+            <button
+              class="btn search-group-addon__btn"
+              @click="handleSearch"
+              type="button"
+            >
+              <img src="../../assets/images/search.png" alt="search-i" />
+            </button>
+          </div>
+        </div>
+        <div class="search-list">
+          <div class="row">
+            <Product
+              v-for="product in searchResult"
+              v-bind:key="product.id"
+              :product="product"
+              @showCart="showCart"
+              @handleVisibleViewInfoModal="handleVisibleViewInfoModal"
+            />
+          </div>
         </div>
       </div>
     </div>
-  </div>
     <Cart />
   </div>
 </template>
@@ -72,7 +73,18 @@ export default {
     };
   },
   methods: {
-    showCart() {
+    showCart(id) {
+      const index = this.searchResult.findIndex((item) => item.id === id);
+      const infor = this.searchResult[index];
+      console.log(infor);
+      const data = {
+        listImg: infor.images,
+        id: infor.id,
+        name: infor.displayName,
+        price: infor.price,
+        quantity: 1,
+      };
+      this.$store.commit("ADD_PRODUCT_ONE", data);
       this.$store.commit("ISVISIBLE_CART");
     },
     handleSearch() {
@@ -83,9 +95,9 @@ export default {
         },
       });
     },
-    handleCloseDrawer(){
+    handleCloseDrawer() {
       this.isVisibleViewCart = false;
-    }
+    },
   },
   components: { Product, Drawer },
 };

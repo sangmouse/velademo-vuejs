@@ -144,20 +144,33 @@ export default {
   },
   methods: {
     showCartDetail(id) {
+      console.log(id);
       const index = this.products.findIndex((item) => item.id === id);
-      const data = this.products[index];
-      const quantity = this.quantity;
-      // console.log(quantity);
+      const infor = this.products[index];
+      console.log(infor);
+      const data = {
+        listImg: infor.images,
+        id: infor.id,
+        name: infor.displayName,
+        price: infor.price,
+        quantity: this.quantity,
+      };
       this.$store.commit("ADD_PRODUCT_DETAIL", {
         id: id,
-        quantity: quantity,
         data: data,
       });
       this.$store.commit("ISVISIBLE_CART");
     },
     showCart(id) {
       const index = this.products.findIndex((item) => item.id === id);
-      const data = this.products[index];
+      const infor = this.products[index];
+      const data = {
+        listImg: infor.images,
+        id: infor.id,
+        name: infor.displayName,
+        price: infor.price,
+        quantity: 1,
+      };
       this.$store.commit("ADD_PRODUCT_ONE", data);
       this.$store.commit("ISVISIBLE_CART");
     },
@@ -189,6 +202,7 @@ export default {
       async (value, _) => {
         const response = await http.get(`/api/product/${value}`);
         this.productDetail = response;
+        this.quantity = 1;
       }
     );
   },
