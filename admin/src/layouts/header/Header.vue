@@ -71,8 +71,8 @@ export default {
       this.isVisible = false;
     },
     handleLogout() {
-      setJwtToken("");
-      window.localStorage.setItem("logout", "false");
+      // setJwtToken("");
+      // window.localStorage.setItem("logout", "false");
       this.$store.commit("LOGOUT");
       if (!this.$store.state.auth.isLogin) {
         this.$router.push("/login");

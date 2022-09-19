@@ -93,16 +93,16 @@ export default {
           dataIndex: "categories",
           key: "categories",
         },
-        // {
-        //   title: "Created Date",
-        //   dataIndex: "createdDate",
-        //   key: "createdDate",
-        // },
-        // {
-        //   title: "Updated Date",
-        //   dataIndex: "updatedDate",
-        //   key: "updatedDate",
-        // },
+        {
+          title: "Created Date",
+          dataIndex: "createdDate",
+          key: "createdDate",
+        },
+        {
+          title: "Updated Date",
+          dataIndex: "updatedDate",
+          key: "updatedDate",
+        },
         // {
         //   title: "Created User",
         //   dataIndex: "createdUser",
@@ -158,17 +158,17 @@ export default {
           currency: "USD",
         }).format(item?.price),
         categories: item?.categories.map((item) => item.name).toString(),
-        // createdDate: item.createdDtm
-        //   ?.slice(0, 10)
-        //   .split("-")
-        //   .reverse()
-        //   .join("-"),
-        // updatedDate: item.updatedDtm
-        //   ?.slice(0, 10)
-        //   .split("-")
-        //   .reverse()
-        //   .join("-"),
-        // createdUser: item.creator?.name,
+        createdDate: item.createdDtm
+          ?.slice(0, 10)
+          .split("-")
+          .reverse()
+          .join("-"),
+        updatedDate: item.updatedDtm
+          ?.slice(0, 10)
+          .split("-")
+          .reverse()
+          .join("-"),
+        createdUser: item.creator?.name,
       }));
     },
     async startListSearch() {

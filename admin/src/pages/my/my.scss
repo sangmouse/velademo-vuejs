@@ -1,0 +1,42 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 20px 30px 20px;
+    .left-side {
+      display: inline-flex;
+      align-items: center;
+      p {
+        font-size: 15px;
+        margin: 0 10px 0 0;
+        display: inline-block;
+      }
+      .select-page-size {
+        .ant-select {
+          .ant-select-selector {
+            display: flex;
+            height: 100%;
+            align-items: center;
+            border-radius: 5px;
+          }
+        }
+      }
+      a {
+        background-color: var(--vela-parag-purple);
+        color: var(--velasubmenu-bgcolor);
+        border-radius: 5px;
+        padding: 8px 15px;
+        font-size: 15px;
+        margin: 0 0 0 10px;
+      }
+    }
+    .right-side {
+      .input-search {
+        min-width: 500px;
+        border-radius: 5px;
+        &::placeholder {
+          font-size: 14px;
+        }
+      }
+    }
+  }

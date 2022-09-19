@@ -1,5 +1,6 @@
 import requestUnauthorized from "../../api/request";
 import { arraymove } from "../../components/comon/common";
+import http from '../../api/request'
 
 const cart = {
   state: {
@@ -64,7 +65,7 @@ const cart = {
           userid: 2,
           productRequestList: dataUdpateCart,
         };
-        const response = await http.post(`/api/cart/add`, dataSubmit);
+         await http.post(`/api/cart/add`, dataSubmit);
       } catch (err) {
         console.log(err);
       }

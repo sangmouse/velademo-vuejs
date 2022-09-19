@@ -92,8 +92,8 @@ export default {
         });
       } else {
         this.$store.dispatch("updateCart", this.cart);
+        this.handleCloseCart();
       }
-      this.handleCloseCart();
     },
   },
   computed: {
