@@ -44,6 +44,11 @@ const router = createRouter({
       name: "contact",
       component: () => import("../pages/contact-page/ContactUsPage.vue"),
     },
+    {
+      path: "/Pagination",
+      name: "Pagination",
+      component: () => import("@/pages/Pagination.vue"),
+    },
   ],
 });
 
