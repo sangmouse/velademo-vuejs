@@ -44,6 +44,11 @@ const router = createRouter({
       name: "contact",
       component: () => import("../pages/contact-page/ContactUsPage.vue"),
     },
+    {
+      path: "/Panigation",
+      name: "Panigation",
+      component: () => import("../pages/learn/Panigation.vue"),
+    },
   ],
 });
 
