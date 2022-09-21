@@ -203,7 +203,7 @@ export default defineComponent({
           .then((res) => {
             setTimeout(() => {
               loading.value = false;
-              message.value = "Create product successfully!";
+              message.value = "Create product successfully!";    
             }, 500);
             setTimeout(() => {
               router.push({
