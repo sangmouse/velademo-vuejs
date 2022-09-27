@@ -1,5 +1,6 @@
-import { setJwtToken } from "../../../../landing-page/src/utils/helpers";
-import requestUnauthorized from "../../api/request";
+import { setJwtToken } from "@/utils/helpers";
+import requestUnauthorized from "@/api/request";
+import { toastSuccess} from '@/utils/toast'
 
 const auth = {
   state: {
@@ -11,6 +12,7 @@ const auth = {
       state.isLogin = true;
       setJwtToken(token);
       window.localStorage.removeItem("logout");
+      toastSuccess('Login Success')
     },
     LOGIN_ERROR(state, msg) {
       state.error_message = msg;
@@ -20,6 +22,7 @@ const auth = {
       sessionStorage.removeItem("jwt");
       state.isLogin = false;
       state.error_message = "";
+      toastSuccess('Logout Success')
     },
   },
   actions: {

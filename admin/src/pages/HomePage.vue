@@ -118,19 +118,14 @@ export default {
   },
 
   created() {
-    if (!getJwtToken()) {
-      this.$router.push({
-        name: "login-page",
-      });
-    } else {
-      requestUnauthorized
-        .get(`${API.ADMIN.PRODUCT_LIST}?page=1&&size=10`)
-        .then((res) => {
-          const data = this.transformData(res);
-          this.source = data;
-        })
-        .catch((err) => console.log(err));
-    }
+    requestUnauthorized
+      .get(`${API.ADMIN.PRODUCT_LIST}?page=1&&size=10`)
+      .then((res) => {
+        const data = this.transformData(res);
+        this.source = data;
+      })
+      .catch((err) => console.log(err));
+
     this.$watch(
       () => this.$store.state.auth.isLogin,
       (value, _) => {
