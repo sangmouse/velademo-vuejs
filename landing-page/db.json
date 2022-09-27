@@ -6,7 +6,7 @@
       "description": "Most of us are familiar with the iconic design of the egg shaped chair floating in the air. The Hanging Egg Chair is a critically acclaimed design that has enjoyed praise worldwide ever since the distinctive sculptural shape was created.",
       "price": 56.8,
       "images": [
-        "../src/assets/images/products/product_1.jpg",
+        "https://cdn.shopify.com/s/files/1/0376/9440/6700/products/21_2_360x.jpg?v=1598253084",
         "../src/assets/images/products/product_2.jpg",
         "../src/assets/images/products/product_3.jpg",
         "../src/assets/images/products/product_4.jpg"

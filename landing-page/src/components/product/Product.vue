@@ -1,7 +1,6 @@
 <template>
   <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-6">
-    <h1>123456</h1>
-    <!-- <div class="product">
+    <div class="product">
       <div class="action">
         <button
           class="btn btn-add-cart"
@@ -29,7 +28,7 @@
         <h6 class="name">{{ product.displayName }}</h6>
       </RouterLink>
       <p class="price">${{ product.price }}</p>
-    </div> -->
+    </div>
   </div>
 </template>
 
