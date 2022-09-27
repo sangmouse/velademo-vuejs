@@ -1,5 +1,6 @@
 import requestUnauthorized from "../../api/request";
 import { getJwtToken, setJwtToken } from "../../utils/helpers";
+import {toastSuccess} from '../../utils/toast'
 
 const auth = {
   state: {
@@ -28,6 +29,7 @@ const auth = {
       const jwtToken = getJwtToken();
       if (!jwtToken) {
         state.isLogin = true;
+        toastSuccess('Logout Success')
       } else {
         state.token = jwtToken;
         state.isLogin = false;

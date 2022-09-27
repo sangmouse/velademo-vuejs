@@ -94,7 +94,11 @@
             </RouterLink>
           </p>
           <p class="link" v-if="!isLogin">
-            <button @click="handleLogout">Logout</button>
+            <a-popconfirm title="Are you sure Logout?" ok-text="Yes" cancel-text="No" @confirm="confirm"
+              @cancel="cancel">
+              <!-- <a href="#">Delete</a> -->
+              <button >Logout</button>
+            </a-popconfirm>
           </p>
           <p class="link" v-else>
             <RouterLink to="/account/login" @click="handleStatusLogin('login')"
@@ -192,16 +196,22 @@ export default {
     },
   },
   methods: {
+     confirm (e: MouseEvent)  {
+      console.log(e);
+      setJwtToken("");
+      window.localStorage.setItem("logout", "false");
+      this.$store.commit("CHECK_IS_LOGIN");
+      message.success('Click on Yes');
+    },
+     cancel (e: MouseEvent) {
+      console.log(e);
+      message.error('Click on No');
+    },
     showCart() {
       this.$store.commit("ISVISIBLE_CART");
     },
     handleStatusLogin(status) {
       this.$store.commit("STATUS_LOGIN", status);
-    },
-    handleLogout() {
-      setJwtToken("");
-      window.localStorage.setItem("logout", "false");
-      this.$store.commit("CHECK_IS_LOGIN");
     },
     handleVisibleMenu() {
       this.isVisible = true;

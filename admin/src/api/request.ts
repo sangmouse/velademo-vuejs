@@ -18,7 +18,8 @@ requestUnauthorized.interceptors.request.use(
   (request) => {
     const token = getJwtToken();
     if (token) {
-      request.headers["Authorization"] = `Bearer ${token}`;
+      request.headers["Authorization"] = `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkaHR1MUBjbWNnbG9iYWwudm4iLCJyb2xlcyI6WyJBRE1JTiJdLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODEvYXBpL2xvZ2luIiwiZXhwIjoxNjY0MjUyNzgwfQ.hIHGIvgyCVUwibhuSu8q0hXNWs5WQyqdhDxiuYgjI6Y`;
+      // request.headers["Authorization"] = `Bearer ${token}`;
     }
     // Edit request config
     return request;
