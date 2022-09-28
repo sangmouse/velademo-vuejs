@@ -3,7 +3,7 @@
     :isVisible="isVisible"
     class="menu-drawer"
     title="Menu Mobile"
-    width="40%"
+    width="45%"
     placement="left"
     @handleClose="handleClose"
   >
@@ -28,7 +28,7 @@
           <div
             class="col col-xl-2 col-xxl-2 col-lg-2 col-md-4 col-sm-4 col-xs-0 display-none"
           >
-            <ProductFilter />
+            <ProductFilter @handleFilterCategory="handleFilterCategory" />
           </div>
           <div
             class="col col-xl-10 col-xxl-10 col-lg-10 col-md-8 col-sm-8 col-xs-12 full-width"
@@ -42,19 +42,22 @@
                 >
                   <span> Filter </span>
                 </button>
-                <select class="collection-body-product-sorting-select">
-                  <option value="">Default sorting</option>
-                  <option value="">Price: Low to High</option>
-                  <option value="">Price: High to Low</option>
-                  <option value="">Alphabetically: A-Z</option>
-                  <option value="">Alphabetically: Z-A</option>
+                <select
+                  class="collection-body-product-sorting-select"
+                  @click="handleSort($event)"
+                >
+                  <option value="default">Default sorting</option>
+                  <option value="lowToHigh">Price: Low to High</option>
+                  <option value="highToLow">Price: High to Low</option>
+                  <option value="aToZ">Alphabetically: A-Z</option>
+                  <option value="ztoA">Alphabetically: Z-A</option>
                 </select>
               </div>
               <div class="collection-body-product-list">
                 <div class="container">
                   <div class="row">
                     <ProductCollection
-                      v-for="product in products"
+                      v-for="product in productPagination"
                       :key="product.id"
                       :product="product"
                       @showCart="showCart"
@@ -65,12 +68,26 @@
               </div>
               <div class="collection-body-product-pagination">
                 <div class="collection-body-product-pagination-box">
-                  <button><i class="fa-regular fa-circle-right"></i></button>
-                  <button class="page--active">1</button>
-                  <button>2</button>
-                  <button><i class="fa-regular fa-circle-left"></i></button>
+                  <button @click="handlePagination('1')">
+                    <i class="fa-regular fa-circle-left"></i>
+                  </button>
+                  <button
+                    :class="pagingStatus ? 'page--active' : ''"
+                    @click="handlePagination('1')"
+                  >
+                    1
+                  </button>
+                  <button
+                    :class="pagingStatus ? 'page--active' : ''"
+                    @click="handlePagination('2')"
+                  >
+                    2
+                  </button>
+                  <button @click="handlePagination('2')">
+                    <i class="fa-regular fa-circle-right"></i>
+                  </button>
                 </div>
-                <span> Showing 1-12 of 17 Results </span>
+                <span> Showing 1 - 8 of 9 Results </span>
               </div>
             </div>
           </div>
@@ -93,55 +110,19 @@ import Header from "../../layout/header/Header.vue";
 export default {
   data() {
     return {
-      products: [
-        {
-          id: 2,
-          images:
-            "https://image-us.eva.vn/upload/1-2022/images/2022-01-27/1-1643296048-128-width800height700.jpg",
-          displayName: "dkm",
-          price: 150,
-        },
-        {
-          id: 2,
-          images:
-            "https://image-us.eva.vn/upload/1-2022/images/2022-01-27/1-1643296048-128-width800height700.jpg",
-          displayName: "dkm",
-          price: 150,
-        },
-      ],
+      products: [],
       isVisible: false,
-      // productCategories: [
-      //   { name: "All Categories", id: 1 },
-      //   { name: "Furniture", id: 2 },
-      //   { name: "Chair", id: 3 },
-      //   { name: "Sofa", id: 4 },
-      //   { name: "Decor Art", id: 5 },
-      // ],
-      // productPrices: [
-      //   {
-      //     price: "$0 - $50",
-      //     id: 1,
-      //   },
-      //   {
-      //     price: "$50 - $100",
-      //     id: 2,
-      //   },
-      //   {
-      //     price: "$100 - $150",
-      //     id: 3,
-      //   },
-      //   {
-      //     price: "$150 - $200",
-      //     id: 4,
-      //   },
-      // ],
+      productPagination: [],
+      pagingStatus: false,
     };
   },
   async created() {
     try {
       const response = await requestProductDbJson.get(`/products`);
       this.products = response.data;
-      console.log(response.data);
+      this.productPagination = [
+        ...response.data.filter((item) => item.id <= 8),
+      ];
     } catch (error) {
       console.log();
     }
@@ -154,12 +135,16 @@ export default {
     Drawer,
   },
   methods: {
-    // handleFilterCategory(id) {
-    //   console.log(id);
-    // },
-    // handleFilterPrice(id) {
-    //   console.log(id);
-    // },
+    handlePagination(num) {
+      if (num === "1") {
+        this.pagingStatus = true;
+        console.log(this.pagingStatus);
+        this.productPagination = this.products.filter((item) => item.id <= 8);
+      } else if (num === "2") {
+        this.pagingStatus = true;
+        this.productPagination = this.products.filter((item) => item.id > 8);
+      }
+    },
     handleVisibleMenu() {
       this.isVisible = true;
     },
@@ -179,9 +164,41 @@ export default {
       // this.$store.commit("ADD_PRODUCT_ONE", data);
       this.$store.commit("ISVISIBLE_CART");
     },
+    handleVisibleViewInfoModal() {},
+
+    //Sorting
+    handleSort(e) {
+      if (e.target.value === "lowToHigh") {
+        this.productPagination = this.products.sort((a, b) =>
+          a.price > b.price ? 1 : -1
+        );
+      } else if (e.target.value === "highToLow") {
+        this.productPagination = this.products.sort((a, b) =>
+          a.price < b.price ? 1 : -1
+        );
+      } else if (e.target.value === "aToZ") {
+        this.productPagination = this.products.sort((a, b) =>
+          a.displayName.localeCompare(b.displayName)
+        );
+      } else if (e.target.value === "ztoA") {
+        this.productPagination = this.products.sort((a, b) =>
+          a.displayName === b.displayName
+            ? 0
+            : a.displayName > b.displayName
+            ? -1
+            : 1
+        );
+      } else if (e.target.value === "default") {
+        this.productPagination = this.products.reverse();
+      }
+    },
+
+    //Category filter
+    handleFilterCategory(value) {
+      console.log(value);
+    },
   },
-  handleVisibleViewInfoModal() {},
 };
 </script>
 
-<style scoped></style>
+<style></style>

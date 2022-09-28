@@ -6,10 +6,10 @@
       </h4>
       <ul class="collection-body-filter-categories-list">
         <li
-          @click="handleFilterCategory(item.id)"
           v-for="item in productCategories"
           :key="item.id"
           class="collection-body-filter-categories-list__item"
+          @click="$emit('handleFilterCategory', item.name)"
         >
           <span class="not-tick"><i class="fa-regular fa-circle"></i></span>
           <span class="ticked"><i class="fa-solid fa-circle-check"></i></span>
@@ -23,7 +23,7 @@
         <li
           v-for="item in productPrices"
           :key="item.id"
-          @click="handleFilterPrice(item.id)"
+          @click="handleFilterPrice(item.price)"
           class="collection-body-filter-categories-list__item"
         >
           <span class="not-tick"><i class="fa-regular fa-circle"></i></span>
@@ -34,48 +34,20 @@
     </div>
     <div class="collection-body-filter-bestSeller">
       <h4 class="collection-body-filter-bestSeller-title">Best Seller</h4>
-      <div class="collection-body-filter-bestSeller-item">
-        <img
-          src="https://cdn.shopify.com/s/files/1/0376/9440/6700/products/14_360x.jpg?v=1586245038"
-          alt=""
-          class="collection-body-filter-bestSeller-item__img"
-        />
+      <div
+        v-for="item in productBestSeller"
+        :key="item.id"
+        class="collection-body-filter-bestSeller-item"
+      >
+        <RouterLink :to="'/product/' + item.id">
+          <img
+            :src="item.images"
+            alt=""
+            class="collection-body-filter-bestSeller-item__img"
+        /></RouterLink>
         <div class="collection-body-filter-bestSeller-item__info">
-          <p>Victor pedent lamp</p>
-          <span>$70</span>
-        </div>
-      </div>
-      <div class="collection-body-filter-bestSeller-item">
-        <img
-          src="../../assets/images/products/product_2.jpg"
-          alt=""
-          class="collection-body-filter-bestSeller-item__img"
-        />
-        <div class="collection-body-filter-bestSeller-item__info">
-          <p>Stainless steel Teapot</p>
-          <span>$85.93</span>
-        </div>
-      </div>
-      <div class="collection-body-filter-bestSeller-item">
-        <img
-          src="../../assets/images/products/product_3.jpg"
-          alt=""
-          class="collection-body-filter-bestSeller-item__img"
-        />
-        <div class="collection-body-filter-bestSeller-item__info">
-          <p>Beoplay A1</p>
-          <span>$56.82</span>
-        </div>
-      </div>
-      <div class="collection-body-filter-bestSeller-item">
-        <img
-          src="../../assets/images/products/product_6.jpg"
-          alt=""
-          class="collection-body-filter-bestSeller-item__img"
-        />
-        <div class="collection-body-filter-bestSeller-item__info">
-          <p>Pia Chair</p>
-          <span>$23.8</span>
+          <p>{{ item.displayName }}</p>
+          <span>${{ item.price }}</span>
         </div>
       </div>
     </div>
@@ -84,6 +56,7 @@
 
 <script>
 import "./productFilter.scss";
+import requestProductDbJson from "../../api/requestProducDbJson";
 export default {
   data() {
     return {
@@ -112,15 +85,23 @@ export default {
           id: 4,
         },
       ],
+      productBestSeller: [],
     };
   },
   methods: {
-    handleFilterCategory(id) {
-      console.log(id);
-    },
+    // handleFilterCategory(value) {
+    //   console.log(value);
+    //   this.$emit('filter', value)
+    // },
     handleFilterPrice(id) {
       console.log(id);
     },
+  },
+  async created() {
+    try {
+      const response = await requestProductDbJson.get(`/products`);
+      this.productBestSeller = response.data.filter((item) => item.id < 5);
+    } catch (error) {}
   },
 };
 </script>

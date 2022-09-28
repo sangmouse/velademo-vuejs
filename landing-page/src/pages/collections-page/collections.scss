@@ -66,6 +66,9 @@
       transition: all ease 0.5s;
     }
   }
+  &-list{
+    min-height: 1050px
+  }
   &-pagination {
     display: flex;
     justify-content: space-between;
