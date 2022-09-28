@@ -1,14 +1,8 @@
 <template>
   <div id="table-record">
-    <a-table
-      :columns="columns"
-      :data-source="source"
-      :pagination="false"
-      :scroll="{ x: 1600 }"
-    >
+    <a-table :columns="columns" :data-source="source" :pagination="false" :scroll="{ x: 1600, y: 600 } " :loading="showLoading">
       <template #headerCell="{ column }"> </template>
-
-      <template #bodyCell="{ column, record }">
+      <template #bodyCell="{ column, record }" >
         <template v-if="column.key === 'action'">
           <span class="actions">
             <router-link :to="'/product/' + record.id">
@@ -16,21 +10,13 @@
                 <img src="../../assets/images/eye.png" alt="view-record" />
               </p>
             </router-link>
-            <!-- <button type="button" class="btn-remove-record" @click="handleDeteteList(record.id)">
-              <img src="../../assets/images/trash.png" alt="remove-record" />
-            </button> -->
           </span>
         </template>
       </template>
     </a-table>
     <div class="paginate">
       <p></p>
-      <a-pagination
-        showLessItems
-        :total="50"
-        :showSizeChanger="false"
-        @change="handleChangePage"
-      />
+      <a-pagination showLessItems :total="50" :showSizeChanger="false" @change="handleChangePage" />
     </div>
   </div>
 </template>
@@ -48,6 +34,7 @@ export default {
   props: {
     columns: Array,
     source: Array,
+    showLoading:Boolean,
   },
   components: {
     SmileOutlined,

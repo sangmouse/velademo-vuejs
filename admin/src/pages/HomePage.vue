@@ -6,31 +6,17 @@
           <div class="left-side">
             <p>Entries</p>
             <div class="select-page-size">
-              <a-select
-                ref="select"
-                v-model:value="pageSize"
-                style="width: 120px; height: 40px"
-                :options="options"
-                @change="handleChange"
-              >
+              <a-select ref="select" v-model:value="pageSize" style="width: 120px; height: 40px" :options="options"
+                @change="handleChange">
               </a-select>
             </div>
             <RouterLink to="add-product"> Add Product </RouterLink>
           </div>
           <div class="right-side">
-            <a-input
-              class="input-search"
-              size="large"
-              @input="debounceSearch"
-              placeholder="Searching..."
-            />
+            <a-input class="input-search" size="large" @input="debounceSearch" placeholder="Searching..." />
           </div>
         </div>
-        <Table
-          :columns="columns"
-          :source="source"
-          @handleChangePage="handleChangePage"
-        />
+        <Table :columns="columns" :source="source" @handleChangePage="handleChangePage" :showLoading="showLoading" />
       </div>
     </div>
   </div>
@@ -114,6 +100,7 @@ export default {
         },
       ],
       source: [],
+      showLoading: false,
     };
   },
 
@@ -124,7 +111,7 @@ export default {
         const data = this.transformData(res);
         this.source = data;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => err);
 
     this.$watch(
       () => this.$store.state.auth.isLogin,
@@ -189,36 +176,49 @@ export default {
       }
     },
     debounceSearch(e) {
+      this.showLoading = true
       clearTimeout(this.debounce);
       this.debounce = setTimeout(() => {
+        this.showLoading = false
         this.searchProduct = e.target.value.trim();
         if (this.searchProduct === "") {
           this.startListProduct();
         } else {
           this.startListSearch();
         }
-      }, 600);
+      }, 500);
     },
 
     async handleChange(value) {
-      // console.log(value);
-      this.pageSize = value;
+      this.showLoading = true
+      clearTimeout(this.debounce);
+      this.debounce = setTimeout(() => {
+        this.pageSize = value;
+        this.showLoading = false
       if (this.searchProduct !== "") {
         this.startListSearch();
       } else {
         this.startListProduct();
       }
+      }, 500);
     },
     async handleChangePage(pageNumbervalue) {
-      this.pageNumber = pageNumbervalue;
+      this.showLoading = true
+      clearTimeout(this.debounce);
+      this.debounce = setTimeout(() => {
+        this.showLoading = false
+        this.pageNumber = pageNumbervalue;
       if (this.searchProduct !== "") {
         this.startListSearch();
       } else {
         this.startListProduct();
       }
+      }, 500);
     },
   },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>

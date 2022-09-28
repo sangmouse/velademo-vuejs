@@ -118,6 +118,7 @@ import { useRouter } from "vue-router";
 import { SyncOutlined } from "@ant-design/icons-vue";
 import requestUnauthorized from "./../../../api/request";
 import "./add-product.scss";
+import {toastSuccess, toastError } from "../../../utils/toast"
 
 interface FormState {
   name: string;
@@ -199,7 +200,8 @@ export default defineComponent({
           .then((res) => {
             setTimeout(() => {
               loading.value = false;
-              message.value = "Create product successfully!";
+              // message.value = "Create product successfully!";
+              toastSuccess("Create product successfully!")
             }, 500);
             setTimeout(() => {
               router.push({
@@ -208,6 +210,7 @@ export default defineComponent({
             }, 2000);
           })
           .catch((err) => {
+            toastError(err.message)
             setTimeout(() => {
               loading.value = false;
             }, 500);

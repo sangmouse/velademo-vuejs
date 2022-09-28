@@ -1,8 +1,8 @@
 import { getJwtToken } from "@/utils/helpers";
 import axios from "axios";
-import { useRouter } from "vue-router";
 import { toastError } from "@/utils/toast";
 import { store } from "../stores";
+import router from "@/router";
 
 const API_URL = "http://localhost:8081";
 
@@ -31,13 +31,13 @@ requestUnauthorized.interceptors.request.use(
 );
 
 requestUnauthorized.interceptors.response.use(
-  (response) => {
+   (response) => {
     // console.log(response);
     // Edit response config
 
     return response.data;
   },
-  (error) => {
+   (error) => {
     // const router = useRouter();
     if (error.response.status === 403 && error?.response?.data?.error_message?.includes("The Token has expired")) {
       window.sessionStorage.removeItem('jwt')

@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import {getJwtToken} from '../utils/helpers'
+import {getJwtToken , getRefreshToken} from '../utils/helpers'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,6 +24,11 @@ const router = createRouter({
       name: "product-detail",
       component: () => import("@/pages/product-detail/ProductDetail.vue"),
     },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "not-found-page",
+      component: () => import("../pages/not-found-page/NotFoundPage.vue"),
+    }
   ],
 });
 router.beforeEach((to, from, next) =>{
