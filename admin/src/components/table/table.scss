@@ -1,4 +1,19 @@
 #table-record {
+  .ant-table-wrapper {
+    .ant-spin-nested-loading > div:first-child {
+      width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        min-height: 100%;
+        position: static;
+        .ant-spin{
+          max-height: 100%;
+        }
+    }
+  }
   .ant-table-container {
     .ant-table-thead {
       tr {
