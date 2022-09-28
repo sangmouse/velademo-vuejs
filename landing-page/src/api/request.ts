@@ -1,4 +1,4 @@
-import { getJwtToken } from "@/utils/helpers";
+import { getJwtToken, setUserCart,setUserIdCart  } from "@/utils/helpers";
 import { toastError } from "@/utils/toast";
 import axios from "axios";
 import { store } from "../stores";
@@ -30,9 +30,11 @@ requestUnauthorized.interceptors.request.use(
 
 requestUnauthorized.interceptors.response.use(
   (response) => {
-    // console.log(response);
     // Edit response config
-
+    if(response?.data?.user?.email && response?.data?.user?.id){
+      setUserCart(response.data.user.email)
+      setUserIdCart(response.data.user.id)
+    }
     return response.data;
   },
   (error) => {

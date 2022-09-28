@@ -1,5 +1,6 @@
-import requestUnauthorized from "../../api/request";
-import { arraymove } from "../../components/comon/common";
+import requestUnauthorized from "@/api/request";
+import { arraymove } from "@/components/comon/common";
+import {getUserIdCart} from '@/utils/helpers'
 
 const cart = {
   state: {
@@ -46,8 +47,9 @@ const cart = {
   },
   actions: {
     async updateCartCurrent(context) {
+      const userId = getUserIdCart()
       try {
-        const response = await requestUnauthorized.get("/api/cart/62");
+        const response = await requestUnauthorized.get(`/api/cart/${userId}`);
         const data = response;
         context.commit("UPDATE_CART_CURRENT", data);
       } catch (error) {
@@ -55,16 +57,17 @@ const cart = {
       }
     },
     async updateCart(_, data) {
+      const userId = getUserIdCart()
       try {
         const dataUdpateCart = data?.map((item) => ({
           id: item?.id,
           count: item?.quantity,
         }));
         const dataSubmit = {
-          userid: 2,
+          userid: userId,
           productRequestList: dataUdpateCart,
         };
-        const response = await http.post(`/api/cart/add`, dataSubmit);
+         await requestUnauthorized.post(`/api/cart/add`, dataSubmit);
       } catch (err) {
         console.log(err);
       }

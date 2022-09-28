@@ -168,7 +168,6 @@
 import "./header.scss";
 import Drawer from "../../components/drawer/Drawer.vue";
 import Cart from "../../components/cart/Cart.vue";
-import { setJwtToken } from "@/utils/helpers";
 
 export default {
   components: { Drawer, Cart },
@@ -199,7 +198,9 @@ export default {
       this.$store.commit("STATUS_LOGIN", status);
     },
     handleLogout() {
-      setJwtToken("");
+      window.sessionStorage.removeItem('useremail')
+      window.sessionStorage.removeItem('userid')
+      window.sessionStorage.removeItem('jwt')
       window.localStorage.setItem("logout", "false");
       this.$store.commit("CHECK_IS_LOGIN");
     },
