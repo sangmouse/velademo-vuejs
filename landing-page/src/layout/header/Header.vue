@@ -94,7 +94,7 @@
             </RouterLink>
           </p>
           <p class="link" v-if="!isLogin">
-            <button @click="handleLogout">Logout</button>
+            <button @click="handleLogout"> Hi <span style="font-weight:800">{{username}}</span>!   Logout</button>
           </p>
           <p class="link" v-else>
             <RouterLink to="/account/login" @click="handleStatusLogin('login')"
@@ -168,7 +168,7 @@
 import "./header.scss";
 import Drawer from "../../components/drawer/Drawer.vue";
 import Cart from "../../components/cart/Cart.vue";
-import { setJwtToken } from "@/utils/helpers";
+import {toastSuccess} from '@/utils/toast'
 
 export default {
   components: { Drawer, Cart },
@@ -178,12 +178,18 @@ export default {
       isVisibleInputSearch: false,
       inputSearch: "",
       qty: 0,
+      username: "",
+      isLogin:true
     };
   },
   created() {
     this.$store.commit("CHECK_IS_LOGIN");
+    this.$store.commit("CHECK_NAME");
   },
   computed: {
+    username(){ 
+      return  this.$store.state.auth.username
+    },
     isLogin() {
       return this.$store.state.auth.isLogin;
     },
@@ -199,9 +205,18 @@ export default {
       this.$store.commit("STATUS_LOGIN", status);
     },
     handleLogout() {
-      setJwtToken("");
+      window.sessionStorage.removeItem('useremail')
+      window.sessionStorage.removeItem('userid')
+      window.sessionStorage.removeItem('jwt')
+      window.sessionStorage.removeItem('username')
       window.localStorage.setItem("logout", "false");
       this.$store.commit("CHECK_IS_LOGIN");
+      toastSuccess('logout Success?')
+      this.username = ''
+      if(this.isLogin){
+        this.$router.push("/account/login")
+        this.$store.commit("LOGOUT_CART")
+      }
     },
     handleVisibleMenu() {
       this.isVisible = true;

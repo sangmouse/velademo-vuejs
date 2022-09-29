@@ -1,12 +1,12 @@
 import requestUnauthorized from "../../api/request";
-import { getJwtToken, setJwtToken } from "../../utils/helpers";
+import { getJwtToken, setJwtToken, getUserName } from "../../utils/helpers";
 
 const auth = {
   state: {
     messageErrorLogin: "",
     isLogin: true,
-    token: "",
     statusLogin: "login",
+    username:'',
   },
   mutations: {
     STATUS_LOGIN(state, status) {
@@ -18,10 +18,14 @@ const auth = {
     },
 
     SET_LOGIN(state, token) {
-      state.token = token;
-      setJwtToken(token);
+      if(token){
+        setJwtToken(token);
+      }
       window.localStorage.removeItem("logout");
       state.isLogin = false;
+    },
+    CHECK_NAME(state){
+      state.username= getUserName()
     },
 
     CHECK_IS_LOGIN(state) {
@@ -41,7 +45,7 @@ const auth = {
         // The server handler is responsible for setting user fingerprint cookie during this as well
         const response = await requestUnauthorized.post("/api/login", infor);
         const token = response.access_token;
-        context.commit("SET_LOGIN", token);
+          context.commit("SET_LOGIN", token);
       } catch (err) {
         if (err.response.status === 401 || 404) {
           context.commit("INCORECT_LOGIN");

@@ -233,6 +233,7 @@ export default {
           password: data.password.trim(),
         };
         await this.$store.dispatch("getLogin", infor);
+        this.$store.commit("CHECK_NAME");
         if (!this.$store.state.auth.isLogin) {
           this.alertLogin = true;
           this.messageAlertLogin = "Sign in Successfully!";
@@ -241,7 +242,7 @@ export default {
             this.$router.push({
               name: "home",
             });
-          }, 1500);
+          }, 1000);
         } else {
           this.alertLogin = false;
           this.messageAlertLogin = this.$store.state.auth.messageErrorLogin;
