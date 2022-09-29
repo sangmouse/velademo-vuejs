@@ -69,7 +69,7 @@
       "id": 6,
       "displayName": "Pia Chair",
       "description": "Altana P Lounge Chair by Chairs & More features a modern Italian design. It is characterized by generous and enveloping dimensions and by a decoration with marine rope that lightens and covers the entire seat. The shapes and the design of Altana P take up and reinterpret the colonial style of the outdoor seats, according to the interpretation of the designer Antonio De Marco.",
-      "price": 23,
+      "price": 149,
       "images": [
         "https://cdn.shopify.com/s/files/1/0376/9440/6700/products/20_2_360x.jpg?v=1586314636",
         "../src/assets/images/products/product_4.jpg",
@@ -82,7 +82,7 @@
       "id": 7,
       "displayName": "Iconic Rocking Horse",
       "description": "Millie SP Chair by Chairs & More is characterized by a modern Italian design. A light multi-striped effect created by thin cords is the decorative theme of the Millie collection. Designed by the Pastina Studio, the chair is inspired by the 70s, from which it takes some details and the colors palette. With its elegant design.",
-      "price": 59,
+      "price": 159,
       "images": [
         "https://cdn.shopify.com/s/files/1/0376/9440/6700/products/15_2_360x.jpg?v=1586245185",
         "../src/assets/images/products/product_4.jpg",
@@ -103,19 +103,6 @@
         "../src/assets/images/products/product_1.jpg"
       ],
       "categories": ["Chair", "Furniture"]
-    },
-    {
-      "id": 9,
-      "displayName": "Sweeper and Funnel",
-      "description": "Easy Barstool by Casprini features a modern Italian design. The idea behind this essential seating comes from the movement of soft lines that seem to float freely in the ambience. Easy Barstool is characterized by a shell made of curved multilayer wood available in different finishes and metal legs.",
-      "price": 49,
-      "images": [
-        "https://cdn.shopify.com/s/files/1/0376/9440/6700/products/11_4_360x.jpg?v=1598084962",
-        "../src/assets/images/products/product_3.jpg",
-        "../src/assets/images/products/product_1.jpg",
-        "../src/assets/images/products/product_2.jpg"
-      ],
-      "categories": ["Chair", "Decor Art"]
     }
   ]
 }

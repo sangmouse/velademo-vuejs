@@ -9,11 +9,15 @@
           v-for="item in productCategories"
           :key="item.id"
           class="collection-body-filter-categories-list__item"
-          @click="$emit('handleFilterCategory', item.name)"
         >
-          <span class="not-tick"><i class="fa-regular fa-circle"></i></span>
-          <span class="ticked"><i class="fa-solid fa-circle-check"></i></span>
-          {{ item.name }}
+          <input
+            :id="item.id"
+            type="radio"
+            :value="item.name"
+            name="category"
+            @click="handleFilterCategory(item.name)"
+          />
+          <label :for="item.id">{{ item.name }}</label>
         </li>
       </ul>
     </div>
@@ -23,12 +27,16 @@
         <li
           v-for="item in productPrices"
           :key="item.id"
-          @click="handleFilterPrice(item.price)"
           class="collection-body-filter-categories-list__item"
         >
-          <span class="not-tick"><i class="fa-regular fa-circle"></i></span>
-          <span class="ticked"><i class="fa-solid fa-circle-check"></i></span>
-          {{ item.price }}
+          <input
+            :id="item.id"
+            type="radio"
+            :value="item.price"
+            name="price"
+            @click="handleFilterPrice(item.price)"
+          />
+          <label :for="item.id">{{ item.price }}</label>
         </li>
       </ul>
     </div>
@@ -60,12 +68,13 @@ import requestProductDbJson from "../../api/requestProducDbJson";
 export default {
   data() {
     return {
+      isTicked: false,
       productCategories: [
-        { name: "All Categories", id: 1 },
-        { name: "Furniture", id: 2 },
-        { name: "Chair", id: 3 },
-        { name: "Sofa", id: 4 },
-        { name: "Decor Art", id: 5 },
+        { name: "All Categories", id: "cate1" },
+        { name: "Furniture", id: "cate2" },
+        { name: "Chair", id: "cate3" },
+        { name: "Sofa", id: "cate4" },
+        { name: "Decor Art", id: "cate5" },
       ],
       productPrices: [
         {
@@ -89,12 +98,11 @@ export default {
     };
   },
   methods: {
-    // handleFilterCategory(value) {
-    //   console.log(value);
-    //   this.$emit('filter', value)
-    // },
-    handleFilterPrice(id) {
-      console.log(id);
+    handleFilterCategory(value) {
+      this.$emit("handleFilterCategory", value);
+    },
+    handleFilterPrice(value) {
+      this.$emit("handleFilterPrice", value);
     },
   },
   async created() {

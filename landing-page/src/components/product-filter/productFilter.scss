@@ -48,7 +48,6 @@
       display: flex;
       align-items: center;
       padding: 10px 0;
-      cursor: pointer;
       img {
         width: 55px;
         height: 75px;
@@ -68,6 +67,10 @@
     }
   }
 }
+.primary-color {
+  color: var(--vela-color-primary);
+}
+
 .ticked {
   display: none;
   transition: all ease 0.5s;
@@ -86,3 +89,11 @@
 .collection-body-filter-bestSeller-item:hover p {
   color: var(--vela-color-primary);
 }
+.collection-body-filter-categories-list__item input {
+  cursor: pointer;
+  margin-right: 5px;
+}
+.collection-body-filter-categories-list__item label {
+  cursor: pointer;
+}
+

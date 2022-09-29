@@ -7,7 +7,10 @@
     placement="left"
     @handleClose="handleClose"
   >
-    <ProductFilter />
+    <ProductFilter
+      @handleFilterCategory="handleFilterCategory"
+      @handleFilterPrice="handleFilterPrice"
+    />
   </Drawer>
   <Header />
   <div class="collections">
@@ -28,7 +31,10 @@
           <div
             class="col col-xl-2 col-xxl-2 col-lg-2 col-md-4 col-sm-4 col-xs-0 display-none"
           >
-            <ProductFilter @handleFilterCategory="handleFilterCategory" />
+            <ProductFilter
+              @handleFilterCategory="handleFilterCategory"
+              @handleFilterPrice="handleFilterPrice"
+            />
           </div>
           <div
             class="col col-xl-10 col-xxl-10 col-lg-10 col-md-8 col-sm-8 col-xs-12 full-width"
@@ -57,7 +63,7 @@
                 <div class="container">
                   <div class="row">
                     <ProductCollection
-                      v-for="product in productPagination"
+                      v-for="product in productFilter"
                       :key="product.id"
                       :product="product"
                       @showCart="showCart"
@@ -68,26 +74,28 @@
               </div>
               <div class="collection-body-product-pagination">
                 <div class="collection-body-product-pagination-box">
-                  <button @click="handlePagination('1')">
+                  <button @click="onClickFirstPage()">
                     <i class="fa-regular fa-circle-left"></i>
                   </button>
                   <button
                     :class="pagingStatus ? 'page--active' : ''"
-                    @click="handlePagination('1')"
+                    @click="onClickPage('1')"
                   >
                     1
                   </button>
-                  <button
+                  <!-- <button
+                    v-for="(page, index) in pages" :key="index"
+                    type="button"
                     :class="pagingStatus ? 'page--active' : ''"
-                    @click="handlePagination('2')"
+                    @click="onClickPage()"
                   >
-                    2
-                  </button>
-                  <button @click="handlePagination('2')">
+                    {{page.number}}
+                  </button> -->
+                  <button @click="onClickLastPage()">
                     <i class="fa-regular fa-circle-right"></i>
                   </button>
                 </div>
-                <span> Showing 1 - 8 of 9 Results </span>
+                <span> Showing 1 - 8 of 8 Results </span>
               </div>
             </div>
           </div>
@@ -112,17 +120,15 @@ export default {
     return {
       products: [],
       isVisible: false,
-      productPagination: [],
-      pagingStatus: false,
+      productFilter: [],
+      pagingStatus: true,
     };
   },
   async created() {
     try {
       const response = await requestProductDbJson.get(`/products`);
       this.products = response.data;
-      this.productPagination = [
-        ...response.data.filter((item) => item.id <= 8),
-      ];
+      this.productFilter = [...response.data.filter((item) => item.id <= 8)];
     } catch (error) {
       console.log();
     }
@@ -135,16 +141,16 @@ export default {
     Drawer,
   },
   methods: {
-    handlePagination(num) {
-      if (num === "1") {
-        this.pagingStatus = true;
-        console.log(this.pagingStatus);
-        this.productPagination = this.products.filter((item) => item.id <= 8);
-      } else if (num === "2") {
-        this.pagingStatus = true;
-        this.productPagination = this.products.filter((item) => item.id > 8);
-      }
-    },
+    // onClickPage(num) {
+    //   if (num === "1") {
+    //     this.pagingStatus = true;
+    //     // console.log(this.pagingStatus);
+    //     this.productFilter = this.products.filter((item) => item.id <= 8);
+    //   } else if (num === "2") {
+    //     this.pagingStatus = true;
+    //     this.productFilter = this.products.filter((item) => item.id > 8);
+    //   }
+    // },
     handleVisibleMenu() {
       this.isVisible = true;
     },
@@ -169,19 +175,19 @@ export default {
     //Sorting
     handleSort(e) {
       if (e.target.value === "lowToHigh") {
-        this.productPagination = this.products.sort((a, b) =>
+        this.productFilter = this.products.sort((a, b) =>
           a.price > b.price ? 1 : -1
         );
       } else if (e.target.value === "highToLow") {
-        this.productPagination = this.products.sort((a, b) =>
+        this.productFilter = this.products.sort((a, b) =>
           a.price < b.price ? 1 : -1
         );
       } else if (e.target.value === "aToZ") {
-        this.productPagination = this.products.sort((a, b) =>
+        this.productFilter = this.products.sort((a, b) =>
           a.displayName.localeCompare(b.displayName)
         );
       } else if (e.target.value === "ztoA") {
-        this.productPagination = this.products.sort((a, b) =>
+        this.productFilter = this.products.sort((a, b) =>
           a.displayName === b.displayName
             ? 0
             : a.displayName > b.displayName
@@ -189,14 +195,45 @@ export default {
             : 1
         );
       } else if (e.target.value === "default") {
-        this.productPagination = this.products.reverse();
+        this.productFilter = this.products;
       }
     },
 
     //Category filter
     handleFilterCategory(value) {
-      console.log(value);
+      if (value === "All Categories") {
+        console.log(value);
+        return (this.productFilter = this.products);
+      } else if (value) {
+        console.log(value);
+        return (this.productFilter = this.products.filter((item) =>
+          item.categories.toString().includes(value)
+        ));
+      }
     },
+    handleFilterPrice(value) {
+      if (value === "$0 - $50") {
+        return (this.productFilter = this.products.filter(
+          (item) => item.price > 0 && item.price < 50
+        ));
+      } else if (value === "$50 - $100") {
+        return (this.productFilter = this.products.filter(
+          (item) => item.price > 50 && item.price < 100
+        ));
+      } else if (value === "$100 - $150") {
+        return (this.productFilter = this.products.filter(
+          (item) => item.price > 100 && item.price < 150
+        ));
+      } else if (value === "$150 - $200") {
+        return (this.productFilter = this.products.filter(
+          (item) => item.price > 150 && item.price < 200
+        ));
+      }
+    },
+
+    //Paginations
+    onClickFirstPage() {},
+    onClickLastPage() {},
   },
 };
 </script>
