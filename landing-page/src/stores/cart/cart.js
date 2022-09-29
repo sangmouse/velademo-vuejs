@@ -1,5 +1,6 @@
 import requestUnauthorized from "../../api/request";
 import { arraymove } from "../../components/comon/common";
+import {getUserIdCart } from '@/utils/helpers'
 
 const cart = {
   state: {
@@ -27,6 +28,9 @@ const cart = {
         }
       }
     },
+    LOGOUT_CART(state){
+      state.cart=[]
+    },
     ADD_PRODUCT_DETAIL(state, payload) {
       const index = state.cart.findIndex((item) => item.id === payload.id);
       if (index === -1) {
@@ -46,25 +50,28 @@ const cart = {
   },
   actions: {
     async updateCartCurrent(context) {
+      const userId = getUserIdCart()
       try {
-        const response = await requestUnauthorized.get("/api/cart/62");
-        const data = response;
-        context.commit("UPDATE_CART_CURRENT", data);
+        if(userId){
+          const data = await requestUnauthorized.get(`/api/cart/${userId}`);
+          context.commit("UPDATE_CART_CURRENT", data);
+        }
       } catch (error) {
         console.log("chua co du lieu trong gio hang");
       }
     },
     async updateCart(_, data) {
+      const userId = getUserIdCart()
       try {
         const dataUdpateCart = data?.map((item) => ({
-          id: item?.id,
+          id: item.id,
           count: item?.quantity,
         }));
         const dataSubmit = {
-          userid: 2,
+          userid: userId,
           productRequestList: dataUdpateCart,
         };
-        const response = await http.post(`/api/cart/add`, dataSubmit);
+        await requestUnauthorized.post(`/api/cart/add`, dataSubmit);
       } catch (err) {
         console.log(err);
       }

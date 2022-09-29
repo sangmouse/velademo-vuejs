@@ -2,7 +2,6 @@
 import { RouterLink, RouterView } from "vue-router";
 import Header from "./layout/header/Header.vue";
 import Footer from "./layout/footer/Footer.vue";
-import { setJwtToken } from "@/utils/helpers";
 
 export default {
   data() {
@@ -14,17 +13,8 @@ export default {
     Header,
     Footer,
   },
-  methods: {
-    syncLogout(event) {
-      if (event.key === "logout") {
-        setJwtToken("");
-        this.$store.commit("CHECK_IS_LOGIN");
-      }
-    },
-  },
-  updated() {
-    // window.addEventListener("storage", this.syncLogout);
-  },
+  methods: {},
+  updated() {},
   async created() {
     await this.$store.dispatch("updateCartCurrent");
   },

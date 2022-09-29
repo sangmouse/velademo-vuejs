@@ -1,4 +1,4 @@
-import { getJwtToken } from "@/utils/helpers";
+import { getJwtToken, setUserCart,setUserIdCart, setUserName } from "@/utils/helpers";
 import { toastError } from "@/utils/toast";
 import axios from "axios";
 import { store } from "../stores";
@@ -33,6 +33,12 @@ requestUnauthorized.interceptors.response.use(
     // console.log(response);
     // Edit response config
 
+    if(response?.data?.user?.email && response?.data?.user?.id && response?.data?.user?.name){
+      setUserCart(response.data.user.email)
+      setUserIdCart(response.data.user.id)
+      setUserName(response.data.user.name)
+    }
+
     return response.data;
   },
   (error) => {
@@ -41,7 +47,6 @@ requestUnauthorized.interceptors.response.use(
       error?.response?.status === 403
     ) {
       sessionStorage.removeItem("jwt");
-      window.localStorage.setItem("logout", "false");
       toastError("Session Expired");
       store.commit("CHECK_IS_LOGIN");
     }

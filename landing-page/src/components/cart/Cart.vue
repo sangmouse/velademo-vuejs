@@ -57,7 +57,6 @@
 </template>
 <script lang="ts">
 import "./cart.scss";
-const token = localStorage.getItem("token-admin");
 export default {
   name: "Cart",
   data() {

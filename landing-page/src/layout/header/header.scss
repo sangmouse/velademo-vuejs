@@ -101,6 +101,9 @@
         margin: 0 5px;
 
         &.link {
+          button{
+            margin-left: 5px;
+          }
           a {
             color: var(--vela-header-textcolor);
 
