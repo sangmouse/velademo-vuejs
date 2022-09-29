@@ -11,12 +11,12 @@
         <div class="item" v-for="product in cart" :key="product.id">
           <div class="info">
             <div class="img">
-              <RouterLink to="/">
+              <RouterLink :to="'/product/' + product.id">
                 <img :src="product?.listImg[0]?.url" alt="product-img" />
               </RouterLink>
             </div>
             <div class="order">
-              <RouterLink to="/sdfdsf">
+              <RouterLink :to="'/product/' + product.id">
                 <h5>{{ product.name }}</h5>
               </RouterLink>
               <p>$ {{ product.price }}</p>
