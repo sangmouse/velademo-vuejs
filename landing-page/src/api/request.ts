@@ -47,7 +47,6 @@ requestUnauthorized.interceptors.response.use(
       error?.response?.status === 403
     ) {
       sessionStorage.removeItem("jwt");
-      window.localStorage.setItem("logout", "false");
       toastError("Session Expired");
       store.commit("CHECK_IS_LOGIN");
     }

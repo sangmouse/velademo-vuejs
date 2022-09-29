@@ -16,12 +16,6 @@ export default {
   methods: {},
   updated() {},
   async created() {
-    this.$watch(
-      () => this.$route.path,
-      async (value, _) => {
-        await this.$store.dispatch("updateCartCurrent");
-      }
-    );
     await this.$store.dispatch("updateCartCurrent");
   },
 };

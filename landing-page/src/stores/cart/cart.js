@@ -53,8 +53,7 @@ const cart = {
       const userId = getUserIdCart()
       try {
         if(userId){
-          const response = await requestUnauthorized.get(`/api/cart/${userId}`);
-          const data = response;
+          const data = await requestUnauthorized.get(`/api/cart/${userId}`);
           context.commit("UPDATE_CART_CURRENT", data);
         }
       } catch (error) {

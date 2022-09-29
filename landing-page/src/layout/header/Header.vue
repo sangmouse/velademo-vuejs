@@ -93,8 +93,7 @@
               <img src="../../assets/images/user.png" alt="user-i" />
             </RouterLink>
           </p>
-          <p class="link" v-if="!isLogin">
-            <button @click="handleLogout"> Hi <span style="font-weight:800">{{username}}</span>!   Logout</button>
+          <p class="link" v-if="!isLogin">Hi <span style="font-weight:800">{{username}}</span>! <button @click="handleLogout">    Logout</button>
           </p>
           <p class="link" v-else>
             <RouterLink to="/account/login" @click="handleStatusLogin('login')"
@@ -209,12 +208,10 @@ export default {
       window.sessionStorage.removeItem('userid')
       window.sessionStorage.removeItem('jwt')
       window.sessionStorage.removeItem('username')
-      window.localStorage.setItem("logout", "false");
       this.$store.commit("CHECK_IS_LOGIN");
-      toastSuccess('logout Success?')
+      toastSuccess('Logout Successfully')
       this.username = ''
       if(this.isLogin){
-        this.$router.push("/account/login")
         this.$store.commit("LOGOUT_CART")
       }
     },

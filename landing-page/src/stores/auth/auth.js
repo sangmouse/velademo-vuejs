@@ -21,7 +21,6 @@ const auth = {
       if(token){
         setJwtToken(token);
       }
-      window.localStorage.removeItem("logout");
       state.isLogin = false;
     },
     CHECK_NAME(state){
