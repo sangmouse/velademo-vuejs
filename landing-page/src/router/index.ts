@@ -45,6 +45,11 @@ const router = createRouter({
       name: "contact",
       component: () => import("../pages/contact-page/ContactUsPage.vue"),
     },
+    {
+      path: "/checkout",
+      name: "checkout",
+      component: () => import("../pages/checkout/Checkout.vue"),
+    },
   ],
 });
 router.beforeEach((to, from, next) =>{
