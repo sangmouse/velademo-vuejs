@@ -90,9 +90,8 @@ export default {
         this.$router.push({
           name: "login",
         });
-      } 
-      if(this.cart.length === 0){
-        return toastError('Cart empty!')
+      } else if(this.cart.length === 0){
+         toastError('Cart empty!')
       }
        else {
        await this.$store.dispatch("updateCart", this.cart);

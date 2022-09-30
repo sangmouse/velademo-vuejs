@@ -28,7 +28,7 @@
           </span> return to cart
         </div>
         <!-- <div class="shopping-continue-to">Continue to shipping</div> -->
-        <div class="shopping-continue-to" @click="enterIconLoading">
+        <div class="shopping-continue-to" @click="handleSubmit">
           <a-space style="background-color: transparent ;">
             <a-button type="primary" :loading="iconLoading" class="shopping-continue-to-buy">Buying</a-button>
           </a-space>
@@ -101,11 +101,11 @@ export default {
       this.$router.push('/')
       this.$store.commit("ISVISIBLE_CART");
     },
-    enterIconLoading() {
+    handleSubmit() {
       if (this.valuePhone1 === "") {
-        return this.requidPhone = true
-      } if (this.valueAddress1 === "") {
-        return this.requidAddress = true
+        this.requidPhone = true
+      } else if (this.valueAddress1 === "") {
+        this.requidAddress = true
       } else {
         this.iconLoading = true;
         setTimeout(async () => {
