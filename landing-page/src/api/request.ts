@@ -2,6 +2,7 @@ import { getJwtToken, setUserCart,setUserIdCart, setUserName } from "@/utils/hel
 import { toastError } from "@/utils/toast";
 import axios from "axios";
 import { store } from "../stores";
+import router from "@/router";
 
 const API_URL = "http://localhost:8081";
 
@@ -46,6 +47,9 @@ requestUnauthorized.interceptors.response.use(
       error?.response?.data?.error_message?.includes("The Token has expired") ||
       error?.response?.status === 403
     ) {
+      router.push({
+        name: "login",
+      });
       sessionStorage.removeItem("jwt");
       toastError("Session Expired");
       store.commit("CHECK_IS_LOGIN");
