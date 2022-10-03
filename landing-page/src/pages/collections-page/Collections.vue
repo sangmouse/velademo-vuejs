@@ -48,6 +48,7 @@
                 >
                   <span> Filter </span>
                 </button>
+
                 <select
                   class="collection-body-product-sorting-select"
                   @click="handleSort($event)"
@@ -74,28 +75,25 @@
               </div>
               <div class="collection-body-product-pagination">
                 <div class="collection-body-product-pagination-box">
-                  <button @click="onClickFirstPage()">
+                  <button @click="onClickFirstPage(), scrollUpToTop()">
                     <i class="fa-regular fa-circle-left"></i>
                   </button>
                   <button
-                    :class="pagingStatus ? 'page--active' : ''"
-                    @click="onClickPage('1')"
+                    :class="pagingStatus == 1 ? 'page--active' : ''"
+                    @click="onClickPage(1), scrollUpToTop()"
                   >
                     1
                   </button>
-                  <!-- <button
-                    v-for="(page, index) in pages" :key="index"
-                    type="button"
-                    :class="pagingStatus ? 'page--active' : ''"
-                    @click="onClickPage()"
+                  <button
+                    :class="pagingStatus == 2 ? 'page--active' : ''"
+                    @click="onClickPage(2), scrollUpToTop()"
                   >
-                    {{page.number}}
-                  </button> -->
-                  <button @click="onClickLastPage()">
+                    2
+                  </button>
+                  <button @click="onClickLastPage(), scrollUpToTop()">
                     <i class="fa-regular fa-circle-right"></i>
                   </button>
                 </div>
-                <span> Showing 1 - 8 of 8 Results </span>
               </div>
             </div>
           </div>
@@ -121,16 +119,20 @@ export default {
       products: [],
       isVisible: false,
       productFilter: [],
-      pagingStatus: true,
+      pagingStatus: 1,
+      page: 1,
+      pageSize: 8,
     };
   },
   async created() {
     try {
-      const response = await requestProductDbJson.get(`/products`);
+      const response = await requestProductDbJson.get(
+        `/api/products?page=${this.page}&size=${this.pageSize}`
+      );
       this.products = response.data;
-      this.productFilter = [...response.data.filter((item) => item.id <= 8)];
+      this.productFilter = [...response.data];
     } catch (error) {
-      console.log();
+      console.log("alo");
     }
   },
   components: {
@@ -140,17 +142,15 @@ export default {
     Header,
     Drawer,
   },
+  computed: {
+    productFilter() {
+      return this.productFilter;
+    },
+    pagingStatus() {
+      return this.pagingStatus;
+    },
+  },
   methods: {
-    // onClickPage(num) {
-    //   if (num === "1") {
-    //     this.pagingStatus = true;
-    //     // console.log(this.pagingStatus);
-    //     this.productFilter = this.products.filter((item) => item.id <= 8);
-    //   } else if (num === "2") {
-    //     this.pagingStatus = true;
-    //     this.productFilter = this.products.filter((item) => item.id > 8);
-    //   }
-    // },
     handleVisibleMenu() {
       this.isVisible = true;
     },
@@ -198,16 +198,24 @@ export default {
         this.productFilter = this.products;
       }
     },
+    tranformArr(arr) {
+      return arr.map((item) => ({
+        id: item.id,
+        displayName: item.displayName,
+        description: item.description,
+        price: item.price,
+        images: item.images,
+        categories: item?.categories?.map((item) => item.name),
+      }));
+    },
 
     //Category filter
     handleFilterCategory(value) {
       if (value === "All Categories") {
-        console.log(value);
         return (this.productFilter = this.products);
-      } else if (value) {
-        console.log(value);
-        return (this.productFilter = this.products.filter((item) =>
-          item.categories.toString().includes(value)
+      } else {
+        return (this.productFilter = this.tranformArr(this.products).filter(
+          (item) => item.categories?.toString().includes(value)
         ));
       }
     },
@@ -232,8 +240,49 @@ export default {
     },
 
     //Paginations
-    onClickFirstPage() {},
-    onClickLastPage() {},
+    onClickFirstPage() {
+      if (this.pagingStatus === 2) {
+        this.onClickPage(1);
+      }
+    },
+    onClickLastPage() {
+      if (this.pagingStatus === 1) {
+        this.onClickPage(2);
+      }
+    },
+    async handleToPageTwo() {
+      try {
+        const response = await requestProductDbJson.get(
+          `/api/products?page=${this.page}&size=${this.pageSize}`
+        );
+        this.products = response.data;
+        this.productFilter = [...response.data];
+      } catch (error) {
+        console.log("alo");
+      }
+    },
+    onClickPage(value) {
+      this.page = value;
+      if (value === 1) {
+        this.pagingStatus = 1;
+        this.handleToPageTwo();
+      } else if (value === 2) {
+        this.pagingStatus = 2;
+        this.handleToPageTwo();
+      }
+    },
+    scrollUpToTop() {
+      let curentScroll = document.documentElement.scrollTop,
+        int = setInterval(frame, 6);
+      function frame() {
+        if (0 > curentScroll) {
+          clearInterval(int);
+        } else {
+          curentScroll = curentScroll - 12;
+          document.documentElement.scrollTop = curentScroll;
+        }
+      }
+    },
   },
 };
 </script>

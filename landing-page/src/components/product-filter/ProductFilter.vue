@@ -49,7 +49,7 @@
       >
         <RouterLink :to="'/product/' + item.id">
           <img
-            :src="item.images"
+            :src="item.images[0]?.url"
             alt=""
             class="collection-body-filter-bestSeller-item__img"
         /></RouterLink>
@@ -107,8 +107,8 @@ export default {
   },
   async created() {
     try {
-      const response = await requestProductDbJson.get(`/products`);
-      this.productBestSeller = response.data.filter((item) => item.id < 5);
+      const response = await requestProductDbJson.get(`/api/products?page=1&size=5`);
+      this.productBestSeller = response.data;
     } catch (error) {}
   },
 };
