@@ -124,6 +124,19 @@ export default {
           return false;
         }
       },
+      validatePassword(password) {
+        if (
+          String(password)
+            .toLowerCase()
+            .match(
+              /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
+            )
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      },
     };
   },
 
@@ -218,9 +231,9 @@ export default {
       } else if (!this.validateEmail(data.email)) {
         this.alertRegister = false;
         this.messageAlertRegister = "Invalid email";
-      } else if (data.password === "") {
+      } else if (!this.validatePassword(data.password)) {
         this.alertRegister = false;
-        this.messageAlertRegister = "Password must be not empty!";
+        this.messageAlertRegister = "Password must be at least eight characters, with at least one letter, one number, and one special character !";
       } else if (data.confirmPassword != data.password) {
         this.alertRegister = false;
         this.messageAlertRegister = "Your confirmed password is incorect!";
