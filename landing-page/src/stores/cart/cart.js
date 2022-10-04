@@ -6,10 +6,14 @@ const cart = {
   state: {
     visibleCart: false,
     cart: [],
+    cartNotLogin:[],
   },
   mutations: {
+    UPDATE_CART_NOTLOGIN(state, data){
+      state.cartNotLogin = data
+    },
     UPDATE_CART_CURRENT(state, data) {
-      state.cart = data;
+      state.cart = data
     },
     ISVISIBLE_CART(state) {
       state.visibleCart = true;

@@ -50,7 +50,7 @@
       </div>
       <div class="cart-total">
         <p class="cart-total-title">Total</p>
-        <p class="cart-total-price">{{totalCoin}} $</p>
+        <p class="cart-total-price">{{totalCoin}}</p>
       </div>
     </div>
   </div>
@@ -61,6 +61,8 @@ import { RightOutlined, LeftOutlined } from "@ant-design/icons-vue";
 import { getUserCart } from '@/utils/helpers'
 import { PoweroffOutlined } from '@ant-design/icons-vue';
 import { toastSuccess } from '@/utils/toast'
+import { formatNumber } from '@/utils/common'
+
 export default {
   data() {
     return {
@@ -83,11 +85,8 @@ export default {
     },
     totalCoin() {
       const total = this.products.map((item) => item.quantity * item.price);
-      return total
-        .reduce((total, currentValue) => {
-          return total + currentValue;
-        }, 0)
-        .toFixed(2);
+      const number = total.reduce((total, currentValue) => { return total + currentValue }, 0).toFixed(2);
+      return formatNumber(number)
     },
   },
   methods: {

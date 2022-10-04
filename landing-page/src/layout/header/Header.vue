@@ -4,10 +4,7 @@
       <div class="top-bar-body">
         <div class="top-bar-body_info">
           <p class="call-in">
-            <img
-              alt="phone-outlined"
-              src="../../assets/images/phone-outline.png"
-            />
+            <img alt="phone-outlined" src="../../assets/images/phone-outline.png" />
           </p>
           <p class="top-bar-body_phone-number ml-8 mr-8">
             +391 (0)35 2568 4593
@@ -44,27 +41,16 @@
       <!-- input search -->
       <div :class="!isVisibleInputSearch ? 'search-top' : 'search-top active'">
         <div class="search-top-group">
-          <input
-            type="text"
-            placeholder="Enter keywords to search..."
-            class="search-top-group__input form-control"
-            v-model="inputSearch"
-          />
-          <button
-            class="btn-search"
-            type="button"
-            v-on:click="handleSearchProduct"
-          >
+          <input type="text" placeholder="Enter keywords to search..." class="search-top-group__input form-control"
+            v-model="inputSearch" />
+          <button class="btn-search" type="button" v-on:click="handleSearchProduct">
             <img src="../../assets/images/search.png" alt="search-i" />
           </button>
         </div>
       </div>
       <button type="button" class="btn-burger" v-on:click="handleVisibleMenu">
         <span>
-          <img
-            src="../../assets/images/common/menu-burger.png"
-            alt="btn-burger"
-          />
+          <img src="../../assets/images/common/menu-burger.png" alt="btn-burger" />
         </span>
       </button>
       <div class="logo">
@@ -93,25 +79,21 @@
               <img src="../../assets/images/user.png" alt="user-i" />
             </RouterLink>
           </p>
-          <p class="link" v-if="!isLogin">Hi <span style="font-weight:800">{{username}}</span>! <button @click="handleLogout">    Logout</button>
+          <p class="link" v-if="!isLogin">Hi <span style="font-weight:800">{{username}}</span>!
+            <a-popconfirm title="Are you sure Log Out?" ok-text="Yes" cancel-text="No" @confirm="confirm"
+              @cancel="cancel">
+              Logout
+            </a-popconfirm>
+            <!-- <button @click="handleLogout"> Logout</button> -->
+
           </p>
           <p class="link" v-else>
-            <RouterLink to="/account/login" @click="handleStatusLogin('login')"
-              >Login /</RouterLink
-            >
-            <RouterLink
-              to="/account/register"
-              @click="handleStatusLogin('register')"
-            >
-              Sign up</RouterLink
-            >
+            <RouterLink to="/account/login" @click="handleStatusLogin('login')">Login /</RouterLink>
+            <RouterLink to="/account/register" @click="handleStatusLogin('register')">
+              Sign up</RouterLink>
           </p>
         </li>
-        <button
-          class="btn-search"
-          type="button"
-          v-on:click="handleVisibleInputSearch"
-        >
+        <button class="btn-search" type="button" v-on:click="handleVisibleInputSearch">
           <img src="../../assets/images/search.png" alt="search-i" />
         </button>
         <button class="btn-shop-bag" type="button" @click="showCart">
@@ -122,14 +104,8 @@
     </div>
 
     <!-- menu mobile drawer -->
-    <Drawer
-      :isVisible="isVisible"
-      class="menu-drawer"
-      title="Menu Mobile"
-      width="50%"
-      placement="left"
-      @handleClose="handleClose"
-    >
+    <Drawer :isVisible="isVisible" class="menu-drawer" title="Menu Mobile" width="50%" placement="left"
+      @handleClose="handleClose">
       <div id="menu-mobile">
         <div class="body">
           <div class="item">
@@ -148,7 +124,9 @@
             </RouterLink>
           </div>
           <div class="item">
-            <RouterLink to="/"><p>Contact Us</p></RouterLink>
+            <RouterLink to="/">
+              <p>Contact Us</p>
+            </RouterLink>
           </div>
           <!-- <div class="item">
             <a-collapse :bordered="false" :ghost="true">
@@ -167,7 +145,8 @@
 import "./header.scss";
 import Drawer from "../../components/drawer/Drawer.vue";
 import Cart from "../../components/cart/Cart.vue";
-import {toastSuccess} from '@/utils/toast'
+import { toastSuccess } from '@/utils/toast'
+import { message } from 'ant-design-vue';
 
 export default {
   components: { Drawer, Cart },
@@ -178,7 +157,7 @@ export default {
       inputSearch: "",
       qty: 0,
       username: "",
-      isLogin:true
+      isLogin: true
     };
   },
   created() {
@@ -186,8 +165,8 @@ export default {
     this.$store.commit("CHECK_NAME");
   },
   computed: {
-    username(){ 
-      return  this.$store.state.auth.username
+    username() {
+      return this.$store.state.auth.username
     },
     isLogin() {
       return this.$store.state.auth.isLogin;
@@ -197,6 +176,11 @@ export default {
     },
   },
   methods: {
+     confirm (e)  {
+      this.handleLogout()
+    },
+     cancel (e)  {
+    },
     showCart() {
       this.$store.commit("ISVISIBLE_CART");
     },
@@ -208,10 +192,11 @@ export default {
       window.sessionStorage.removeItem('userid')
       window.sessionStorage.removeItem('jwt')
       window.sessionStorage.removeItem('username')
+      window.sessionStorage.removeItem('checkout')
       this.$store.commit("CHECK_IS_LOGIN");
       toastSuccess('Logout Successfully')
       this.username = ''
-      if(this.isLogin){
+      if (this.isLogin) {
         this.$store.commit("LOGOUT_CART")
       }
     },
