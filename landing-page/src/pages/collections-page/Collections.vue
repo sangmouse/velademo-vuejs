@@ -41,6 +41,18 @@
           >
             <div class="collection-body-product">
               <div class="collection-body-product-sorting">
+                <div class="collection-body-product-sorting-layout">
+                  <span
+                    @click="onClickLayout(true)"
+                    :class="layoutStatus == true ? 'layout-active' : ''"
+                    >Grid</span
+                  >
+                  <span
+                    @click="onClickLayout(false)"
+                    :class="layoutStatus == false ? 'layout-active' : ''"
+                    >List</span
+                  >
+                </div>
                 <button
                   type="button"
                   class="btn-burger"
@@ -63,34 +75,85 @@
               <div class="collection-body-product-list">
                 <div class="container">
                   <div class="row">
-                    <ProductCollection
-                      v-for="product in productFilter"
-                      :key="product.id"
-                      :product="product"
-                      @showCart="showCart"
-                      @handleVisibleViewInfoModal="handleVisibleViewInfoModal"
-                    />
+                      <ProductCollection
+                        v-for="product in productFilter"
+                        :key="product.id"
+                        :product="product"
+                        :class="layoutStatus == false ? 'hiding' : ''"
+                        @showCart="showCart"
+                        @handleVisibleViewInfoModal="handleVisibleViewInfoModal"
+                      />
+                    <!-- </transition-group> -->
+                  </div>
+                  <div class="row">
+                    <!-- <transition-group name="back-to-top-fade"> -->
+                      <div
+                        class="list-block col-xs-12"
+                        v-for="product in productFilter"
+                        :key="product.id"
+                        :product="product"
+                        :class="layoutStatus == true ? 'hiding' : ''"
+                      >
+                        <div class="list-block-item">
+                          <div class="col-xs-12 col-sm-4 col-md-3">
+                            <RouterLink :to="'/product/' + product.id">
+                              <div class="list-block-item-image">
+                                <img
+                                  v-bind:src="product.images[0]?.url"
+                                  alt="product"
+                                /></div
+                            ></RouterLink>
+                          </div>
+
+                          <div class="col-xs-12 col-sm-8 col-md-6 col-lg-7">
+                            <div class="list-block-item-content">
+                              <RouterLink :to="'/product/' + product.id">
+                                <h4 class="list-block-item-content__title">
+                                  {{ product.displayName }}
+                                </h4>
+                              </RouterLink>
+
+                              <p class="list-block-item-content__price">
+                                ${{ product.price }}
+                              </p>
+                              <p class="list-block-item-content__description">
+                                {{ product.description }}
+                              </p>
+                            </div>
+                          </div>
+                          <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+                            <div class="rating-block">
+                              <i class="fa-solid fa-star"></i>
+                              <i class="fa-solid fa-star"></i>
+                              <i class="fa-solid fa-star"></i>
+                              <i class="fa-solid fa-star"></i>
+                              <i class="fa-solid fa-star"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    <!-- </transition-group> -->
                   </div>
                 </div>
               </div>
               <div class="collection-body-product-pagination">
                 <div class="collection-body-product-pagination-box">
-                  <button @click="onClickFirstPage(), scrollUpToTop()">
+                  <button @click="onClickFirstPage()">
                     <i class="fa-regular fa-circle-left"></i>
                   </button>
                   <button
                     :class="pagingStatus == 1 ? 'page--active' : ''"
-                    @click="onClickPage(1), scrollUpToTop()"
+                    @click="onClickPage(1)"
                   >
                     1
                   </button>
                   <button
                     :class="pagingStatus == 2 ? 'page--active' : ''"
-                    @click="onClickPage(2), scrollUpToTop()"
+                    @click="onClickPage(2)"
                   >
                     2
                   </button>
-                  <button @click="onClickLastPage(), scrollUpToTop()">
+                  <button @click="onClickLastPage()">
                     <i class="fa-regular fa-circle-right"></i>
                   </button>
                 </div>
@@ -122,6 +185,7 @@ export default {
       pagingStatus: 1,
       page: 1,
       pageSize: 8,
+      layoutStatus: true,
     };
   },
   async created() {
@@ -167,7 +231,7 @@ export default {
         price: infor.price,
         quantity: 1,
       };
-      // this.$store.commit("ADD_PRODUCT_ONE", data);
+      this.$store.commit("ADD_PRODUCT_ONE", data);
       this.$store.commit("ISVISIBLE_CART");
     },
     handleVisibleViewInfoModal() {},
@@ -255,6 +319,7 @@ export default {
         const response = await requestProductDbJson.get(
           `/api/products?page=${this.page}&size=${this.pageSize}`
         );
+        console.log(response);
         this.products = response.data;
         this.productFilter = [...response.data];
       } catch (error) {
@@ -271,19 +336,30 @@ export default {
         this.handleToPageTwo();
       }
     },
-    scrollUpToTop() {
-      let curentScroll = document.documentElement.scrollTop,
-        int = setInterval(frame, 6);
-      function frame() {
-        if (0 > curentScroll) {
-          clearInterval(int);
-        } else {
-          curentScroll = curentScroll - 12;
-          document.documentElement.scrollTop = curentScroll;
-        }
+
+    onClickLayout(value) {
+      this.layoutStatus = value;
+      if (value == true) {
+        this.layoutStatus = true;
+      } else if (value == false) {
+        this.layoutStatus = false;
       }
     },
+
+    // scrollUpToTop() {
+    //   window.smoothScroll();
+    // },
   },
+  // mounted() {
+  //   window.smoothScroll = () => {
+  //     let currentScroll =
+  //       document.documentElement.scrollTop || document.body.scrollTop;
+  //     if (currentScroll > 0) {
+  //       window.requestAnimationFrame(window.smoothScroll);
+  //       window.scrollTo(0, Math.floor(currentScroll - (currentScroll / 5)));
+  //     }
+  //   };
+  // },
 };
 </script>
 
