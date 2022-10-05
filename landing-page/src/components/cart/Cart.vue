@@ -11,12 +11,12 @@
         <div class="item" v-for="product in cart" :key="product.id">
           <div class="info">
             <div class="img">
-              <RouterLink to="/">
+              <RouterLink :to="'/product/' + product.id">
                 <img :src="product?.listImg[0]?.url" alt="product-img" />
               </RouterLink>
             </div>
             <div class="order">
-              <RouterLink to="/sdfdsf">
+              <RouterLink :to="'/product/' + product.id">
                 <h5>{{ product.name }}</h5>
               </RouterLink>
               <p>$ {{ product.price }}</p>
@@ -49,15 +49,15 @@
       <p class="privacy">
         Shipping, taxes, and discounts will be calculated at checkout.
       </p>
-      <button class="btn-view-cart" @click="handleUpdateCart">
-        Update Cart
+      <button class="btn-view-cart" @click="handleCheckout">
+        Check Out
       </button>
     </div>
   </a-drawer>
 </template>
 <script lang="ts">
 import "./cart.scss";
-const token = localStorage.getItem("token-admin");
+import {toastError} from "@/utils/toast"
 export default {
   name: "Cart",
   data() {
@@ -85,13 +85,18 @@ export default {
       }
       this.cart[index].quantity = this.cart[index].quantity - 1;
     },
-    handleUpdateCart() {
+    async handleCheckout() {
       if (this.$store.state.auth.isLogin) {
         this.$router.push({
           name: "login",
         });
-      } else {
-        this.$store.dispatch("updateCart", this.cart);
+      } else if(this.cart.length === 0){
+         toastError('Cart empty!')
+      }
+       else {
+       await this.$store.dispatch("updateCart", this.cart);
+       await this.$store.dispatch("updateCartCurrent");
+       this.$router.push("/checkout");
       }
       this.handleCloseCart();
     },

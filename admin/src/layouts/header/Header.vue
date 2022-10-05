@@ -56,6 +56,7 @@
 import { setJwtToken } from "@/utils/helpers";
 import Drawer from "../../components/drawer/Drawer.vue";
 import "./header.scss";
+import { toastSuccess} from '@/utils/toast'
 export default {
   name: "Header",
   data() {
@@ -76,6 +77,7 @@ export default {
       this.$store.commit("LOGOUT");
       if (!this.$store.state.auth.isLogin) {
         this.$router.push("/login");
+        toastSuccess('Logout Success')
       }
     },
   },

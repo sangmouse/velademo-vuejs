@@ -4,36 +4,27 @@
       <div class="account">
         <div class="account-nav">
           <div class="account-nav-login" @click="handleLogin('login')">
-            <h4
-              class="account-nav-login__title"
-              v-bind:class="
-                statusLogin === 'login'
-                  ? 'account-nav-login__title--active'
-                  : ''
-              "
-            >
+            <h4 class="account-nav-login__title" v-bind:class="
+              statusLogin === 'login'
+                ? 'account-nav-login__title--active'
+                : ''
+            ">
               Login
             </h4>
           </div>
           <div class="account-nav-create" @click="handleLogin('register')">
-            <h4
-              class="account-nav-create__title"
-              v-bind:class="
-                statusLogin === 'register'
-                  ? 'account-nav-create__title--active'
-                  : ''
-              "
-            >
+            <h4 class="account-nav-create__title" v-bind:class="
+              statusLogin === 'register'
+                ? 'account-nav-create__title--active'
+                : ''
+            ">
               Create Account
             </h4>
           </div>
         </div>
         <div class="account-main">
           <div class="account-content" v-if="statusLogin === 'login'">
-            <div
-              class="login-alert"
-              :class="alertLogin ? 'alert-success' : 'alert-error'"
-            >
+            <div class="login-alert" :class="alertLogin ? 'alert-success' : 'alert-error'">
               <p v-if="messageAlertLogin.length > 0">
                 {{ messageAlertLogin }}
               </p>
@@ -41,47 +32,25 @@
 
             <div>
               <div class="account-email">
-                <input
-                  type="email"
-                  class="form-control account-email-control"
-                  required
-                  autofocus
-                  placeholder="Email"
-                  v-on:change="onChangeEmail"
-                />
+                <input type="email" class="form-control account-email-control" required autofocus placeholder="Email"
+                  v-on:change="onChangeEmail" />
               </div>
               <div class="account-password">
-                <input
-                  v-bind:type="showPassword ? 'text' : 'password'"
-                  class="form-control account-password-control"
-                  required
-                  placeholder="Password"
-                  v-on:change="onChangePassword"
-                />
-                <div
-                  class="account-password__showbtn"
-                  @click="handleShowPassword"
-                >
+                <input v-bind:type="showPassword ? 'text' : 'password'" class="form-control account-password-control"
+                  required placeholder="Password" v-on:change="onChangePassword" />
+                <div class="account-password__showbtn" @click="handleShowPassword">
                   <span class="showbtn" v-if="isPassword">Hide </span>
                   <span class="showbtn" v-if="!isPassword">Show</span>
                 </div>
               </div>
               <div class="account-signin-btn">
-                <input
-                  type="button"
-                  value="Sign In"
-                  v-on:click="handleSubmitLogin"
-                  class="signin-btn"
-                />
+                <input type="button" value="Sign In" v-on:click="handleSubmitLogin" class="signin-btn" />
               </div>
             </div>
           </div>
 
           <div class="register-content" v-if="statusLogin === 'register'">
-            <div
-              class="register-alert"
-              :class="alertRegister ? 'alert-success' : 'alert-error'"
-            >
+            <div class="register-alert" :class="alertRegister ? 'alert-success' : 'alert-error'">
               <p v-if="messageAlertRegister.length > 0">
                 {{ messageAlertRegister }}
               </p>
@@ -89,55 +58,28 @@
 
             <div>
               <div class="register-name">
-                <input
-                  type="text"
-                  class="form-control register-name-control"
-                  placeholder="Full Name"
-                  required
-                  autofocus
-                  @change="handleName"
-                />
+                <input type="text" class="form-control register-name-control" placeholder="Full Name" required autofocus
+                  @change="handleName" />
               </div>
               <div class="register-email">
-                <input
-                  type="email"
-                  class="form-control register-email-control"
-                  required
-                  placeholder="Email"
-                  v-on:change="onChangeEmailRegister"
-                />
+                <input type="email" class="form-control register-email-control" required placeholder="Email"
+                  v-on:change="onChangeEmailRegister" />
               </div>
               <div class="register-password">
-                <input
-                  v-bind:type="showPassword ? 'text' : 'password'"
-                  class="form-control register-password-control"
-                  required
-                  placeholder="Password"
-                  v-on:change="onChangePasswordRegister"
-                />
-                <div
-                  class="register-password__showbtn"
-                  @click="handleShowPassword"
-                >
+                <input v-bind:type="showPassword ? 'text' : 'password'" class="form-control register-password-control"
+                  required placeholder="Password" v-on:change="onChangePasswordRegister" />
+                <div class="register-password__showbtn" @click="handleShowPassword">
                   <span class="showbtn" v-if="isPassword">Hide</span>
                   <span class="showbtn" v-if="!isPassword">Show</span>
                 </div>
               </div>
               <div class="register-confirm-password">
-                <input
-                  type="password"
-                  class="form-control register-confirm-password-control"
-                  placeholder="Confirm Password"
-                  v-on:change="onChangeConfirmPassword"
-                />
+                <input type="password" class="form-control register-confirm-password-control"
+                  placeholder="Confirm Password" v-on:change="onChangeConfirmPassword" />
               </div>
               <div class="register-create-btn">
-                <input
-                  type="button"
-                  value="Create Account"
-                  class="create-account-btn"
-                  v-on:click="handleSubmitRegister"
-                />
+                <input type="button" value="Create Account" class="create-account-btn"
+                  v-on:click="handleSubmitRegister" />
               </div>
             </div>
           </div>
@@ -175,6 +117,19 @@ export default {
             .toLowerCase()
             .match(
               /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            )
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      validatePassword(password) {
+        if (
+          String(password)
+            .toLowerCase()
+            .match(
+              /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
             )
         ) {
           return true;
@@ -233,6 +188,8 @@ export default {
           password: data.password.trim(),
         };
         await this.$store.dispatch("getLogin", infor);
+        await this.$store.dispatch("updateCartCurrent")
+        this.$store.commit("CHECK_NAME");
         if (!this.$store.state.auth.isLogin) {
           this.alertLogin = true;
           this.messageAlertLogin = "Sign in Successfully!";
@@ -241,7 +198,7 @@ export default {
             this.$router.push({
               name: "home",
             });
-          }, 1500);
+          }, 1000);
         } else {
           this.alertLogin = false;
           this.messageAlertLogin = this.$store.state.auth.messageErrorLogin;
@@ -274,9 +231,9 @@ export default {
       } else if (!this.validateEmail(data.email)) {
         this.alertRegister = false;
         this.messageAlertRegister = "Invalid email";
-      } else if (data.password === "") {
+      } else if (!this.validatePassword(data.password)) {
         this.alertRegister = false;
-        this.messageAlertRegister = "Password must be not empty!";
+        this.messageAlertRegister = "Password must be at least eight characters, with at least one letter, one number, and one special character !";
       } else if (data.confirmPassword != data.password) {
         this.alertRegister = false;
         this.messageAlertRegister = "Your confirmed password is incorect!";
@@ -325,4 +282,6 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>

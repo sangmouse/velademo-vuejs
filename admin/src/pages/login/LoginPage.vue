@@ -65,7 +65,8 @@
 <script>
 import "./login.scss";
 import router from "@/router";
-import { getJwtToken } from "./../../utils/helpers";
+import { toastSuccess} from '@/utils/toast'
+
 export default {
   data() {
     return {
@@ -82,13 +83,7 @@ export default {
       },
     };
   },
-  created() {
-    if (!getJwtToken()) {
-      this.$router.push("/login");
-    } else {
-      this.$router.push("/");
-    }
-  },
+  created() {},
   methods: {
     async onFinish(values) {
       const data = {
@@ -98,6 +93,7 @@ export default {
       await this.$store.dispatch("loginSuccess", data);
       if (this.$store.state.auth.isLogin) {
         this.$router.push("/");
+        toastSuccess('Login Success')
       }
     },
   },

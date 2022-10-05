@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../pages/HomePage.vue";
+import {getJwtToken} from "../utils/helpers"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,11 +46,24 @@ const router = createRouter({
       component: () => import("../pages/contact-page/ContactUsPage.vue"),
     },
     {
+      path: "/checkout",
+      name: "checkout",
+      component: () => import("../pages/checkout/Checkout.vue"),
+    },
+    {
       path: "/collections",
       name: "collections",
       component: () => import ("../pages/collections-page/Collections.vue"),
-    },
+    }
   ],
 });
+router.beforeEach((to, from, next) =>{
+  const token = getJwtToken();
+  if(token && to.path === '/account/login'){
+    next({path: "/"})
+  } else{
+    next()
+  }
+})
 
 export default router;

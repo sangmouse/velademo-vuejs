@@ -1,3 +1,4 @@
+import {getJwtToken } from '../utils/helpers'
 import { createRouter, createWebHistory } from "vue-router";
 
 const router = createRouter({
@@ -23,7 +24,22 @@ const router = createRouter({
       name: "product-detail",
       component: () => import("@/pages/product-detail/ProductDetail.vue"),
     },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "not-found-page",
+      component: () => import("../pages/not-found-page/NotFoundPage.vue"),
+    }
   ],
 });
+router.beforeEach((to, from, next) =>{
+  const token = getJwtToken();
+  if(!token && to.path !== '/login'){
+    next({path: "/login"})
+  } if(token && to.path === '/login'){
+    next(from.path)
+  }else{
+    next()
+  }
+})
 
 export default router;
