@@ -50,6 +50,11 @@ const router = createRouter({
       name: "checkout",
       component: () => import("../pages/checkout/Checkout.vue"),
     },
+    {
+      path: "/collections",
+      name: "collections",
+      component: () => import ("../pages/collections-page/Collections.vue"),
+    }
   ],
 });
 router.beforeEach((to, from, next) =>{
