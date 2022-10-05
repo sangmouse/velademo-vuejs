@@ -1,4 +1,4 @@
-import { getJwtToken, setUserCart,setUserIdCart, setUserName } from "@/utils/helpers";
+import { getJwtToken, setUserCart,setUserIdCart, setUserName, setJwtToken } from "@/utils/helpers";
 import { toastError } from "@/utils/toast";
 import axios from "axios";
 import { store } from "../stores";
@@ -38,6 +38,7 @@ requestUnauthorized.interceptors.response.use(
       setUserCart(response.data.user.email)
       setUserIdCart(response.data.user.id)
       setUserName(response.data.user.name)
+      setJwtToken(response.data.access_token)
     }
 
     return response.data;

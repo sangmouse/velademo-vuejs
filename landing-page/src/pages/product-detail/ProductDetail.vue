@@ -127,7 +127,7 @@ import "./product-detail.scss";
 import Carousel from "../../components/carousel/Carousel.vue";
 import Drawer from "../../components/drawer/Drawer.vue";
 import Cart from "../../components/cart/Cart.vue";
-import requestAuthorized from "@/api/requestAuthorized";
+import requestUnauthorized from "@/api/request";
 
 export default {
   data() {
@@ -192,10 +192,10 @@ export default {
     },
   },
   async created() {
-    const products = await requestAuthorized.get("/api/products?page=1&size=8");
+    const products = await requestUnauthorized.get("/api/products?page=1&size=8");
 
     this.products = products;
-    const response = await requestAuthorized.get(
+    const response = await requestUnauthorized.get(
       `/api/product/${this.$route.params.id}`
     );
     if (response) {
@@ -205,7 +205,7 @@ export default {
     this.$watch(
       () => this.$route.params.id,
       async (value, _) => {
-        const response = await requestAuthorized.get(`/api/product/${value}`);
+        const response = await requestUnauthorized.get(`/api/product/${value}`);
         this.productDetail = response;
         this.quantity = 1;
       }

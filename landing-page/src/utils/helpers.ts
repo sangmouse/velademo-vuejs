@@ -38,3 +38,20 @@ export function setUserName(username: string) {
 export function getUserName() {
   return sessionStorage.getItem("username");
 }
+
+
+// checkout
+export function setCheckoutLogin(check: string) {
+  sessionStorage.setItem("checkout", check);
+}
+export function getCheckoutLogin() {
+  return sessionStorage.getItem("checkout");
+}
+
+// save cart product in local
+export function setCartLocalNotLogin(check: string) {
+  sessionStorage.setItem("cartnotlogin", check);
+}
+export function getCartLocalNotLogin() {
+  return sessionStorage.getItem("cartnotlogin");
+}
