@@ -43,30 +43,44 @@
               <form action="">
                 <div class="row">
                   <div class="col-xs-12">
+                    <div
+                      class="contact-alert mb-4"
+                      :class="alertContact ? 'alert-success' : 'alert-error'"
+                    >
+                      <p v-if="messageAlertContact.length > 0">
+                        {{ messageAlertContact }}
+                      </p>
+                    </div>
+                  </div>
+                  <div class="col-xs-12">
                     <div class="mb-4">
                       <input
+                        v-model="name"
+                        @change="onChangeName"
                         type="text"
                         class="form-control contact-info-control-right__control"
                         placeholder="Name"
                         required
-                        autofocus
                       />
                     </div>
                   </div>
                   <div class="col-xs-12">
                     <div class="mb-4">
                       <input
+                        v-model="email"
+                        @change="onChangeEmail"
                         type="email"
                         class="form-control contact-info-control-right__control"
                         placeholder="Email"
                         required
-                        autofocus
                       />
                     </div>
                   </div>
                   <div class="col-xs-12">
                     <div class="mb-4">
                       <textarea
+                        v-model="message"
+                        @change="onChangeMessage"
                         rows="6"
                         class="form-control contact-info-control-right__control"
                         placeholder="Message"
@@ -75,11 +89,14 @@
                   </div>
                 </div>
                 <div class="contact-info-control-right-button">
-                  <input
-                    type="submit"
+                  <button
+                    type="button"
                     class="btn contact-info-control-right-button__message"
                     value="Send Message"
-                  />
+                    @click="handleSubmit"
+                  >
+                    Send Message
+                  </button>
                 </div>
               </form>
             </div>
@@ -92,4 +109,48 @@
 
 <script>
 import "./contact.scss";
+import { validateEmail } from "../../utils/common";
+export default {
+  data() {
+    return {
+      alertContact: true,
+      messageAlertContact: "",
+      email: `${window.sessionStorage.getItem("useremail")}`,
+      name: ` ${window.sessionStorage.getItem("username")}`,
+      message: "",
+      validateEmail,
+    };
+  },
+  methods: {
+    onChangeName(e) {
+      this.name = e.target.value;
+      console.log(e);
+    },
+    onChangeEmail(e) {
+      this.email = e.target.value;
+    },
+    onChangeMessage(e) {
+      this.message = e.target.value;
+    },
+    handleSubmit() {
+      if (this.name === "") {
+        this.alertContact = false;
+        this.messageAlertContact = "Name must be not empty!";
+      } else if (!this.validateEmail(this.email)) {
+        this.alertContact = false;
+        this.messageAlertContact = "Invalid email!";
+      } else if (this.message === "") {
+        this.alertContact = false;
+        this.messageAlertContact = "Message must be not empty!";
+      } else {
+        this.alertContact = true;
+        this.messageAlertContact = "Message has been sent Successfully!";
+        setTimeout(() => {
+          this.messageAlertContact = "";
+          this.message = "";
+        }, 1500);
+      }
+    },
+  },
+};
 </script>

@@ -56,6 +56,26 @@
   }
 }
 
+.contact-alert {
+  p {
+    color: var(--vela-footer-titlecolor);
+    margin: 0;
+    padding: 8px 10px;
+  }
+}
+
+.alert-error {
+  // margin-bottom: 30px;
+  background-color: #e26868;
+  display: block;
+}
+
+.alert-success {
+  // margin-bottom: 30px;
+  background-color: #5cb85c;
+  display: block;
+}
+
 @media screen and (max-width: 1000px) {
   .contact-info-control-left {
     margin: 0 0 30px 0;
