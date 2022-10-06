@@ -75,63 +75,63 @@
               <div class="collection-body-product-list">
                 <div class="container">
                   <div class="row">
-                      <ProductCollection
-                        v-for="product in productFilter"
-                        :key="product.id"
-                        :product="product"
-                        :class="layoutStatus == false ? 'hiding' : ''"
-                        @showCart="showCart"
-                        @handleVisibleViewInfoModal="handleVisibleViewInfoModal"
-                      />
+                    <ProductCollection
+                      v-for="product in productFilter"
+                      :key="product.id"
+                      :product="product"
+                      :class="layoutStatus == false ? 'hiding' : ''"
+                      @showCart="showCart"
+                      @handleVisibleViewInfoModal="handleVisibleViewInfoModal"
+                    />
                     <!-- </transition-group> -->
                   </div>
                   <div class="row">
                     <!-- <transition-group name="back-to-top-fade"> -->
-                      <div
-                        class="list-block col-xs-12"
-                        v-for="product in productFilter"
-                        :key="product.id"
-                        :product="product"
-                        :class="layoutStatus == true ? 'hiding' : ''"
-                      >
-                        <div class="list-block-item">
-                          <div class="col-xs-12 col-sm-4 col-md-3">
+                    <div
+                      class="list-block col-xs-12"
+                      v-for="product in productFilter"
+                      :key="product.id"
+                      :product="product"
+                      :class="layoutStatus == true ? 'hiding' : ''"
+                    >
+                      <div class="list-block-item">
+                        <div class="col-xs-12 col-sm-4 col-md-3">
+                          <RouterLink :to="'/product/' + product.id">
+                            <div class="list-block-item-image">
+                              <img
+                                v-bind:src="url + product.images[0]?.url"
+                                alt="product"
+                              /></div
+                          ></RouterLink>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-8 col-md-6 col-lg-7">
+                          <div class="list-block-item-content">
                             <RouterLink :to="'/product/' + product.id">
-                              <div class="list-block-item-image">
-                                <img
-                                  v-bind:src="product.images[0]?.url"
-                                  alt="product"
-                                /></div
-                            ></RouterLink>
-                          </div>
+                              <h4 class="list-block-item-content__title">
+                                {{ product.displayName }}
+                              </h4>
+                            </RouterLink>
 
-                          <div class="col-xs-12 col-sm-8 col-md-6 col-lg-7">
-                            <div class="list-block-item-content">
-                              <RouterLink :to="'/product/' + product.id">
-                                <h4 class="list-block-item-content__title">
-                                  {{ product.displayName }}
-                                </h4>
-                              </RouterLink>
-
-                              <p class="list-block-item-content__price">
-                                ${{ product.price }}
-                              </p>
-                              <p class="list-block-item-content__description">
-                                {{ product.description }}
-                              </p>
-                            </div>
+                            <p class="list-block-item-content__price">
+                              ${{ product.price }}
+                            </p>
+                            <p class="list-block-item-content__description">
+                              {{ product.description }}
+                            </p>
                           </div>
-                          <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2">
-                            <div class="rating-block">
-                              <i class="fa-solid fa-star"></i>
-                              <i class="fa-solid fa-star"></i>
-                              <i class="fa-solid fa-star"></i>
-                              <i class="fa-solid fa-star"></i>
-                              <i class="fa-solid fa-star"></i>
-                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+                          <div class="rating-block">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
                           </div>
                         </div>
                       </div>
+                    </div>
                     <!-- </transition-group> -->
                   </div>
                 </div>
@@ -186,6 +186,7 @@ export default {
       page: 1,
       pageSize: 8,
       layoutStatus: true,
+      url: "http://localhost:8081/api/image/downloadFile/",
     };
   },
   async created() {

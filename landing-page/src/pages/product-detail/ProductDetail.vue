@@ -11,13 +11,22 @@
                   dots-class="slick-dots slick-thumb"
                   effect="fade"
                 >
-                  <template #customPaging="props">
+                  <template #customPaging>
+                    <a v-for="item in productDetail?.images" :key="item">
+                      <img :src="url + item.url" />
+                    </a>
+                  </template>
+
+                  <!-- <template #customPaging="props">
                     <a>
                       <img :src="getImgUrl(props.i)" />
                     </a>
-                  </template>
+                  </template> -->
+                  <!-- <div v-for="item in 4" :key="item">
+                    <img :src="getImgUrl(item)" />
+                  </div> -->
                   <div v-for="item in productDetail?.images" :key="item">
-                    <img :src="item.url" />
+                    <img :src="url + item.url" />
                   </div>
                 </a-carousel>
               </div>
@@ -101,7 +110,7 @@
                     <RouterLink v-bind:to="'/product/' + product.id">
                       <div class="img">
                         <img
-                          v-bind:src="product.images[0]?.url"
+                          v-bind:src="url + product.images[0]?.url"
                           alt="product"
                         />
                       </div>
@@ -131,11 +140,15 @@ import requestUnauthorized from "@/api/request";
 
 export default {
   data() {
-    const getImgUrl = (i: number) => {
-      return `../src/assets/images/products/product_${i + 1}.jpg`;
-    };
+    // const getImgUrl = (i: number) => {
+    //   return `http://localhost:8081/api/image/downloadFile/product ${
+    //     i + 1
+    //   }.jpg`;
+    // };
     return {
-      getImgUrl,
+      i: 0,
+      url: `http://localhost:8081/api/image/downloadFile/`,
+      // getImgUrl,
       productDetail: null,
       products: [],
       isVisibleDrawer: false,
@@ -192,7 +205,9 @@ export default {
     },
   },
   async created() {
-    const products = await requestUnauthorized.get("/api/products?page=1&size=8");
+    const products = await requestUnauthorized.get(
+      "/api/products?page=1&size=8"
+    );
 
     this.products = products;
     const response = await requestUnauthorized.get(
@@ -202,6 +217,7 @@ export default {
       this.products.push(response);
     }
     this.productDetail = response;
+
     this.$watch(
       () => this.$route.params.id,
       async (value, _) => {
