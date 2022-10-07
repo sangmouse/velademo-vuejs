@@ -17,7 +17,7 @@
     </a-table>
     <div class="paginate">
       <p></p>
-      <a-pagination showLessItems :total="50" :showSizeChanger="false" @change="handleChangePage" />
+      <a-pagination showLessItems :total="numberPanigation" :showSizeChanger="false" @change="handleChangePage" />
     </div>
   </div>
 </template>
@@ -36,6 +36,7 @@ export default {
     columns: Array,
     source: Array,
     showLoading:Boolean,
+    numberPanigation:Number,
   },
   components: {
     SmileOutlined,

@@ -10,24 +10,25 @@
                 @change="handleChange">
               </a-select>
             </div>
-            <RouterLink to="add-product"> Add Product </RouterLink>
-          </div>
-          <div class="right-side">
-            <a-input class="input-search" size="large" @input="debounceSearch" placeholder="Searching..." />
+            <RouterLink to="/add-blogs"> Add Blogs </RouterLink>
           </div>
         </div>
-        <Table :columns="columns" :source="source" @handleChangePage="handleChangePage" :showLoading="showLoading" :numberPanigation="numberPanigation" />
+        <Table :columns="columns" :source="source" @handleChangePage="handleChangePage" :showLoading="showLoading"
+          :numberPanigation="numberPanigation" />
       </div>
     </div>
   </div>
 </template>
-
+  
 <script>
-import "./home-page.scss";
-import Table from "../components/table/Table.vue";
-import http from "@/api/request";
-import { getJwtToken } from "./../utils/helpers";
-import ProductService from '@/api/ProductService'
+import "./blogs.scss";
+import Table from "@/components/table/Table.vue";
+import { getJwtToken } from "@/utils/helpers";
+import axios from 'axios'
+import BlogsService from "@/api/BlogsService";
+import ProductService from "@/api/ProductService";
+
+
 
 export default {
   components: { Table },
@@ -38,7 +39,7 @@ export default {
       pageNumber: 1,
       searchProduct: "",
       debounce: null,
-      numberPanigation:50,
+      numberPanigation: 50,
       options: [
         {
           value: 5,
@@ -65,12 +66,12 @@ export default {
           width: 200,
         },
         {
-          title: "Name",
+          title: "Title",
           dataIndex: "displayName",
           key: "displayName",
         },
         {
-          title: "price",
+          title: "Stage Name",
           dataIndex: "price",
           key: "price",
         },
@@ -79,11 +80,11 @@ export default {
           dataIndex: "categories",
           key: "categories",
         },
-        // {
-        //   title: "Created Date",
-        //   dataIndex: "createdDate",
-        //   key: "createdDate",
-        // },
+        {
+          title: "Created Date",
+          dataIndex: "createdDate",
+          key: "createdDate",
+        },
         // {
         //   title: "Updated Date",
         //   dataIndex: "updatedDate",
@@ -101,18 +102,20 @@ export default {
       ],
       source: [],
       showLoading: false,
+      totalItem: null,
+
     };
   },
 
-  created() {
-    ProductService
-      .get(1,10)
-      .then((res) => {
-        const data = this.transformData(res);
-        this.source = data;
-      })
-      .catch((err) => console.log(err));
-
+  async created() {
+    try {
+      const response = await BlogsService.getBlogs(1, 10)
+      this.totalItem = response.total
+      this.source = this.transformData(response.voList);
+    } catch (error) {
+      console.log(error);
+    }
+    this.numberPanigation = Math.ceil( this.totalItem / this.pageSize)*10
     this.$watch(
       () => this.$store.state.auth.isLogin,
       (value, _) => {
@@ -122,7 +125,7 @@ export default {
           });
         }
       }
-    );
+    )
   },
   computed: {
     source() {
@@ -134,41 +137,23 @@ export default {
     transformData(arr) {
       return arr.map((item) => ({
         id: item?.id,
-        displayName: item?.displayName,
-        price: new Intl.NumberFormat("de-DE", {
-          style: "currency",
-          currency: "USD",
-        }).format(item?.price),
-        categories: item?.categories.map((item) => item.name).toString(),
-        // createdDate: item.createdDtm
-        //   ?.slice(0, 10)
-        //   .split("-")
-        //   .reverse()
-        //   .join("-"),
-        // updatedDate: item.updatedDtm
-        //   ?.slice(0, 10)
-        //   .split("-")
-        //   .reverse()
-        //   .join("-"),
-        // createdUser: item.creator?.name,
+        displayName: item?.title,
+        price: item?.userName,
+        categories: 'chua co',
+        createdDate: item.createdDtm
+          ?.slice(0, 10)
+          .split("-")
+          .reverse()
+          .join("-"),
       }));
-    },
-    async startListSearch() {
-      try {
-        const res = await ProductService.search(this.pageNumber, this.pageSize, this.searchProduct)
-        const data = this.transformData(res);
-        return (this.source = data);
-      } catch (error) {
-        this.source = [];
-      }
     },
     async startListProduct() {
       try {
-        const response = await ProductService.get(this.pageNumber, this.pageSize )
-        const data = this.transformData(response);
+        const response = await BlogsService.getBlogs(this.pageNumber, this.pageSize)
+        const data = this.transformData(response.voList);
         this.source = data;
       } catch (error) {
-        this.source = [];
+        console.log( error);
       }
     },
     debounceSearch(e) {
@@ -177,11 +162,7 @@ export default {
       this.debounce = setTimeout(() => {
         this.showLoading = false
         this.searchProduct = e.target.value.trim();
-        if (this.searchProduct === "") {
-          this.startListProduct();
-        } else {
           this.startListSearch();
-        }
       }, 500);
     },
 
@@ -191,11 +172,8 @@ export default {
       this.debounce = setTimeout(() => {
         this.pageSize = value;
         this.showLoading = false
-        if (this.searchProduct !== "") {
-          this.startListSearch();
-        } else {
+        this.numberPanigation = Math.ceil( this.totalItem / this.pageSize)*10
           this.startListProduct();
-        }
       }, 500);
     },
     async handleChangePage(pageNumbervalue) {
@@ -204,17 +182,14 @@ export default {
       this.debounce = setTimeout(() => {
         this.showLoading = false
         this.pageNumber = pageNumbervalue;
-        if (this.searchProduct !== "") {
-          this.startListSearch();
-        } else {
           this.startListProduct();
-        }
       }, 500);
     },
   },
-};
+}
 </script>
-
+  
 <style scoped>
 
 </style>
+  

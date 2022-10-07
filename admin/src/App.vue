@@ -2,18 +2,18 @@
   <div
     style="height: 100px"
     v-if="
-      ['home-page', 'add-product', 'product-detail'].indexOf($route.name) > -1
+      ['home-page', 'add-product', 'product-detail', 'AddBlogs','blogs',].indexOf($route.name) > -1
     "
   />
   <Header
     v-if="
-      ['home-page', 'add-product', 'product-detail'].indexOf($route.name) > -1
+      ['home-page', 'add-product', 'product-detail', 'AddBlogs','blogs',].indexOf($route.name) > -1
     "
   />
   <RouterView />
   <Footer
     v-if="
-      ['home-page', 'add-product', 'product-detail'].indexOf($route.name) > -1
+      ['home-page', 'add-product', 'product-detail', 'AddBlogs','blogs',].indexOf($route.name) > -1
     "
   />
 </template>

@@ -14,3 +14,11 @@ export function getRefreshToken() {
 export function setRefreshToken(token: string) {
   sessionStorage.setItem("refreshToken", token);
 }
+
+export function geturl() {
+  return sessionStorage.getItem("url");
+}
+
+export function seturl(token: string) {
+  sessionStorage.setItem("url", token);
+}

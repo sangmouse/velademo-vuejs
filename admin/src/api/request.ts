@@ -1,12 +1,11 @@
-import { getJwtToken } from "@/utils/helpers";
 import axios from "axios";
-import router from "@/router";
 import { toastError } from "@/utils/toast";
+import { setJwtToken, getJwtToken, geturl, seturl, getRefreshToken, setRefreshToken } from '@/utils/helpers'
 
-const API_URL = "http://localhost:8081";
+const BASE_URL = "http://localhost:8081"
 
 const requestUnauthorized = axios.create({
-  baseURL: API_URL,
+  baseURL: BASE_URL,
   timeout: 1000,
   headers: {
     "Content-Type": "application/json",
@@ -15,33 +14,52 @@ const requestUnauthorized = axios.create({
 
 requestUnauthorized.interceptors.request.use(
   (request) => {
-    const token = getJwtToken();
-    if (token) {
-      request.headers["Authorization"] = `Bearer ${token}`;
+    if (request.url?.indexOf('/api/login') >= 1 || request.url?.indexOf('/api/token/refresh') >= 1 || request.url?.indexOf('/api/user/register') >= 1) {
+      return request;
     }
-    // Edit request config
+    if (getJwtToken()) {
+      request.headers["Authorization"] = `Bearer ${getJwtToken()}`;
+      seturl(request?.url)
+    }
     return request;
   },
   (error) => {
-    // console.log(error);
     return Promise.reject(error);
   }
 );
 
 requestUnauthorized.interceptors.response.use(
   (response) => {
-    // console.log(response);
-    // Edit response config
+    if (response?.data?.refresh_token && response?.data?.access_token) {
+      const token = response?.data?.access_token
+      setJwtToken(token)
+      const refreshToken = response?.data?.refresh_token
+      setRefreshToken(refreshToken)
+    }
 
+    if (response?.access_token && response?.refresh_token) {
+      const token = response?.access_token
+      setJwtToken(token)
+      const refreshToken = response?.refresh_token
+      setRefreshToken(refreshToken)
+    }
     return response.data;
   },
-  (error) => {
-    if (error.response.status === 403 && error?.response?.data?.error_message?.includes("The Token has expired")) {
-      window.sessionStorage.removeItem('jwt')
+  async (error) => {
+    if (error?.response?.status === 403) {
       toastError("Session Expired")
-      router.push({
-        name: "login-page",
-      });
+      try {
+        const response = await axios.get(`http://localhost:8081/api/token/refresh`
+          , {
+            headers: {
+              "Authorization": `Bearer ${getRefreshToken()}`
+            }
+          }
+        )
+        setJwtToken(response.data.access_token)
+        setRefreshToken(response.data.refresh_token)
+        return await requestUnauthorized.get(`${geturl()}`)
+      } catch (error) {}
     }
     return Promise.reject(error);
   }
