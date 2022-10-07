@@ -1,4 +1,5 @@
 <template>
+  <Spinner v-if="spin" />
   <Drawer
     :isVisible="isVisible"
     class="menu-drawer"
@@ -75,64 +76,67 @@
               <div class="collection-body-product-list">
                 <div class="container">
                   <div class="row">
-                    <ProductCollection
-                      v-for="product in productFilter"
-                      :key="product.id"
-                      :product="product"
-                      :class="layoutStatus == false ? 'hiding' : ''"
-                      @showCart="showCart"
-                      @handleVisibleViewInfoModal="handleVisibleViewInfoModal"
-                    />
-                    <!-- </transition-group> -->
+                    <transition-group name="back-to-top-fade">
+                      <ProductCollection
+                        v-for="product in productFilter"
+                        v-if="isShow"
+                        :key="product.id"
+                        :product="product"
+                        :class="layoutStatus == false ? 'hiding' : ''"
+                        @showCart="showCart"
+                        @handleVisibleViewInfoModal="handleVisibleViewInfoModal"
+                      />
+                    </transition-group>
                   </div>
                   <div class="row">
-                    <!-- <transition-group name="back-to-top-fade"> -->
-                    <div
-                      class="list-block col-xs-12"
-                      v-for="product in productFilter"
-                      :key="product.id"
-                      :product="product"
-                      :class="layoutStatus == true ? 'hiding' : ''"
-                    >
-                      <div class="list-block-item">
-                        <div class="col-xs-12 col-sm-4 col-md-3">
-                          <RouterLink :to="'/product/' + product.id">
-                            <div class="list-block-item-image">
-                              <img
-                                v-bind:src="url + product.images[0]?.url"
-                                alt="product"
-                              /></div
-                          ></RouterLink>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-8 col-md-6 col-lg-7">
-                          <div class="list-block-item-content">
+                    <transition-group name="back-to-top-fade" tag="div">
+                      <div
+                        class="list-block col-xs-12"
+                        v-for="product in productFilter"
+                        v-if="isShow"
+                        :key="product.id"
+                        :product="product"
+                        :class="layoutStatus == true ? 'hiding' : ''"
+                      >
+                        <div class="list-block-item">
+                          <div class="col-xs-12 col-sm-4 col-md-3">
                             <RouterLink :to="'/product/' + product.id">
-                              <h4 class="list-block-item-content__title">
-                                {{ product.displayName }}
-                              </h4>
-                            </RouterLink>
-
-                            <p class="list-block-item-content__price">
-                              ${{ product.price }}
-                            </p>
-                            <p class="list-block-item-content__description">
-                              {{ product.description }}
-                            </p>
+                              <div class="list-block-item-image">
+                                <img
+                                  v-bind:src="url + product.images[0]?.url"
+                                  alt="product"
+                                /></div
+                            ></RouterLink>
                           </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2">
-                          <div class="rating-block">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
+
+                          <div class="col-xs-12 col-sm-8 col-md-6 col-lg-7">
+                            <div class="list-block-item-content">
+                              <RouterLink :to="'/product/' + product.id">
+                                <h4 class="list-block-item-content__title">
+                                  {{ product.displayName }}
+                                </h4>
+                              </RouterLink>
+
+                              <p class="list-block-item-content__price">
+                                ${{ product.price }}
+                              </p>
+                              <p class="list-block-item-content__description">
+                                {{ product.description }}
+                              </p>
+                            </div>
+                          </div>
+                          <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+                            <div class="rating-block">
+                              <i class="fa-solid fa-star"></i>
+                              <i class="fa-solid fa-star"></i>
+                              <i class="fa-solid fa-star"></i>
+                              <i class="fa-solid fa-star"></i>
+                              <i class="fa-solid fa-star"></i>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <!-- </transition-group> -->
+                    </transition-group>
                   </div>
                 </div>
               </div>
@@ -175,10 +179,13 @@ import ProductCollection from "../../components/product/ProductCollection.vue";
 import ProductFilter from "../../components/product-filter/ProductFilter.vue";
 import Footer from "../../layout/footer/Footer.vue";
 import Header from "../../layout/header/Header.vue";
+import Spinner from "../../components/spinner/Spinner.vue";
 
 export default {
   data() {
     return {
+      spin: false,
+      isShow: true,
       products: [],
       isVisible: false,
       productFilter: [],
@@ -206,6 +213,7 @@ export default {
     Footer,
     Header,
     Drawer,
+    Spinner,
   },
   computed: {
     productFilter() {
@@ -277,41 +285,81 @@ export default {
     //Category filter
     handleFilterCategory(value) {
       if (value === "All Categories") {
-        return (this.productFilter = this.products);
+        setTimeout(() => {
+          this.spin = false;
+          this.isShow = true;
+          return (this.productFilter = this.products);
+        }, 1500);
+        this.spin = true;
+        this.isShow = false;
       } else {
-        return (this.productFilter = this.tranformArr(this.products).filter(
-          (item) => item.categories?.toString().includes(value)
-        ));
+        setTimeout(() => {
+          this.spin = false;
+          this.isShow = true;
+          return (this.productFilter = this.tranformArr(this.products).filter(
+            (item) => item.categories?.toString().includes(value)
+          ));
+        }, 1500);
+        this.spin = true;
+        this.isShow = false;
       }
     },
     handleFilterPrice(value) {
       if (value === "$0 - $50") {
-        return (this.productFilter = this.products.filter(
-          (item) => item.price > 0 && item.price < 50
-        ));
+        setTimeout(() => {
+          this.spin = false;
+          this.isShow = true;
+          return (this.productFilter = this.products.filter(
+            (item) => item.price > 0 && item.price < 50
+          ));
+        }, 1500);
+        this.spin = true;
+        this.isShow = false;
       } else if (value === "$50 - $100") {
-        return (this.productFilter = this.products.filter(
-          (item) => item.price > 50 && item.price < 100
-        ));
+        setTimeout(() => {
+          this.spin = false;
+          this.isShow = true;
+          return (this.productFilter = this.products.filter(
+            (item) => item.price > 50 && item.price < 100
+          ));
+        }, 1500);
+        this.spin = true;
+        this.isShow = false;
       } else if (value === "$100 - $150") {
-        return (this.productFilter = this.products.filter(
-          (item) => item.price > 100 && item.price < 150
-        ));
+        setTimeout(() => {
+          this.spin = false;
+          this.isShow = true;
+          return (this.productFilter = this.products.filter(
+            (item) => item.price > 100 && item.price < 150
+          ));
+        }, 1500);
+        this.spin = true;
+        this.isShow = false;
       } else if (value === "$150 - $200") {
-        return (this.productFilter = this.products.filter(
-          (item) => item.price > 150 && item.price < 200
-        ));
+        setTimeout(() => {
+          this.spin = false;
+          this.isShow = true;
+          return (this.productFilter = this.products.filter(
+            (item) => item.price > 150 && item.price < 200
+          ));
+        }, 1500);
+        this.spin = true;
+        this.isShow = false;
       }
     },
 
     //Paginations
     onClickFirstPage() {
       if (this.pagingStatus === 2) {
+        this.spin = true;
+        this.isShow = false;
         this.onClickPage(1);
       }
     },
     onClickLastPage() {
       if (this.pagingStatus === 1) {
+        this.spin = true;
+        this.isShow = false;
         this.onClickPage(2);
       }
     },
@@ -320,9 +368,14 @@ export default {
         const response = await requestProductDbJson.get(
           `/api/products?page=${this.page}&size=${this.pageSize}`
         );
-        console.log(response);
-        this.products = response.data;
-        this.productFilter = [...response.data];
+        setTimeout(() => {
+          this.spin = false;
+          this.isShow = true;
+          this.products = response.data;
+          this.productFilter = [...response.data];
+        }, 1500);
+        this.spin = true;
+        this.isShow = false;
       } catch (error) {
         console.log("alo");
       }
@@ -341,9 +394,21 @@ export default {
     onClickLayout(value) {
       this.layoutStatus = value;
       if (value == true) {
-        this.layoutStatus = true;
+        setTimeout(() => {
+          this.spin = false;
+          this.isShow = true;
+          this.layoutStatus = true;
+        }, 1500);
+        this.spin = true;
+        this.isShow = false;
       } else if (value == false) {
-        this.layoutStatus = false;
+        setTimeout(() => {
+          this.spin = false;
+          this.isShow = true;
+          this.layoutStatus = false;
+        }, 1500);
+        this.spin = true;
+        this.isShow = false;
       }
     },
 

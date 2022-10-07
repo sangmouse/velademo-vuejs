@@ -219,3 +219,31 @@ select:focus {
 // .back-to-top-fade-enter, .back-to-top-fade-leave {
 //   opacity: 0;
 // }
+
+.back-to-top-fade-enter-form {
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.back-to-top-fade-enter-to {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.back-to-top-fade-enter-active {
+  transition: all 0.4s ease;
+}
+
+.back-to-top-fade-leave-form {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.back-to-top-fade-leave-to {
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.back-to-top-fade-leave-active {
+  transition: all 0.4s ease;
+}
