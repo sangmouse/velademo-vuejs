@@ -1,4 +1,5 @@
 import requestUnauthorized from "../../api/AuthService";
+import {removetJwtToken,removeRefreshToken,removeUrl} from '@/utils/helpers'
 
 const auth = {
   state: {
@@ -8,7 +9,6 @@ const auth = {
   mutations: {
     LOGIN_SUCCESS(state) {
       state.isLogin = true;
-      window.localStorage.removeItem("logout");
     },
     LOGIN_ERROR(state, msg) {
       state.error_message = msg;
@@ -17,10 +17,9 @@ const auth = {
     LOGOUT(state) {
       state.isLogin = false;
       state.error_message = "";
-      window.sessionStorage.removeItem('refreshToken')
-      window.sessionStorage.removeItem('url')
-      window.localStorage.setItem("logout", "false");
-      window.sessionStorage.removeItem('jwt')
+      removetJwtToken()
+      removeRefreshToken()
+      removeUrl()
     },
   },
   actions: {

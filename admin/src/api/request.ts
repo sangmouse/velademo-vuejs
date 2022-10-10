@@ -1,6 +1,6 @@
 import axios from "axios";
-import { toastError } from "@/utils/toast";
-import { setJwtToken, getJwtToken, geturl, seturl, getRefreshToken, setRefreshToken } from '@/utils/helpers'
+import { setJwtToken, getJwtToken, geturl, seturl, setRefreshToken } from '@/utils/helpers'
+import RefreshTokenServive from './RefreshTokenServive'
 
 const BASE_URL = "http://localhost:8081"
 
@@ -47,19 +47,13 @@ requestUnauthorized.interceptors.response.use(
   },
   async (error) => {
     if (error?.response?.status === 403) {
-      toastError("Session Expired")
+      console.log('tuan oi het han token');
       try {
-        const response = await axios.get(`http://localhost:8081/api/token/refresh`
-          , {
-            headers: {
-              "Authorization": `Bearer ${getRefreshToken()}`
-            }
-          }
-        )
+        const response = await RefreshTokenServive.getRefreshToken()
         setJwtToken(response.data.access_token)
         setRefreshToken(response.data.refresh_token)
         return await requestUnauthorized.get(`${geturl()}`)
-      } catch (error) {}
+      } catch (error) { }
     }
     return Promise.reject(error);
   }

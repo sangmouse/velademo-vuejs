@@ -16,7 +16,8 @@
             <a-input class="input-search" size="large" @input="debounceSearch" placeholder="Searching..." />
           </div>
         </div>
-        <Table :columns="columns" :source="source" @handleChangePage="handleChangePage" :showLoading="showLoading" :numberPanigation="numberPanigation" />
+        <Table :columns="columns" :source="source" @handleChangePage="handleChangePage" :showLoading="showLoading"
+          :numberPanigation="numberPanigation" />
       </div>
     </div>
   </div>
@@ -25,7 +26,6 @@
 <script>
 import "./home-page.scss";
 import Table from "../components/table/Table.vue";
-import http from "@/api/request";
 import { getJwtToken } from "./../utils/helpers";
 import ProductService from '@/api/ProductService'
 
@@ -38,7 +38,7 @@ export default {
       pageNumber: 1,
       searchProduct: "",
       debounce: null,
-      numberPanigation:50,
+      numberPanigation: 50,
       options: [
         {
           value: 5,
@@ -104,14 +104,15 @@ export default {
     };
   },
 
-  created() {
+  async created() {
     ProductService
-      .get(1,10)
+      .get(1, 10)
       .then((res) => {
-        const data = this.transformData(res);
+        const data = this.transformData(res.voList);
+        console.log('tuan', res);
         this.source = data;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log('loi', err));
 
     this.$watch(
       () => this.$store.state.auth.isLogin,
@@ -156,7 +157,8 @@ export default {
     async startListSearch() {
       try {
         const res = await ProductService.search(this.pageNumber, this.pageSize, this.searchProduct)
-        const data = this.transformData(res);
+        const data = this.transformData(res.voList);
+        console.log(data);
         return (this.source = data);
       } catch (error) {
         this.source = [];
@@ -164,8 +166,8 @@ export default {
     },
     async startListProduct() {
       try {
-        const response = await ProductService.get(this.pageNumber, this.pageSize )
-        const data = this.transformData(response);
+        const response = await ProductService.get(this.pageNumber, this.pageSize)
+        const data = this.transformData(response.voList);
         this.source = data;
       } catch (error) {
         this.source = [];

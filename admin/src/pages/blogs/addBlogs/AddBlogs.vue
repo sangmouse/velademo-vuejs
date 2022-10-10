@@ -58,7 +58,6 @@
 </template>
   
 <script lang="ts">
-//   import http from "@/api/request";
 import type { UploadChangeParam, UploadProps } from "ant-design-vue";
 import { computed, defineComponent, reactive, ref } from "vue";
 import { useRouter } from "vue-router";

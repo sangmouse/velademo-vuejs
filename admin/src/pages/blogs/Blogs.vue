@@ -12,6 +12,9 @@
             </div>
             <RouterLink to="/add-blogs"> Add Blogs </RouterLink>
           </div>
+          <div class="right-side">
+            <a-input class="input-search" size="large" @input="debounceSearch" placeholder="Searching..." />
+          </div>
         </div>
         <Table :columns="columns" :source="source" @handleChangePage="handleChangePage" :showLoading="showLoading"
           :numberPanigation="numberPanigation" />
@@ -156,13 +159,27 @@ export default {
         console.log( error);
       }
     },
+    async startListSearch() {
+      try {
+        const res = await ProductService.search(this.pageNumber, this.pageSize, this.searchProduct)
+        const data = this.transformData(res.voList);
+        console.log('blogs',data);
+        return (this.source = data);
+      } catch (error) {
+        this.source = [];
+      }
+    },
     debounceSearch(e) {
       this.showLoading = true
       clearTimeout(this.debounce);
       this.debounce = setTimeout(() => {
         this.showLoading = false
         this.searchProduct = e.target.value.trim();
+        if (this.searchProduct === "") {
+          this.startListProduct();
+        } else {
           this.startListSearch();
+        }
       }, 500);
     },
 
@@ -173,7 +190,11 @@ export default {
         this.pageSize = value;
         this.showLoading = false
         this.numberPanigation = Math.ceil( this.totalItem / this.pageSize)*10
+        if (this.searchProduct !== "") {
+          this.startListSearch();
+        } else {
           this.startListProduct();
+        }
       }, 500);
     },
     async handleChangePage(pageNumbervalue) {
@@ -182,8 +203,12 @@ export default {
       this.debounce = setTimeout(() => {
         this.showLoading = false
         this.pageNumber = pageNumbervalue;
+        if (this.searchProduct !== "") {
+          this.startListSearch();
+        } else {
           this.startListProduct();
-      }, 500);
+        }
+      }, 500)
     },
   },
 }
