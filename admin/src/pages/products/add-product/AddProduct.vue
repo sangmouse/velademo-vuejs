@@ -2,89 +2,41 @@
   <div id="add-product">
     <div class="container">
       <p v-if="message.length" class="message">{{ message }}</p>
-      <a-form
-        :model="formState"
-        name="basic"
-        layout="vertical"
-        autocomplete="off"
-        @finish="onFinish"
-        @finishFailed="onFinishFailed"
-      >
-        <a-form-item
-          label="Product Name"
-          name="name"
-          :rules="[{ required: true, message: 'This field is required' }]"
-        >
-          <a-input
-            v-model:value="formState.name"
-            placeholder="Enter product name"
-          />
+      <a-form :model="formState" name="basic" layout="vertical" autocomplete="off" @finish="onFinish"
+        @finishFailed="onFinishFailed">
+        <a-form-item label="Product Name" name="name" :rules="[{ required: true, message: 'This field is required' }]">
+          <a-input v-model:value="formState.name" placeholder="Enter product name" />
         </a-form-item>
-        <a-form-item
-          label="Product Price"
-          name="price"
-          :rules="[{ required: true, message: 'This field is required' }]"
-        >
-          <a-input
-            v-model:value="formState.price"
-            placeholder="Enter product price"
-            type="number"
-          />
+        <a-form-item label="Product Price" name="price"
+          :rules="[{ required: true, message: 'This field is required' }]">
+          <a-input v-model:value="formState.price" placeholder="Enter product price" type="number" />
         </a-form-item>
 
-        <a-form-item
-          name="categories"
-          label="Categories"
-          :rules="[
-            {
-              required: true,
-              message: 'This field is required',
-              type: 'array',
-            },
-          ]"
-        >
-          <a-select
-            mode="multiple"
-            placeholder="Select category"
-            v-model:value="formState.categories"
-            :options="categories"
-          >
+        <a-form-item name="categories" label="Categories" :rules="[
+          {
+            required: true,
+            message: 'This field is required',
+            type: 'array',
+          },
+        ]">
+          <a-select mode="multiple" placeholder="Select category" v-model:value="formState.categories"
+            :options="categories">
           </a-select>
         </a-form-item>
 
-        <a-form-item
-          label="Product Description"
-          name="description"
-          :rules="[{ required: true, message: 'This field is required' }]"
-        >
-          <a-textarea
-            v-model:value="formState.description"
-            placeholder="Enter product description"
-            :rows="4"
-          />
+        <a-form-item label="Product Description" name="description"
+          :rules="[{ required: true, message: 'This field is required' }]">
+          <a-textarea v-model:value="formState.description" placeholder="Enter product description" :rows="4" />
         </a-form-item>
 
-        <a-upload
-          v-model:file-list="fileList"
-          accept=".jpg, .jpeg, .png"
-          list-type="picture"
-          :multiple="true"
-          :before-upload="beforeUpload"
-          class="avatar-uploader"
-          @remove="handleRemove"
-        >
+        <a-upload v-model:file-list="fileList" accept=".jpg, .jpeg, .png" list-type="picture" :multiple="true"
+          :before-upload="beforeUpload" class="avatar-uploader" @remove="handleRemove">
           <p style="margin: 0 0 10px 0">
-            <span
-              style="
+            <span style="
                 display: inline-block;
                 margin: 0 5px 0 0;
                 vertical-align: middle;
-              "
-              ><img
-                src="../../../assets/images/asterik.png"
-                width="5"
-                alt="asterik" /></span
-            >Upload Photo
+              "><img src="../../../assets/images/asterik.png" width="5" alt="asterik" /></span>Upload Photo
           </p>
           <div class="upload-file">
             <div class="img">
@@ -97,12 +49,9 @@
 
         <a-form-item>
           <p style="text-align: center">
-            <a-button
-              type="primary"
-              html-type="submit"
-              class="btn-create-product"
-              ><sync-outlined spin v-if="loading" />Create New</a-button
-            >
+            <a-button type="primary" html-type="submit" class="btn-create-product">
+              <sync-outlined spin v-if="loading" />Create New
+            </a-button>
           </p>
         </a-form-item>
       </a-form>
@@ -111,14 +60,14 @@
 </template>
 
 <script lang="ts">
-import http from "@/api/request";
 import type { UploadChangeParam, UploadProps } from "ant-design-vue";
 import { computed, defineComponent, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { SyncOutlined } from "@ant-design/icons-vue";
-import requestUnauthorized from "./../../../api/request";
+import CategoriesService from "@/api/CategoriesService"
 import "./add-product.scss";
-import {toastSuccess, toastError } from "../../../utils/toast"
+import { toastSuccess, toastError } from "@/utils/toast"
+import ProductService from '@/api/ProductService'
 
 interface FormState {
   name: string;
@@ -139,7 +88,7 @@ export default defineComponent({
   },
 
   created() {
-    requestUnauthorized.get("/api/categories").then((res) => {
+    CategoriesService.get().then((res) => {
       this.categories = res?.map((item) => ({
         value: item.id,
         label: item.name,
@@ -195,8 +144,7 @@ export default defineComponent({
         };
         const postData = JSON.stringify(jsonFile);
         formData.append("jsonFile", postData);
-        requestUnauthorized
-          .post("/api/admin/addProduct", formData)
+        ProductService.post(formData)
           .then((res) => {
             setTimeout(() => {
               loading.value = false;

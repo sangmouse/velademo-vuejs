@@ -23,21 +23,21 @@
                   <div class="fs-15 text-muted">
                     Created User :
                     <span class="text-body fw-medium">{{
-                      productDetail?.creator.name
+                    productDetail?.creator.name
                     }}</span>
                   </div>
                   <div class="vr"></div>
                   <div class="fs-15 text-muted">
                     Updated Date :
                     <span class="text-body fw-medium">{{
-                      moment(productDetail?.updatedDtm).format("ll")
+                    moment(productDetail?.updatedDtm).format("ll")
                     }}</span>
                   </div>
                   <div class="vr"></div>
                   <div class="fs-15 text-muted">
                     ID :
                     <span class="text-body fw-medium">{{
-                      productDetail?.id
+                    productDetail?.id
                     }}</span>
                   </div>
                 </div>
@@ -48,14 +48,8 @@
                 <div class="p-2 border border-dashed rounded">
                   <div class="d-flex align-items-center">
                     <div class="avatar-sm me-2">
-                      <div
-                        class="avatar-title rounded bg-transparent text-success fs-24"
-                      >
-                        <img
-                          src="../../assets/images/usd-circle-free-icon-font.png"
-                          alt=""
-                          class="img-fluid d-block"
-                        />
+                      <div class="avatar-title rounded bg-transparent text-success fs-24">
+                        <img src="../../assets/images/usd-circle-free-icon-font.png" alt="" class="img-fluid d-block" />
                       </div>
                     </div>
                     <div class="flex-grow-1">
@@ -69,14 +63,8 @@
                 <div class="p-2 border border-dashed rounded">
                   <div class="d-flex align-items-center">
                     <div class="avatar-sm me-2">
-                      <div
-                        class="avatar-title rounded bg-transparent text-success fs-24"
-                      >
-                        <img
-                          src="../../assets/images/document-free-icon-font.png"
-                          alt=""
-                          class="img-fluid d-block"
-                        />
+                      <div class="avatar-title rounded bg-transparent text-success fs-24">
+                        <img src="../../assets/images/document-free-icon-font.png" alt="" class="img-fluid d-block" />
                       </div>
                     </div>
                     <div class="flex-grow-1">
@@ -92,14 +80,8 @@
                 <div class="p-2 border border-dashed rounded">
                   <div class="d-flex align-items-center">
                     <div class="avatar-sm me-2">
-                      <div
-                        class="avatar-title rounded bg-transparent text-success fs-24"
-                      >
-                        <img
-                          src="../../assets/images/id-badge-free-icon-font.png"
-                          alt=""
-                          class="img-fluid d-block"
-                        />
+                      <div class="avatar-title rounded bg-transparent text-success fs-24">
+                        <img src="../../assets/images/id-badge-free-icon-font.png" alt="" class="img-fluid d-block" />
                       </div>
                     </div>
                     <div class="flex-grow-1">
@@ -120,11 +102,7 @@
               <div class="col-sm-12">
                 <div class="mt-4">
                   <h5 class="title-desc">Categories :</h5>
-                  <ul
-                    v-for="item in productDetail?.categories"
-                    :key="item"
-                    class="fs-15 list-unstyled"
-                  >
+                  <ul v-for="item in productDetail?.categories" :key="item" class="fs-15 list-unstyled">
                     <li class="p-1 text-list">{{ item.name }}</li>
                   </ul>
                 </div>
@@ -137,19 +115,20 @@
   </div>
 </template>
 <script lang="ts">
-import { API } from "@/constants/api";
 import "./product-detail.scss";
-import requestUnauthorized from "./../../api/request";
 import moment from "moment";
+import ProductService from '@/api/ProductService'
 
 export default {
   data() {
     const getImgUrl = (i: number) => {
-      return this.productDetail?.images[i]?.url;
+      return `${this.url}` + `${this.productDetail.images[i].url}`;
     };
+    const url = 'http://localhost:8081/api/image/downloadFile/';
     return {
       getImgUrl,
       productDetail: null,
+      url,
     };
   },
   methods: {
@@ -158,16 +137,12 @@ export default {
     },
   },
   async created() {
-    const response = await requestUnauthorized.get(
-      `${API.ADMIN.PRODUCT_DETAIL}/${this.$route.params.id}`
-    );
+    const response = await ProductService.getDetail(this.$route.params.id);
     this.productDetail = response;
     this.$watch(
       () => this.$route.params.id,
       async (value, _) => {
-        const response = await requestUnauthorized.get(
-          `/api/admin/product/${value}`
-        );
+        const response = await ProductService.get(`${value}`);
         this.productDetail = response;
       }
     );
@@ -175,36 +150,42 @@ export default {
 };
 </script>
 <style scoped>
-.ant-carousel >>> .slick-dots {
+.ant-carousel>>>.slick-dots {
   height: auto;
   margin: 20px 0 0 0;
   position: relative;
 }
-.ant-carousel >>> .slick-slide img {
+
+.ant-carousel>>>.slick-slide img {
   border: 5px solid #fff;
   display: block;
   margin: auto;
   background-color: #f3f6f9;
 }
-.ant-carousel >>> .slick-thumb {
+
+.ant-carousel>>>.slick-thumb {
   bottom: 0;
 }
-.ant-carousel >>> .slick-thumb li {
+
+.ant-carousel>>>.slick-thumb li {
   width: 88.2px;
   height: 88.2px;
   border-radius: 4px;
   border: 1px solid #e9ebec;
 }
-.ant-carousel >>> .slick-thumb li img {
+
+.ant-carousel>>>.slick-thumb li img {
   width: 100%;
   height: 100%;
   filter: grayscale(100%);
   background: #f3f6f9;
 }
-.ant-carousel >>> .slick-thumb .slick-active {
+
+.ant-carousel>>>.slick-thumb .slick-active {
   background-color: #f3f6f9;
 }
-.ant-carousel >>> .slick-thumb li.slick-active img {
+
+.ant-carousel>>>.slick-thumb li.slick-active img {
   filter: grayscale(0%);
 }
 </style>
