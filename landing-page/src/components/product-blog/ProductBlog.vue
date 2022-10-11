@@ -1,6 +1,6 @@
 <template>
   <div class="row mt-4 mb-4">
-    <div class="col-12 col-sm-12 col-md-6">
+    <div class="col-12 col-sm-6 col-md-6">
       <div class="card" v-for="item in productBlog.voList" :key="item.id">
         <img :src="url + item?.images[0]?.url" class="card-img-top" alt="..." />
         <div class="blog__title">lifestyle</div>
@@ -16,7 +16,7 @@
         </button>
       </div>
     </div>
-    <div class="col-12 col-sm-12 col-md-6">
+    <div class="col-12 col-sm-6 col-md-6">
       <div class="card" v-for="item in productBlog2.voList" :key="item.id">
         <img :src="url + item?.images[0]?.url" class="card-img-top" alt="..." />
         <div class="blog__title">lifestyle</div>
