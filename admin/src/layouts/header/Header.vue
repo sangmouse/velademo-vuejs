@@ -7,13 +7,12 @@
             <img src="../../assets/images/logo.png" alt="logo" />
           </RouterLink>
         </div>
-        <!-- <div class="menus">
-          <ul>
-            <li>
-              <RouterLink to="/">Products</RouterLink>
-            </li>
+        <div class="menu">
+          <ul class="menu-list">
+            <li class="menu-list-product" ><RouterLink to="/">Product Manager</RouterLink></li>
+            <li class="menu-list-blogs"><RouterLink to="/blogs">Blogs</RouterLink></li>
           </ul>
-        </div> -->
+        </div>
         <button type="button" class="profile" @click="handleLogout">
           <p>Sign out</p>
         </button>
@@ -72,8 +71,6 @@ export default {
       this.isVisible = false;
     },
     handleLogout() {
-      setJwtToken("");
-      window.localStorage.setItem("logout", "false");
       this.$store.commit("LOGOUT");
       if (!this.$store.state.auth.isLogin) {
         this.$router.push("/login");
