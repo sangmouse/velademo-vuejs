@@ -136,7 +136,6 @@ export default defineComponent({
                     formData.append("files", file?.originFileObj as any);
                 });
                 let categoryArr = [];
-                console.log(values?.categories);
                 if (values?.categories != undefined) {
                     values?.categories.forEach(element => {
                         categoryArr.push({id: element})
