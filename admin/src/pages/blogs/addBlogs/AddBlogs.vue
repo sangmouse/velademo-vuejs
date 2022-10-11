@@ -70,7 +70,7 @@ import { toastSuccess, toastError } from "@/utils/toast"
 interface FormState {
     title: string;
     description: string;
-    categories: string[];
+    categories: [];
 }
 
 const OPTIONS = [
@@ -135,10 +135,18 @@ export default defineComponent({
                 fileList.value.forEach((file: any) => {
                     formData.append("files", file?.originFileObj as any);
                 });
+                let categoryArr = [];
+                console.log(values?.categories);
+                if (values?.categories != undefined) {
+                    values?.categories.forEach(element => {
+                        categoryArr.push({id: element})
+                    });
+                }
+
                 const jsonFile = {
                     title: values?.title?.trim(),
                     description: values?.description?.trim(),
-                    categories: values?.categories,
+                    categories: categoryArr,
                 };
                 const postData = JSON.stringify(jsonFile);
                 formData.append("jsonFile", postData);
@@ -151,9 +159,7 @@ export default defineComponent({
                             toastSuccess("Create product successfully!")
                         }, 500);
                         setTimeout(() => {
-                            router.push({
-                                name: "home-page",
-                            });
+                            router.push('/blogs');
                         }, 2000);
                     })
                     .catch((err) => {

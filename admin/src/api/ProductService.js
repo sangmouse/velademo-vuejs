@@ -4,7 +4,7 @@ const API_ENDPOINT = {
   DETAIL_PRODUCT: "/api/admin/product/",
   LIST_PRODUCT: "/api/admin/products",
   POST_PRODUCT: "/api/admin/addProduct",
-  SEARCH_PRODUCT: '/api/search'
+  SEARCH_PRODUCT: '/api/admin/products'
 };
 class ProductService {
   constructor() {

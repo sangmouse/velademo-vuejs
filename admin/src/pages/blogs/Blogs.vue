@@ -13,11 +13,13 @@
             <RouterLink to="/add-blogs"> Add Blogs </RouterLink>
           </div>
           <div class="right-side">
-            <a-input class="input-search" size="large" @input="debounceSearch" placeholder="Searching..." />
+            <a-input class="input-search" size="large" @input="debounceSearch"
+              placeholder="Searching..." />
           </div>
         </div>
         <Table :columns="columns" :source="source" @handleChangePage="handleChangePage" :showLoading="showLoading"
-          :numberPanigation="numberPanigation" />
+          :numberPanigation="numberPanigation"   :current="current"/>
+       
       </div>
     </div>
   </div>
@@ -39,6 +41,7 @@ export default {
   data() {
     return {
       pageSize: 10,
+      current: 1,
       pageNumber: 1,
       searchProduct: "",
       debounce: null,
@@ -115,10 +118,8 @@ export default {
       const response = await BlogsService.getBlogs(1, 10)
       this.totalItem = response.total
       this.source = this.transformData(response.voList);
-    } catch (error) {
-      console.log(error);
-    }
-    this.numberPanigation = Math.ceil( this.totalItem / this.pageSize)*10
+    } catch (error) {}
+    this.numberPanigation = Math.ceil(this.totalItem / this.pageSize) * 10
     this.$watch(
       () => this.$store.state.auth.isLogin,
       (value, _) => {
@@ -134,6 +135,12 @@ export default {
     source() {
       return this.source;
     },
+    numberPanigation() {
+      return Math.ceil(this.totalItem / this.pageSize) * 10
+    },
+    current(){
+      return this.pageNumber
+    }
   },
 
   methods: {
@@ -153,17 +160,16 @@ export default {
     async startListProduct() {
       try {
         const response = await BlogsService.getBlogs(this.pageNumber, this.pageSize)
+        this.totalItem = response.total
         const data = this.transformData(response.voList);
         this.source = data;
-      } catch (error) {
-        console.log( error);
-      }
+      } catch (error) { }
     },
     async startListSearch() {
       try {
-        const res = await ProductService.search(this.pageNumber, this.pageSize, this.searchProduct)
-        const data = this.transformData(res.voList);
-        console.log('blogs',data);
+        const response = await BlogsService.searchBlogs(this.pageNumber, this.pageSize, this.searchProduct)
+        this.totalItem = response.total
+        const data = this.transformData(response.voList);
         return (this.source = data);
       } catch (error) {
         this.source = [];
@@ -176,20 +182,22 @@ export default {
         this.showLoading = false
         this.searchProduct = e.target.value.trim();
         if (this.searchProduct === "") {
+          this.pageNumber = 1
           this.startListProduct();
         } else {
+          this.pageNumber = 1
           this.startListSearch();
         }
       }, 500);
     },
 
-    async handleChange(value) {
+    async handleChange(pageSize) {
       this.showLoading = true
       clearTimeout(this.debounce);
       this.debounce = setTimeout(() => {
-        this.pageSize = value;
+        this.pageSize = pageSize;
         this.showLoading = false
-        this.numberPanigation = Math.ceil( this.totalItem / this.pageSize)*10
+        this.numberPanigation = Math.ceil(this.totalItem / this.pageSize) * 10
         if (this.searchProduct !== "") {
           this.startListSearch();
         } else {
@@ -197,12 +205,12 @@ export default {
         }
       }, 500);
     },
-    async handleChangePage(pageNumbervalue) {
+    async handleChangePage(pageNumber) {
       this.showLoading = true
       clearTimeout(this.debounce);
       this.debounce = setTimeout(() => {
         this.showLoading = false
-        this.pageNumber = pageNumbervalue;
+        this.pageNumber = pageNumber;
         if (this.searchProduct !== "") {
           this.startListSearch();
         } else {

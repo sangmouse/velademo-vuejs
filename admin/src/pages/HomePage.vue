@@ -17,7 +17,7 @@
           </div>
         </div>
         <Table :columns="columns" :source="source" @handleChangePage="handleChangePage" :showLoading="showLoading"
-          :numberPanigation="numberPanigation" />
+          :numberPanigation="numberPanigation" :urlPath='product' :current="current" />
       </div>
     </div>
   </div>
@@ -34,6 +34,9 @@ export default {
 
   data() {
     return {
+      product:'/product/',
+      current:1,
+      urlImg:'http://localhost:8081/api/image/downloadFile/',
       pageSize: 10,
       pageNumber: 1,
       searchProduct: "",
@@ -101,18 +104,19 @@ export default {
       ],
       source: [],
       showLoading: false,
+      totalItem: null,
     };
   },
 
   async created() {
-    ProductService
-      .get(1, 10)
-      .then((res) => {
-        const data = this.transformData(res.voList);
-        console.log('tuan', res);
-        this.source = data;
-      })
-      .catch((err) => console.log('loi', err));
+    try {
+      const response = await ProductService.get(1, 10)
+      this.totalItem = response.total
+      const data = this.transformData(response.voList);
+      this.source = data;
+    } catch (error) {}
+
+    this.numberPanigation = Math.ceil( this.totalItem / this.pageSize)*10
 
     this.$watch(
       () => this.$store.state.auth.isLogin,
@@ -129,18 +133,24 @@ export default {
     source() {
       return this.source;
     },
+    numberPanigation(){
+      return Math.ceil( this.totalItem / this.pageSize)*10
+    },
+    current(){
+      return this.pageNumber
+    }
   },
 
   methods: {
     transformData(arr) {
       return arr.map((item) => ({
         id: item?.id,
-        displayName: item?.displayName,
+        displayName: item?.name,
         price: new Intl.NumberFormat("de-DE", {
           style: "currency",
           currency: "USD",
         }).format(item?.price),
-        categories: item?.categories.map((item) => item.name).toString(),
+        categories: item?.listCategory?.map((item) => item.name).toString(),
         // createdDate: item.createdDtm
         //   ?.slice(0, 10)
         //   .split("-")
@@ -156,9 +166,10 @@ export default {
     },
     async startListSearch() {
       try {
-        const res = await ProductService.search(this.pageNumber, this.pageSize, this.searchProduct)
-        const data = this.transformData(res.voList);
-        console.log(data);
+        const response = await ProductService.search(this.pageNumber, this.pageSize, this.searchProduct)
+        const data = this.transformData(response.voList);
+        this.totalItem = response.total
+        
         return (this.source = data);
       } catch (error) {
         this.source = [];
@@ -167,6 +178,7 @@ export default {
     async startListProduct() {
       try {
         const response = await ProductService.get(this.pageNumber, this.pageSize)
+        this.totalItem = response.total
         const data = this.transformData(response.voList);
         this.source = data;
       } catch (error) {
@@ -179,9 +191,12 @@ export default {
       this.debounce = setTimeout(() => {
         this.showLoading = false
         this.searchProduct = e.target.value.trim();
+        this.numberPanigation = Math.ceil( this.totalItem / this.pageSize)*10
         if (this.searchProduct === "") {
+          this.pageNumber = 1
           this.startListProduct();
         } else {
+          this.pageNumber = 1
           this.startListSearch();
         }
       }, 500);
