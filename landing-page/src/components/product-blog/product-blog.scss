@@ -1,4 +1,7 @@
 .blog {
+  &-body {
+    display: contents;
+  }
   &__title {
     width: 21%;
     display: inline-block;
@@ -69,6 +72,8 @@
 .card {
   border: none;
   margin-bottom: 40px;
+  width: 50%;
+  padding: 0 10px;
   & img {
     height: 270px;
   }

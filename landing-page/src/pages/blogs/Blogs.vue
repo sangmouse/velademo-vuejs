@@ -15,9 +15,9 @@
 </template>
 
 <script>
-import SlideShow from "../../components/slide-show/SlideShow.vue";
-import ProductBlog from "../../components/product-blog/ProductBlog.vue";
-import SiderBar from "../../components/sider-bar/SiderBar.vue";
+import SlideShow from "@/components/slide-show/SlideShow.vue";
+import ProductBlog from "@/components/product-blog/ProductBlog.vue";
+import SiderBar from "@/components/sider-bar/SiderBar.vue";
 import "./blogs.scss";
 
 export default {

@@ -40,7 +40,7 @@
         <ul class="cart-box-product">
           <li class="cart-box-product-list" v-for="item in products" :key="id">
             <div class="cart-box-product-list-img">
-              <img :src="item.listImg[0].url" alt="" />
+              <img :src="urlImg + item.listImg[0].url" alt="" />
               <span>{{item.quantity}}</span>
             </div>
             <p class="cart-box-product-list-name">{{item.name}}</p>
@@ -74,6 +74,7 @@ export default {
       requidAddress: false,
       valuePhone1: '',
       valueAddress1: '',
+      urlImg:'http://localhost:8081/api/image/downloadFile/'
     };
   },
   created() {

@@ -7,31 +7,18 @@
           <span> "{{ search }}" </span> products on our site
         </h1>
         <div class="search-group">
-          <input
-            type="text"
-            v-model="search"
-            placeholder="Enter keywords to search..."
-            class="search-group__input form-control"
-          />
+          <input type="text" v-model="search" placeholder="Enter keywords to search..."
+            class="search-group__input form-control" />
           <div class="search-group-addon">
-            <button
-              class="btn search-group-addon__btn"
-              @click="handleSearch"
-              type="button"
-            >
+            <button class="btn search-group-addon__btn" @click="handleSearch" type="button">
               <img src="../../assets/images/search.png" alt="search-i" />
             </button>
           </div>
         </div>
         <div class="search-list">
           <div class="row">
-            <Product
-              v-for="product in searchResult"
-              v-bind:key="product.id"
-              :product="product"
-              @showCart="showCart"
-              @handleVisibleViewInfoModal="handleVisibleViewInfoModal"
-            />
+            <Product v-for="product in searchResult" v-bind:key="product.id" :product="product" @showCart="showCart"
+              @handleVisibleViewInfoModal="handleVisibleViewInfoModal" />
           </div>
         </div>
       </div>
@@ -41,15 +28,16 @@
 </template>
 <script lang="ts">
 import "./search-product.scss";
-import Product from "../../components/product/Product.vue";
-import Drawer from "../../components/drawer/Drawer.vue";
-import requestAuthorized from "@/api/requestAuthorized";
+import Product from "@/components/product/Product.vue";
+import Drawer from "@/components/drawer/Drawer.vue";
+import ProductService from "@/api/ProductService";
 export default {
   async created() {
     if (this.$route.query.q.length) {
-      this.searchResult = await requestAuthorized.get(
-        `/api/search?page=1&size=8&name=${this.$route.query.q}`
-      );
+      const response = await ProductService.getSearch(1, 8, this.$route.query.q)
+      this.searchResult = response.voList
+      console.log('tuancan', response);
+
     }
 
     this.$watch(
@@ -57,9 +45,8 @@ export default {
       async (value, _) => {
         this.search = value;
         if (value.trim().length > 0) {
-          this.searchResult = await requestAuthorized.get(
-            `/api/search?page=1&size=8&name=${this.$route.query.q}`
-          );
+          const response = await ProductService.getSearch(1, 8, this.$route.query.q)
+          this.searchResult = response.voList
         } else {
           this.searchResult = [];
         }

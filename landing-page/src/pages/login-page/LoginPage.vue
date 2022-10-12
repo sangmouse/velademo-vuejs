@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import http from "@/api/request";
+import LoginService from "@/api/LoginService";
 import "./login.scss";
 import { getCheckoutLogin } from '@/utils/helpers'
 export default {
@@ -267,7 +267,8 @@ export default {
         };
 
         try {
-          const response = await http.post("/api/user/register", infor);
+          // const response = await http.post("/api/user/register", infor);
+          const response = await LoginService.postRegister(infor);
 
           if (response.email != "") {
             setTimeout(() => {

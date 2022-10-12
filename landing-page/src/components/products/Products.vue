@@ -67,7 +67,7 @@
 import "./products.scss";
 import Drawer from "../drawer/Drawer.vue";
 import Product from "../product/Product.vue";
-import requestAuthorized from "@/api/requestAuthorized";
+import  ProductService from "@/api/ProductService"
 
 export default {
   data() {
@@ -85,9 +85,9 @@ export default {
       const index = this.products.findIndex((item) => item.id === id);
       const infor = this.products[index];
       const data = {
-        listImg: infor.images,
+        listImg: infor.listImg,
         id: infor.id,
-        name: infor.displayName,
+        name: infor.name,
         price: infor.price,
         quantity: 1,
       };
@@ -100,8 +100,8 @@ export default {
     handleVisibleViewInfoModal() {},
   },
   async created() {
-    const response = await requestAuthorized.get("/api/products?page=1&size=8");
-    this.products = response;
+    const response = await ProductService.getList(1,8);
+    this.products = response.voList;
   },
 };
 </script>

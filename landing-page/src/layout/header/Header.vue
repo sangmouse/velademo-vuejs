@@ -175,9 +175,10 @@
 </template>
 <script lang="ts">
 import "./header.scss";
-import Drawer from "../../components/drawer/Drawer.vue";
-import Cart from "../../components/cart/Cart.vue";
+import Drawer from "@/components/drawer/Drawer.vue";
+import Cart from "@/components/cart/Cart.vue";
 import { toastSuccess } from "@/utils/toast";
+import {removetJwtToken, removeRefreshToken, removeUserCart} from "@/utils/helpers"
 
 export default {
   components: { Drawer, Cart },
@@ -214,10 +215,9 @@ export default {
       this.$store.commit("STATUS_LOGIN", status);
     },
     handleLogout() {
-      window.sessionStorage.removeItem("useremail");
-      window.sessionStorage.removeItem("userid");
-      window.sessionStorage.removeItem("jwt");
-      window.sessionStorage.removeItem("username");
+      removeUserCart()
+      removetJwtToken()
+      removeRefreshToken()
       this.$store.commit("CHECK_IS_LOGIN");
       toastSuccess("Logout Successfully");
       this.username = "";

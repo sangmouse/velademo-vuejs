@@ -77,30 +77,27 @@
 
 <script>
 import "./sider-bar.scss";
-import requestAuthorized from "@/api/request";
+import BlogsService from "@/api/BlogsService";
+import CategoryService from "@/api/CategoryService";
+
 export default {
   data() {
     return {
-      search: this.$route.query.q,
+      search: "",
       productBlog: [],
       categories: [],
     };
   },
   methods: {
     handleSearch() {
-      this.$router.push({
-        name: "search-product",
-        query: {
-          q: this.search,
-        },
-      });
+
     },
   },
   async created() {
-    const response = await requestAuthorized.get("/api/blogs?page=1&size=5");
+    const response = await BlogsService.getListBlogs(1,7);
     this.productBlog = response;
-    const responses = await requestAuthorized.get("/api/categories");
-    this.categories = responses;
+    const resCategory = await CategoryService.getCategory();
+    this.categories = resCategory;
   },
 };
 </script>
