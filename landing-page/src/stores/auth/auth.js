@@ -1,5 +1,7 @@
 import requestUnauthorized from "../../api/request";
-import { getJwtToken, setJwtToken, getUserName } from "../../utils/helpers";
+import { getJwtToken, setJwtToken, getUserName, getCheckoutLogin } from "../../utils/helpers";
+import router from '../../router/index'
+
 
 const auth = {
   state: {
@@ -17,9 +19,11 @@ const auth = {
       state.messageErrorLogin = "Incorect Email or Password!";
     },
 
-    SET_LOGIN(state, token) {
-      if(token){
-        setJwtToken(token);
+    SET_LOGIN(state) {
+      const token = getJwtToken()
+      const checkout = getCheckoutLogin()
+      if(token && checkout ){
+        router.push('/checkout')
       }
       state.isLogin = false;
     },
@@ -42,9 +46,8 @@ const auth = {
       try {
         // Call login method in API
         // The server handler is responsible for setting user fingerprint cookie during this as well
-        const response = await requestUnauthorized.post("/api/login", infor);
-        const token = response.access_token;
-          context.commit("SET_LOGIN", token);
+        await requestUnauthorized.post("/api/login", infor);
+        context.commit("SET_LOGIN");
       } catch (err) {
         if (err.response.status === 401 || 404) {
           context.commit("INCORECT_LOGIN");

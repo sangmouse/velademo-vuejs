@@ -1,5 +1,5 @@
-import { setJwtToken } from "../../../../landing-page/src/utils/helpers";
-import requestUnauthorized from "../../api/request";
+import requestUnauthorized from "../../api/AuthService";
+import {removetJwtToken,removeRefreshToken,removeUrl} from '@/utils/helpers'
 
 const auth = {
   state: {
@@ -7,30 +7,29 @@ const auth = {
     isLogin: false,
   },
   mutations: {
-    LOGIN_SUCCESS(state, token) {
+    LOGIN_SUCCESS(state) {
       state.isLogin = true;
-      setJwtToken(token);
-      window.localStorage.removeItem("logout");
     },
     LOGIN_ERROR(state, msg) {
       state.error_message = msg;
       state.isLogin = false;
     },
     LOGOUT(state) {
-      sessionStorage.removeItem("jwt");
       state.isLogin = false;
       state.error_message = "";
+      removetJwtToken()
+      removeRefreshToken()
+      removeUrl()
     },
   },
   actions: {
     async loginSuccess(context, value) {
       try {
-        const response = await requestUnauthorized.post("/api/login", value);
-        const token = response?.access_token;
-        context.commit("LOGIN_SUCCESS", token);
+       await requestUnauthorized.postLogin( value);
+        context.commit("LOGIN_SUCCESS");
       } catch (error) {
         if (
-          error.response.status === 404 ||
+          error?.response?.status === 404 ||
           error?.response?.data?.Message?.includes(
             "Username password incorrect"
           )

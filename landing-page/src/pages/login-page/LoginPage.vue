@@ -92,6 +92,7 @@
 <script>
 import http from "@/api/request";
 import "./login.scss";
+import { getCheckoutLogin } from '@/utils/helpers'
 export default {
   data() {
     return {
@@ -169,6 +170,20 @@ export default {
     onChangePassword(e) {
       this.login.password = e.target.value;
     },
+    unique(arr) {
+      const newArr = []
+      for (var i = 0; i < arr.length; i++) {
+        const x = newArr.map(item => item?.id).indexOf(arr[i].id)
+        console.log(x);
+        if (x === -1) {
+          newArr.push(arr[i])
+        } else {
+          const index = newArr.findIndex(item => item.id === arr[i].id)
+          newArr[index].quantity = newArr[index].quantity + arr[i].quantity
+        }
+      }
+      return newArr
+    },
 
     async handleSubmitLogin() {
       const data = this.login;
@@ -188,15 +203,21 @@ export default {
         };
         await this.$store.dispatch("getLogin", infor);
         await this.$store.dispatch("updateCartCurrent")
+        const carttotal =  [...this.$store.state.cart.cart, ...this.$store.state.cart.cartNotLogin]
+        await this.$store.dispatch("updateCart", this.unique(carttotal))
+        await this.$store.dispatch("updateCartCurrent")
         this.$store.commit("CHECK_NAME");
         if (!this.$store.state.auth.isLogin) {
           this.alertLogin = true;
           this.messageAlertLogin = "Sign in Successfully!";
-
           setTimeout(() => {
-            this.$router.push({
-              name: "home",
-            });
+            if(getCheckoutLogin() === 'true'){
+              const path = this.$store.state.routerpath.path
+              this.$router.push( `${path}`);
+              this.$store.commit("ISVISIBLE_CART")
+            } else{
+              this.$router.push('/');
+            }
           }, 1000);
         } else {
           this.alertLogin = false;

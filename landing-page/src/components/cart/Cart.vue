@@ -1,11 +1,6 @@
 <template>
-  <a-drawer
-    class="view-cart-drawer"
-    title="Shopping Cart"
-    placement="right"
-    v-model:visible="visible"
-    @close="handleCloseCart"
-  >
+  <a-drawer class="view-cart-drawer" title="Shopping Cart" placement="right" v-model:visible="visible"
+    @close="handleCloseCart">
     <div id="view-cart">
       <div class="products">
         <div class="item" v-for="product in cart" :key="product.id">
@@ -21,17 +16,11 @@
               </RouterLink>
               <p>$ {{ product.price }}</p>
               <div class="action">
-                <button
-                  class="btn btn-increment"
-                  @click="handleDiminishQty(product.id)"
-                >
+                <button class="btn btn-increment" @click="handleDiminishQty(product.id)">
                   -
                 </button>
                 <p class="quantity">{{ product.quantity }}</p>
-                <button
-                  class="btn btn-increment"
-                  @click="handleInscreQty(product.id)"
-                >
+                <button class="btn btn-increment" @click="handleInscreQty(product.id)">
                   +
                 </button>
               </div>
@@ -57,7 +46,10 @@
 </template>
 <script lang="ts">
 import "./cart.scss";
-import {toastError} from "@/utils/toast"
+import { toastError } from "@/utils/toast"
+import { formatNumber } from "../../utils/common"
+import { setCheckoutLogin } from '../../utils/helpers'
+
 export default {
   name: "Cart",
   data() {
@@ -86,29 +78,29 @@ export default {
       this.cart[index].quantity = this.cart[index].quantity - 1;
     },
     async handleCheckout() {
-      if (this.$store.state.auth.isLogin) {
+      this.$store.commit('PATH', this.$route.path)
+      if (this.cart.length === 0) {
+        toastError('Cart empty!')
+      } else if (this.$store.state.auth.isLogin) {
+        this.$store.commit('UPDATE_CART_NOTLOGIN', this.cart)
         this.$router.push({
           name: "login",
         });
-      } else if(this.cart.length === 0){
-         toastError('Cart empty!')
+        setCheckoutLogin("true")
       }
-       else {
-       await this.$store.dispatch("updateCart", this.cart);
-       await this.$store.dispatch("updateCartCurrent");
-       this.$router.push("/checkout");
+      else {
+        await this.$store.dispatch("updateCart", this.cart);
+        await this.$store.dispatch("updateCartCurrent");
+        this.$router.push("/checkout");
+        this.handleCloseCart();
       }
-      this.handleCloseCart();
     },
   },
   computed: {
     totalCoin() {
       const total = this.cart.map((item) => item.quantity * item.price);
-      return total
-        .reduce((total, currentValue) => {
-          return total + currentValue;
-        }, 0)
-        .toFixed(2);
+      const number = total.reduce((total, currentValue) => { return total + currentValue }, 0).toFixed(2)
+      return formatNumber(number);
     },
     visible() {
       return this.$store.state.cart.visibleCart;
@@ -122,6 +114,9 @@ export default {
     cart() {
       return (this.cart = this.$store.state.cart.cart);
     },
+  },
+  created() {
+    this.cart = this.$store.state.cart.cart
   },
 };
 </script>

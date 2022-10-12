@@ -4,6 +4,7 @@
   left: 0;
   right: 0;
   z-index: 5;
+
   .body {
     box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
     display: flex;
@@ -15,8 +16,10 @@
     .menus {
       ul {
         list-style-type: none;
+
         li {
           display: inline-block;
+
           a {
             display: inline-block;
             margin: 0 10px;
@@ -24,9 +27,29 @@
         }
       }
     }
+
     .btn-burger {
       display: none;
     }
+  }
+
+  .menu {
+
+    &-list {
+      display: flex;
+      list-style-type: none;
+
+      a {
+        background-color: var(--vela-parag-purple);
+        color: var(--velasubmenu-bgcolor);
+        border-radius: 5px;
+        padding: 8px 15px;
+        font-size: 15px;
+        margin: 0 0 0 10px;
+        cursor: pointer;
+      }
+    }
+
   }
 }
 
@@ -37,6 +60,7 @@
     }
   }
 }
+
 @media screen and (max-width: 576px) {
   #header {
     .body {
@@ -45,6 +69,7 @@
           display: none;
         }
       }
+
       .btn-burger {
         display: inline-flex;
       }
@@ -56,17 +81,21 @@
   &.menu-drawer {
     .ant-drawer-header {
       border: none;
+
       .ant-drawer-header-title {
         flex-direction: row-reverse;
+
         .ant-drawer-close {
           margin: 0;
         }
+
         .ant-drawer-title {
           font-family: RedHatBold;
           font-size: 20px;
         }
       }
     }
+
     .ant-drawer-body {
       #menu-mobile {
         .body {
@@ -75,17 +104,21 @@
               color: var(--vela-text-color-primary);
               margin: 0 0 15px 0;
             }
+
             .ant-collapse {
               &-item {
                 border: none;
+
                 .ant-collapse-header {
                   display: flex;
                   justify-content: space-between;
                   align-items: center;
                   flex-direction: row-reverse;
                   padding: 0;
-                  & + div {
+
+                  &+div {
                     display: inline-flex;
+
                     .ant-collapse-arrow {
                       display: inline-flex;
                       margin: 0;
