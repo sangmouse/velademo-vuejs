@@ -7,7 +7,7 @@
           <div class="info">
             <div class="img">
               <RouterLink :to="'/product/' + product.id">
-                <img :src="product?.listImg[0]?.url" alt="product-img" />
+                <img :src="url + product?.listImg[0]?.url" alt="product-img" />
               </RouterLink>
             </div>
             <div class="order">
@@ -57,6 +57,7 @@ export default {
       visible: false,
       quantity: 1,
       cart: [],
+      url: "http://localhost:8081/api/image/downloadFile/",
     };
   },
   methods: {

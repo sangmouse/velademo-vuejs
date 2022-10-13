@@ -16,6 +16,9 @@
                       <img :src="getImgUrl(props.i)" />
                     </a>
                   </template>
+                  <div v-for="item in 4" :key="item">
+                    <img :src="getImgUrl(item)" />
+                  </div>
                   <div v-for="item in productDetail?.images" :key="item">
                     <img :src="item.url" />
                   </div>
@@ -135,6 +138,7 @@ export default {
       return `../src/assets/images/products/product_${i + 1}.jpg`;
     };
     return {
+      i: 0,
       getImgUrl,
       productDetail: null,
       products: [],
@@ -192,7 +196,9 @@ export default {
     },
   },
   async created() {
-    const products = await requestUnauthorized.get("/api/products?page=1&size=8");
+    const products = await requestUnauthorized.get(
+      "/api/products?page=1&size=8"
+    );
 
     this.products = products;
     const response = await requestUnauthorized.get(
@@ -202,6 +208,7 @@ export default {
       this.products.push(response);
     }
     this.productDetail = response;
+
     this.$watch(
       () => this.$route.params.id,
       async (value, _) => {

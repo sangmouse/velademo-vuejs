@@ -49,12 +49,12 @@
       >
         <RouterLink :to="'/product/' + item.id">
           <img
-            :src="item.images[0]?.url"
+          :src="url + item.listImg[0]?.url"
             alt=""
             class="collection-body-filter-bestSeller-item__img"
         /></RouterLink>
         <div class="collection-body-filter-bestSeller-item__info">
-          <p>{{ item.displayName }}</p>
+          <p>{{ item.name }}</p>
           <span>${{ item.price }}</span>
         </div>
       </div>
@@ -68,6 +68,7 @@ import requestProductDbJson from "../../api/requestProducDbJson";
 export default {
   data() {
     return {
+      url: "http://localhost:8081/api/image/downloadFile/",
       isTicked: false,
       productCategories: [
         { name: "All Categories", id: "cate1" },
@@ -107,8 +108,10 @@ export default {
   },
   async created() {
     try {
-      const response = await requestProductDbJson.get(`/api/products?page=1&size=5`);
-      this.productBestSeller = response.data;
+      const response = await requestProductDbJson.get(
+        `/api/products?page=1&size=5`
+      );
+      this.productBestSeller = response.data.voList;
     } catch (error) {}
   },
 };
