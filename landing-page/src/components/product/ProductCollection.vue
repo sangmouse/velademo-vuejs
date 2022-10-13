@@ -21,11 +21,11 @@
       </div>
       <RouterLink :to="'/product/' + product.id">
         <div class="image">
-          <img v-bind:src="url + product.images[0]?.url" alt="product" />
+          <img v-bind:src="url + product.listImg[0]?.url" alt="product" />
         </div>
       </RouterLink>
       <RouterLink :to="'/product/' + product.id">
-        <h6 class="name">{{ product.displayName }}</h6>
+        <h6 class="name">{{ product.name }}</h6>
       </RouterLink>
       <p class="price">${{ product.price }}</p>
     </div>

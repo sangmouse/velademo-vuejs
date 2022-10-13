@@ -80,10 +80,10 @@
         width: 40px;
         height: 40px;
         border: 1px solid var(--vela-border-color);
-        margin-left: 10px;
         transition: all ease 0.5s;
         cursor: pointer;
       }
+      
     }
     span {
       font-size: 14px;
@@ -111,7 +111,13 @@
   color: var(--vela-color-primary);
 }
 
-.collection-body-product-pagination-box button:hover {
+.collection-body-product-pagination-box button:hover,
+.collection-body-product-pagination-box li:hover {
+  background-color: var(--vela-color-primary);
+  border: none;
+}
+.ant-pagination-item-active {
+  border: none;
   background-color: var(--vela-color-primary);
 }
 

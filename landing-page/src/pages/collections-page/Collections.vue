@@ -103,7 +103,7 @@
                             <RouterLink :to="'/product/' + product.id">
                               <div class="list-block-item-image">
                                 <img
-                                  v-bind:src="url + product.images[0]?.url"
+                                  v-bind:src="url + product.listImg[0]?.url"
                                   alt="product"
                                 /></div
                             ></RouterLink>
@@ -113,7 +113,7 @@
                             <div class="list-block-item-content">
                               <RouterLink :to="'/product/' + product.id">
                                 <h4 class="list-block-item-content__title">
-                                  {{ product.displayName }}
+                                  {{ product.name }}
                                 </h4>
                               </RouterLink>
 
@@ -121,7 +121,7 @@
                                 ${{ product.price }}
                               </p>
                               <p class="list-block-item-content__description">
-                                {{ product.description }}
+                                {{ product.desc }}
                               </p>
                             </div>
                           </div>
@@ -142,24 +142,12 @@
               </div>
               <div class="collection-body-product-pagination">
                 <div class="collection-body-product-pagination-box">
-                  <button @click="onClickFirstPage()">
-                    <i class="fa-regular fa-circle-left"></i>
-                  </button>
-                  <button
-                    :class="pagingStatus == 1 ? 'page--active' : ''"
-                    @click="onClickPage(1)"
-                  >
-                    1
-                  </button>
-                  <button
-                    :class="pagingStatus == 2 ? 'page--active' : ''"
-                    @click="onClickPage(2)"
-                  >
-                    2
-                  </button>
-                  <button @click="onClickLastPage()">
-                    <i class="fa-regular fa-circle-right"></i>
-                  </button>
+                  <a-pagination
+                    v-model:current="current"
+                    :total="total"
+                    show-less-items
+                    @change="handleClickPage"
+                  />
                 </div>
               </div>
             </div>
@@ -184,6 +172,7 @@ import Spinner from "../../components/spinner/Spinner.vue";
 export default {
   data() {
     return {
+      current: 1,
       spin: false,
       isShow: true,
       products: [],
@@ -193,6 +182,8 @@ export default {
       page: 1,
       pageSize: 8,
       layoutStatus: true,
+      total: null,
+      listPages: [],
       url: "http://localhost:8081/api/image/downloadFile/",
     };
   },
@@ -201,8 +192,9 @@ export default {
       const response = await requestProductDbJson.get(
         `/api/products?page=${this.page}&size=${this.pageSize}`
       );
-      this.products = response.data;
-      this.productFilter = [...response.data];
+      this.total = response.data.total;
+      this.products = response.data.voList;
+      this.productFilter = [...response.data.voList];
     } catch (error) {
       console.log("alo");
     }
@@ -216,6 +208,9 @@ export default {
     Spinner,
   },
   computed: {
+    total() {
+      return Math.ceil(this.total / this.pageSize) * 10;
+    },
     productFilter() {
       return this.productFilter;
     },
@@ -233,6 +228,7 @@ export default {
     showCart(id) {
       const index = this.products.findIndex((item) => item.id === id);
       const infor = this.products[index];
+      console.log(infor);
       const data = {
         listImg: infor.images,
         id: infor.id,
@@ -257,15 +253,11 @@ export default {
         );
       } else if (e.target.value === "aToZ") {
         this.productFilter = this.products.sort((a, b) =>
-          a.displayName.localeCompare(b.displayName)
+          a.name.localeCompare(b.name)
         );
       } else if (e.target.value === "ztoA") {
         this.productFilter = this.products.sort((a, b) =>
-          a.displayName === b.displayName
-            ? 0
-            : a.displayName > b.displayName
-            ? -1
-            : 1
+          a.name === b.name ? 0 : a.name > b.name ? -1 : 1
         );
       } else if (e.target.value === "default") {
         this.productFilter = this.products;
@@ -297,7 +289,9 @@ export default {
           this.spin = false;
           this.isShow = true;
           return (this.productFilter = this.tranformArr(this.products).filter(
-            (item) => item.categories?.toString().includes(value)
+            (item) => {
+              item.listCategory?.toString().includes(value);
+            }
           ));
         }, 1500);
         this.spin = true;
@@ -349,48 +343,20 @@ export default {
     },
 
     //Paginations
-    onClickFirstPage() {
-      if (this.pagingStatus === 2) {
-        this.spin = true;
-        this.isShow = false;
-        this.onClickPage(1);
-      }
+    async handleClickPage(pageNumber) {
+      this.page = pageNumber;
+      const response = await requestProductDbJson.get(
+        `/api/products?page=${this.page}&size=${this.pageSize}`
+      );
+      setTimeout(() => {
+        this.spin = false;
+        this.isShow = true;
+        this.products = response.data.voList;
+        this.productFilter = [...response.data.voList];
+      }, 1500);
+      this.spin = true;
+      this.isShow = false;
     },
-    onClickLastPage() {
-      if (this.pagingStatus === 1) {
-        this.spin = true;
-        this.isShow = false;
-        this.onClickPage(2);
-      }
-    },
-    async handleToPageTwo() {
-      try {
-        const response = await requestProductDbJson.get(
-          `/api/products?page=${this.page}&size=${this.pageSize}`
-        );
-        setTimeout(() => {
-          this.spin = false;
-          this.isShow = true;
-          this.products = response.data;
-          this.productFilter = [...response.data];
-        }, 1500);
-        this.spin = true;
-        this.isShow = false;
-      } catch (error) {
-        console.log("alo");
-      }
-    },
-    onClickPage(value) {
-      this.page = value;
-      if (value === 1) {
-        this.pagingStatus = 1;
-        this.handleToPageTwo();
-      } else if (value === 2) {
-        this.pagingStatus = 2;
-        this.handleToPageTwo();
-      }
-    },
-
     onClickLayout(value) {
       this.layoutStatus = value;
       if (value == true) {
