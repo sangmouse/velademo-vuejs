@@ -11,22 +11,16 @@
                   dots-class="slick-dots slick-thumb"
                   effect="fade"
                 >
-                  <template #customPaging>
-                    <a v-for="item in productDetail?.images" :key="item">
-                      <img :src="url + item.url" />
-                    </a>
-                  </template>
-
-                  <!-- <template #customPaging="props">
+                  <template #customPaging="props">
                     <a>
                       <img :src="getImgUrl(props.i)" />
                     </a>
-                  </template> -->
-                  <!-- <div v-for="item in 4" :key="item">
+                  </template>
+                  <div v-for="item in 4" :key="item">
                     <img :src="getImgUrl(item)" />
-                  </div> -->
+                  </div>
                   <div v-for="item in productDetail?.images" :key="item">
-                    <img :src="url + item.url" />
+                    <img :src="item.url" />
                   </div>
                 </a-carousel>
               </div>
@@ -110,7 +104,7 @@
                     <RouterLink v-bind:to="'/product/' + product.id">
                       <div class="img">
                         <img
-                          v-bind:src="url + product.images[0]?.url"
+                          v-bind:src="product.images[0]?.url"
                           alt="product"
                         />
                       </div>
@@ -140,15 +134,12 @@ import requestUnauthorized from "@/api/request";
 
 export default {
   data() {
-    // const getImgUrl = (i: number) => {
-    //   return `http://localhost:8081/api/image/downloadFile/product ${
-    //     i + 1
-    //   }.jpg`;
-    // };
+    const getImgUrl = (i: number) => {
+      return `../src/assets/images/products/product_${i + 1}.jpg`;
+    };
     return {
       i: 0,
-      url: `http://localhost:8081/api/image/downloadFile/`,
-      // getImgUrl,
+      getImgUrl,
       productDetail: null,
       products: [],
       isVisibleDrawer: false,
