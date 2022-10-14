@@ -138,6 +138,8 @@ export default {
   },
   async created() {
     const response = await ProductService.getDetail(this.$route.params.id);
+    console.log(response);
+    
     this.productDetail = response;
     this.$watch(
       () => this.$route.params.id,

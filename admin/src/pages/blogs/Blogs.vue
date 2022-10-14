@@ -19,14 +19,13 @@
         </div>
         <Table :columns="columns" :source="source" @handleChangePage="handleChangePage" :showLoading="showLoading"
           :numberPanigation="numberPanigation"   :current="current"/>
-       
       </div>
     </div>
   </div>
 </template>
   
 <script>
-import "./blogs.scss";
+import "../home-page.scss";
 import Table from "@/components/table/Table.vue";
 import { getJwtToken } from "@/utils/helpers";
 import axios from 'axios'
@@ -102,8 +101,9 @@ export default {
         //   key: "createdUser",
         // },
         {
-          title: "Actions",
-          key: "action",
+          title: "edit",
+          key: "edit",
+
         },
       ],
       source: [],
@@ -192,6 +192,7 @@ export default {
     },
 
     async handleChange(pageSize) {
+      this.pageNumber=1
       this.showLoading = true
       clearTimeout(this.debounce);
       this.debounce = setTimeout(() => {

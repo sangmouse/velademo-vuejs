@@ -31,3 +31,14 @@ export function seturl(token: string) {
 export function removeUrl() {
   return sessionStorage.removeItem("url");
 }
+
+// theme dark light
+export function setTheme(token: string) {
+  sessionStorage.setItem("theme", token);
+}
+export function getThem() {
+  return sessionStorage.getItem("theme");
+}
+export function removeThem() {
+  return sessionStorage.removeItem("them");
+}
