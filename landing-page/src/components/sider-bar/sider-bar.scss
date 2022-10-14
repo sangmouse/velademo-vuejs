@@ -10,6 +10,7 @@
     }
     .search-group {
       max-width: 600px;
+      margin: 2px auto 30px;
       box-shadow: 0 0 3px var(--vela-notfound-txtcolor);
       border-radius: 5px;
       overflow: hidden;
@@ -69,12 +70,13 @@
     font-family: var(--vela-font-family-secondary);
     font-size: calc(var(--vela-font-size) + 2px);
     line-height: calc(var(--vela-font-size) + 6px);
-    margin: 0 0 15px;
-    padding: 50px 0 10px;
+    padding: 40px 0 30px;
     position: relative;
     color: var(--vela-text-color-secondary);
     font-weight: 700;
     border-top: var(--vela-border-main);
+    margin-bottom: 0;
+    position: relative;
   }
   &-content {
     margin-bottom: 50px;
@@ -82,6 +84,7 @@
       &__list {
         padding: 5px 0;
         color: var(--vela-text-color-secondary);
+        font-family: var(--vela-font-family-secondary);
         font-weight: 600;
         font-size: calc(var(--vela-font-size) + 2px);
         &:hover {
@@ -95,12 +98,13 @@
         line-height: 18px;
         padding-bottom: 8px;
         font-size: calc(var(--vela-font-size) - 1px);
-        font-family: var(--vela-font-family-secondary);
+        font-family: Arial, Helvetica, sans-serif;
       }
     }
     &-category {
       list-style: inside;
       &__item {
+        font-family: var(--vela-font-family-secondary);
         color: var(--vela-text-color-primary);
         font-size: var(--vela-font-size);
         transition: all 0.35s ease;
@@ -201,8 +205,35 @@
 }
 @media screen and (max-width: 768px) {
   .siderbar {
+    .down {
+      &::after {
+        content: "\f106";
+      }
+    }
+    &-content {
+      display: none;
+    }
+    &__title {
+      &::after {
+        content: "\f107";
+        font-family: var(--vela-font-icon);
+        font-size: var(--vela-font-size);
+        position: absolute;
+        right: 10px;
+        position: absolute;
+      }
+    }
     &-banner {
       display: none;
+    }
+    .v-enter-active,
+    .v-leave-active {
+      transition: opacity 0.5s ease;
+    }
+
+    .v-enter-from,
+    .v-leave-to {
+      opacity: 0;
     }
   }
 }

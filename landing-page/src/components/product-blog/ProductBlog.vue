@@ -6,14 +6,16 @@
         <div class="blog__title">lifestyle</div>
         <div class="blog-article d-flex">
           <span class="blog-article__author">{{ item.userName }}</span>
-          <span>Apr 04, 2020</span>
+          <span class="blog-article__date">Apr 04, 2020</span>
         </div>
         <div class="blog__text">{{ item.title }}</div>
         <p class="card-text">{{ item.description }}</p>
-        <button class="blog-btn">
-          Read More
-          <span><i class="fa-regular fa-circle-right"></i></span>
-        </button>
+        <router-link :to="/blogs/ + item.id">
+          <button class="blog-btn">
+               Read More
+            <span><i class="fa-regular fa-circle-right"></i></span>
+          </button>
+        </router-link>
       </div>
     </div>
   </div>
