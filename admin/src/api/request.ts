@@ -49,8 +49,6 @@ requestUnauthorized.interceptors.response.use(
   async (error) => {
     if (error?.response?.status === 403) {
       try {
-        console.log('het han roi tuan oi');
-        
         const response = await RefreshTokenServive.getRefreshToken()
         setJwtToken(response.data.access_token)
         setRefreshToken(response.data.refresh_token)
