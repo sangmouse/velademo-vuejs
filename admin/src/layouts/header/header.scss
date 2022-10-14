@@ -53,20 +53,13 @@
   }
 }
 
-@media screen and (max-width: 768px) {
-  #header {
-    .body {
-      padding: 20px;
-    }
-  }
-}
-
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 1024px) {
   #header {
     .body {
       .profile {
         p {
           display: none;
+          cursor: pointer;
         }
       }
 

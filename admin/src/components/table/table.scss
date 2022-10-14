@@ -1,4 +1,6 @@
 #table-record {
+  position: relative;
+  height: 74vh;
   .ant-table-wrapper {
     .ant-spin-nested-loading > div:first-child {
       width: 100%;
@@ -44,6 +46,9 @@
     }
   }
   .paginate {
+    position: absolute;
+    bottom: 0;
+    right: 0;
     display: flex;
     justify-content: space-between;
     margin: 30px 0 0 0;

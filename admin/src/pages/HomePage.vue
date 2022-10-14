@@ -203,6 +203,7 @@ export default {
     },
 
     async handleChange(value) {
+      this.pageNumber=1
       this.showLoading = true
       clearTimeout(this.debounce);
       this.debounce = setTimeout(() => {

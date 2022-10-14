@@ -7,12 +7,6 @@
             <img src="../../assets/images/logo.png" alt="logo" />
           </RouterLink>
         </div>
-        <div class="menu">
-          <ul class="menu-list">
-            <li class="menu-list-product" ><RouterLink to="/">Product Manager</RouterLink></li>
-            <li class="menu-list-blogs"><RouterLink to="/blogs">Blogs</RouterLink></li>
-          </ul>
-        </div>
         <button type="button" class="profile" @click="handleLogout">
           <p>Sign out</p>
         </button>
@@ -23,28 +17,58 @@
         </button>
       </div>
     </div>
-    <Drawer
-      :isVisible="isVisible"
-      class="menu-drawer"
-      title="Menu Mobile"
-      width="50%"
-      placement="left"
-      @handleClose="handleClose"
-    >
+    <Drawer :isVisible="isVisible" class="menu-drawer" title="Menu Mobile" width="50%" placement="left"
+      @handleClose="handleClose">
       <div id="menu-mobile">
         <div class="body">
           <div class="item">
-            <!-- <RouterLink to="/"><p>Products</p></RouterLink> -->
+
+            <a-menu v-model:openKeys="openKeys" v-model:selectedKeys="selectedKeys"
+              style="width: 100%; height: 87.5vh;" mode="inline" :theme="state.theme">
+              <RouterLink to="/">
+                <a-menu-item key="1">
+                  <template #icon>
+                    <reconciliation-outlined />
+                  </template>
+                  Product Manager
+                </a-menu-item>
+              </RouterLink>
+              <RouterLink to="/blogs">
+                <a-menu-item key="2">
+                  <template #icon>
+                    <highlight-outlined />
+                  </template>
+                  Blogs
+                </a-menu-item>
+              </RouterLink>
+              <a-sub-menu key="sub1">
+                <template #icon>
+                  <AppstoreOutlined />
+                </template>
+                <template #title>Add status</template>
+                <a-menu-item key="3">Option 1</a-menu-item>
+                <a-menu-item key="4">Option 2</a-menu-item>
+                <a-sub-menu key="sub1-2" title="Option 3">
+                  <a-menu-item key="5">Option 3-1 </a-menu-item>
+                  <a-menu-item key="6">Option 3-2</a-menu-item>
+                </a-sub-menu>
+              </a-sub-menu>
+              <a-sub-menu key="sub2">
+                <template #icon>
+                  <SettingOutlined />
+                </template>
+                <template #title>Add status</template>
+                <a-menu-item key="7">Option 7</a-menu-item>
+                <a-menu-item key="8">Option 8</a-menu-item>
+                <a-menu-item key="9">Option 9</a-menu-item>
+                <a-menu-item key="10">Option 10</a-menu-item>
+              </a-sub-menu>
+            </a-menu>
+
             <button type="button" class="profile" @click="handleLogout">
               <p>Sign out</p>
             </button>
           </div>
-          <!-- <div class="item">
-            <RouterLink to="/user"><p>User</p></RouterLink>
-          </div>
-          <div class="item">
-            <RouterLink to="/cart"><p>Cart</p></RouterLink>
-          </div> -->
         </div>
       </div>
     </Drawer>
@@ -52,15 +76,26 @@
 </template>
 
 <script lang="ts">
-import { setJwtToken } from "@/utils/helpers";
 import Drawer from "../../components/drawer/Drawer.vue";
 import "./header.scss";
-import { toastSuccess} from '@/utils/toast'
+import { toastSuccess } from '@/utils/toast'
+import {
+  HighlightOutlined,
+  ReconciliationOutlined,
+  AppstoreOutlined,
+  SettingOutlined,
+  MenuOutlined
+} from '@ant-design/icons-vue';
+
 export default {
   name: "Header",
   data() {
     return {
       isVisible: false,
+      state: {
+        selectedKeys: ['1'],
+        openKeys: [],
+      },
     };
   },
   methods: {
@@ -78,6 +113,13 @@ export default {
       }
     },
   },
-  components: { Drawer },
+  components: {
+    Drawer,
+    ReconciliationOutlined,
+    AppstoreOutlined,
+    SettingOutlined,
+    HighlightOutlined,
+    MenuOutlined,
+  },
 };
 </script>
