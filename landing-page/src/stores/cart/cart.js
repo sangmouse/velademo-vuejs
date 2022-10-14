@@ -1,5 +1,5 @@
-import requestUnauthorized from "../../api/request";
-import { arraymove } from "../../components/comon/common";
+import CartService from "@/api/CartService";
+import { arraymove } from "@/components/comon/common";
 import {getUserIdCart } from '@/utils/helpers'
 
 const cart = {
@@ -57,7 +57,7 @@ const cart = {
       const userId = getUserIdCart()
       try {
         if(userId){
-          const data = await requestUnauthorized.get(`/api/cart/${userId}`);
+          const data = await CartService.getCartCurrent(userId);
           context.commit("UPDATE_CART_CURRENT", data);
         }
       } catch (error) {
@@ -75,7 +75,7 @@ const cart = {
           userid: userId,
           productRequestList: dataUdpateCart,
         };
-        await requestUnauthorized.post(`/api/cart/add`, dataSubmit);
+        await CartService.postCartUpdate( dataSubmit);
       } catch (err) {
         console.log(err);
       }

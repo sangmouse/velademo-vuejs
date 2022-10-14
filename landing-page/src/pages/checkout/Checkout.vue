@@ -93,8 +93,8 @@
         <ul class="cart-box-product">
           <li class="cart-box-product-list" v-for="item in products" :key="id">
             <div class="cart-box-product-list-img">
-              <img :src="item.listImg[0].url" alt="" />
-              <span>{{ item.quantity }}</span>
+              <img :src="urlImg + item.listImg[0].url" alt="" />
+              <span>{{item.quantity}}</span>
             </div>
             <p class="cart-box-product-list-name">{{ item.name }}</p>
             <p class="cart-box-product-list-price">{{ item.price }} $</p>
@@ -121,16 +121,10 @@ export default {
       products: [],
       iconLoading: false,
       cartEmpty: [],
-      phoneNumber: "",
-      isValidatePhoneNumber: true,
-      firstName: "",
-      isValidateFirstName: true,
-      lastName: "",
-      isValidateLastName: true,
-      address: "",
-      isValidateAddress: true,
-      apartment: "",
-      isValidateApartment: true,
+      requidPhone: false,
+      requidAddress: false,
+      valuePhone1: '',
+      valueAddress1: '',
     };
   },
   created() {

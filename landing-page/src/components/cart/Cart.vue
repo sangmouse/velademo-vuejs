@@ -7,7 +7,7 @@
           <div class="info">
             <div class="img">
               <RouterLink :to="'/product/' + product.id">
-                <img :src="url + product?.listImg[0]?.url" alt="product-img" />
+                <img :src="urlImg+ product?.listImg[0]?.url" alt="product-img" />
               </RouterLink>
             </div>
             <div class="order">
@@ -47,7 +47,7 @@
 <script lang="ts">
 import "./cart.scss";
 import { toastError } from "@/utils/toast"
-import { formatNumber } from "../../utils/common"
+import { formatNumber, reduceArr } from "../../utils/common"
 import { setCheckoutLogin } from '../../utils/helpers'
 
 export default {
@@ -57,7 +57,7 @@ export default {
       visible: false,
       quantity: 1,
       cart: [],
-      url: "http://localhost:8081/api/image/downloadFile/",
+      urlImg:'http://localhost:8081/api/image/downloadFile/'
     };
   },
   methods: {
@@ -100,7 +100,7 @@ export default {
   computed: {
     totalCoin() {
       const total = this.cart.map((item) => item.quantity * item.price);
-      const number = total.reduce((total, currentValue) => { return total + currentValue }, 0).toFixed(2)
+      const number = reduceArr(total)
       return formatNumber(number);
     },
     visible() {

@@ -148,7 +148,6 @@ export default {
   },
   methods: {
     showCartDetail(id) {
-      console.log(id);
       const index = this.products.findIndex((item) => item.id === id);
       const infor = this.products[index];
       const data = {

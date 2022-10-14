@@ -1,12 +1,13 @@
-import { getJwtToken, setUserCart,setUserIdCart, setUserName, setJwtToken } from "@/utils/helpers";
+import { getJwtToken, setUserCart,setUserIdCart, setUserName, setJwtToken, setRefreshToken, seturl } from "@/utils/helpers";
 import { toastError } from "@/utils/toast";
 import axios from "axios";
 import { store } from "../stores";
 import router from "@/router";
+import RefreshTokenServive from './RefreshTokenServive'
 
 const API_URL = "http://localhost:8081";
 
-const requestUnauthorized = axios.create({
+const request = axios.create({
   baseURL: API_URL,
   timeout: 1000,
   headers: {
@@ -14,7 +15,7 @@ const requestUnauthorized = axios.create({
   },
 });
 
-requestUnauthorized.interceptors.request.use(
+request.interceptors.request.use(
   (request) => {
     const token = getJwtToken();
     if (token) {
@@ -29,33 +30,36 @@ requestUnauthorized.interceptors.request.use(
   }
 );
 
-requestUnauthorized.interceptors.response.use(
+request.interceptors.response.use(
   (response) => {
-    // console.log(response);
-    // Edit response config
+    console.log(response);
+    
 
-    if(response?.data?.user?.email && response?.data?.user?.id && response?.data?.user?.name){
+    if(response?.data?.user?.email && response?.data?.user?.id && response?.data?.user?.name && response?.data?.access_token){
       setUserCart(response.data.user.email)
       setUserIdCart(response.data.user.id)
       setUserName(response.data.user.name)
       setJwtToken(response.data.access_token)
+      setRefreshToken(response.data.refresh_token)
     }
 
     return response.data;
   },
-  (error) => {
+  async (error) => {
     if (
       error?.response?.data?.error_message?.includes("The Token has expired") ||
       error?.response?.status === 403
     ) {
-      router.push({
-        name: "login",
-      });
-      sessionStorage.removeItem("jwt");
-      toastError("Session Expired");
+      try {
+        toastError("Session Expired");
+        const response = await RefreshTokenServive.getRefreshToken()
+        setJwtToken(response.data.access_token)
+        setRefreshToken(response.data.refresh_token)
+        return await request.get(error?.request?.responseURL)
+      } catch (error) { }
       store.commit("CHECK_IS_LOGIN");
     }
     return Promise.reject(error);
   }
 );
-export default requestUnauthorized;
+export default request;
