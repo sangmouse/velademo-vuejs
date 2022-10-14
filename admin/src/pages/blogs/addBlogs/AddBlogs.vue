@@ -47,6 +47,9 @@
 
                 <a-form-item>
                     <p style="text-align: center">
+                        <a-button type="primary" html-type="submit" class="btn-create-product space-right">
+                            <router-link to="/blogs" > Back to Blogs</router-link>
+                        </a-button>
                         <a-button type="primary" html-type="submit" class="btn-create-product">
                             <sync-outlined spin v-if="loading" />Create New
                         </a-button>

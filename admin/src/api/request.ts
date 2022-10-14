@@ -1,5 +1,5 @@
 import axios from "axios";
-import { setJwtToken, getJwtToken, geturl, seturl, setRefreshToken } from '@/utils/helpers'
+import { setJwtToken, getJwtToken, geturl, seturl, setRefreshToken, setTheme } from '@/utils/helpers'
 import RefreshTokenServive from './RefreshTokenServive'
 
 const BASE_URL = "http://localhost:8081"
@@ -35,6 +35,7 @@ requestUnauthorized.interceptors.response.use(
       setJwtToken(token)
       const refreshToken = response?.data?.refresh_token
       setRefreshToken(refreshToken)
+      setTheme('dark')
     }
 
     if (response?.access_token && response?.refresh_token) {
