@@ -230,7 +230,7 @@ export default {
       const infor = this.products[index];
       console.log(infor);
       const data = {
-        listImg: infor.images,
+        listImg: infor.listImg,
         id: infor.id,
         name: infor.displayName,
         price: infor.price,
