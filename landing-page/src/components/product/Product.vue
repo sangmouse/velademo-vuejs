@@ -11,8 +11,8 @@
           </span>
         </button>
         <button
-          class="btn btn-view"
-          v-on:click="$emit('handleVisibleViewInfoModal')"
+          class="btn btn-view display-none-990px"
+          v-on:click="$emit('handleVisibleViewInfoModal', product.id)"
         >
           <span>
             <img src="../../assets/images/search-b-16.png" alt="add-cart" />
