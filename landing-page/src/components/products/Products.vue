@@ -23,62 +23,38 @@
   </div>
 
   <!-- modal view info -->
-  <!-- <a-modal
+  <a-modal
     v-model:visible="isVisible"
     centered
     wrapClassName="view-info-modal"
     :footer="null"
     :title="null"
-    width="50%"
+    width="60%"
   >
-    <div class="modal-body">
-      <div class="container">
-        <div class="row">
-          <div class="col-xxl-4">slider in this</div>
-          <div class="col-xxl-8">
-            <div class="info-detail">
-              <h3>
-                <RouterLink to="/">Beoplay A1</RouterLink>
-              </h3>
-              <p>
-                Most of us are familiar with the iconic design of the egg shaped
-                chair floating in the air. The Hanging Egg Chair is a critically
-                acclaimed design that has enjoyed praise worldwide ever since
-                the distinctive sculptural shape was created.
-              </p>
-              <p class="price">$56.53</p>
-              <div class="add-cart">
-                <div class="quantity">
-                  <button class="btn btn-increment">-</button>
-                  <p>1</p>
-                  <button class="btn btn-increment">+</button>
-                </div>
-                <button class="btn btn-add-to-cart">Add To Cart</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </a-modal> -->
+    <Modal :popUpProduct = "popUpProduct"></Modal>
+  </a-modal>
 </template>
 
 <script lang="ts">
 import "./products.scss";
 import Drawer from "../drawer/Drawer.vue";
 import Product from "../product/Product.vue";
-import  ProductService from "@/api/ProductService"
+import Modal from "../../components/modal/Modal.vue";
+import ProductService from "@/api/ProductService";
 
 export default {
   data() {
     return {
       isLoading: false,
       products: [],
+      isVisible: false,
+      popUpProduct: {},
     };
   },
   components: {
     Drawer,
     Product,
+    Modal,
   },
   methods: {
     showCart(id) {
@@ -97,10 +73,23 @@ export default {
     handleCloseDrawer(event: any) {
       this.isVisibleDrawer = false;
     },
-    handleVisibleViewInfoModal() {},
+    handleVisibleViewInfoModal(id) {
+      this.isVisible = true;
+      const index = this.products.findIndex((item) => item.id === id);
+      const info = this.products[index];      
+      const data = {
+        listImg: info.listImg,
+        id: info.id,
+        name: info.name,
+        price: info.price,
+        desc: info.desc,
+        quantity: 1,
+      };
+      this.popUpProduct = data             
+    },
   },
   async created() {
-    const response = await ProductService.getList(1,8);
+    const response = await ProductService.getList(1, 8);
     this.products = response.voList;
   },
 };

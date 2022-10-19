@@ -80,7 +80,7 @@
           <RouterLink to="/products">Shop</RouterLink>
         </li>
         <li class="menu">
-          <RouterLink to="/products">Collections</RouterLink>
+          <RouterLink to="/collections">Collections</RouterLink>
         </li>
         <li class="menu">
           <RouterLink to="/blogs">Blogs</RouterLink>
