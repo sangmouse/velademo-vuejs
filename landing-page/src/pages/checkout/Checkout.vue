@@ -117,6 +117,7 @@ import { toastSuccess } from "@/utils/toast";
 export default {
   data() {
     return {
+      urlImg:'http://localhost:8081/api/image/downloadFile/',
       useremail: getUserCart(),
       products: [],
       iconLoading: false,
