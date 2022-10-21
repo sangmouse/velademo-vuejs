@@ -9,10 +9,13 @@ import "ant-design-vue/dist/antd.css"; // or 'ant-design-vue/dist/antd.less'
 import "vue-toastification/dist/index.css";
 import "./assets/main.css";
 
+import i18n  from './components/language/i18n.js'
+
 const app = createApp(App);
 
 app.use(store);
 app.use(router);
+app.use(i18n);
 app.use(Antd);
 app.use(Toast, {
   transition: "Vue-Toastification__bounce",
@@ -29,3 +32,5 @@ app.use(Toast, {
 });
 
 app.mount("#app");
+
+export default app

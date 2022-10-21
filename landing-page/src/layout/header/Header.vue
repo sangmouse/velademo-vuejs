@@ -4,18 +4,18 @@
       <div class="top-bar-body">
         <div class="top-bar-body_info">
           <p class="call-in">
-            <img
-              alt="phone-outlined"
-              src="../../assets/images/phone-outline.png"
-            />
+            <img alt="phone-outlined" src="@/assets/images/phone-outline.png" />
           </p>
           <p class="top-bar-body_phone-number ml-8 mr-8">
             +391 (0)35 2568 4593
           </p>
           <p class="top-bar-email-i mr-8">
-            <img alt="phone-outlined" src="../../assets/images/envelope.png" />
+            <img alt="phone-outlined" src="@/assets/images/envelope.png" />
           </p>
           <p class="top-bar-email">velatheme@gmail.com</p>
+          <p class="language">
+          <SwitchLanguage />
+        </p>
         </div>
         <p class="top-bar-body_sale">
           Free shipping on all orders over
@@ -25,16 +25,16 @@
         <div class="top-bar-body_social">
           <ul>
             <li class="item">
-              <img alt="facebook" src="../../assets/images/facebook.png" />
+              <img alt="facebook" src="@/assets/images/facebook.png" />
             </li>
             <li class="item">
-              <img alt="facebook" src="../../assets/images/instagram.png" />
+              <img alt="facebook" src="@/assets/images/instagram.png" />
             </li>
             <li class="item">
-              <img alt="facebook" src="../../assets/images/twitter.png" />
+              <img alt="facebook" src="@/assets/images/twitter.png" />
             </li>
             <li class="item">
-              <img alt="facebook" src="../../assets/images/pinterest.png" />
+              <img alt="facebook" src="@/assets/images/pinterest.png" />
             </li>
           </ul>
         </div>
@@ -44,27 +44,16 @@
       <!-- input search -->
       <div :class="!isVisibleInputSearch ? 'search-top' : 'search-top active'">
         <div class="search-top-group">
-          <input
-            type="text"
-            placeholder="Enter keywords to search..."
-            class="search-top-group__input form-control"
-            v-model="inputSearch"
-          />
-          <button
-            class="btn-search"
-            type="button"
-            v-on:click="handleSearchProduct"
-          >
+          <input type="text" placeholder="Enter keywords to search..." class="search-top-group__input form-control"
+            v-model="inputSearch" />
+          <button class="btn-search" type="button" v-on:click="handleSearchProduct">
             <img src="../../assets/images/search.png" alt="search-i" />
           </button>
         </div>
       </div>
       <button type="button" class="btn-burger" v-on:click="handleVisibleMenu">
         <span>
-          <img
-            src="../../assets/images/common/menu-burger.png"
-            alt="btn-burger"
-          />
+          <img src="../../assets/images/common/menu-burger.png" alt="btn-burger" />
         </span>
       </button>
       <div class="logo">
@@ -97,26 +86,15 @@
             </RouterLink>
           </p>
           <p class="link" v-if="!isLogin">
-            Hi <span style="font-weight: 800">{{ username }}</span
-            >! <button @click="handleLogout">Logout</button>
+            Hi <span style="font-weight: 800">{{ username }}</span>! <button @click="handleLogout">Logout</button>
           </p>
           <p class="link" v-else>
-            <RouterLink to="/account/login" @click="handleStatusLogin('login')"
-              >Login /</RouterLink
-            >
-            <RouterLink
-              to="/account/register"
-              @click="handleStatusLogin('register')"
-            >
-              Sign up</RouterLink
-            >
+            <RouterLink to="/account/login" @click="handleStatusLogin('login')">      {{ $t('login') }} /</RouterLink>
+            <RouterLink to="/account/register" @click="handleStatusLogin('register')"> 
+              {{ $t('register') }}</RouterLink>
           </p>
         </li>
-        <button
-          class="btn-search"
-          type="button"
-          v-on:click="handleVisibleInputSearch"
-        >
+        <button class="btn-search" type="button" v-on:click="handleVisibleInputSearch">
           <img src="../../assets/images/search.png" alt="search-i" />
         </button>
         <button class="btn-shop-bag" type="button" @click="showCart">
@@ -124,17 +102,15 @@
           <small class="quantity">{{ qty || "o" }}</small>
         </button>
       </ul>
+
+
+      <!-- <h1>{{$t('common.language')}}</h1> -->
+
     </div>
 
     <!-- menu mobile drawer -->
-    <Drawer
-      :isVisible="isVisible"
-      class="menu-drawer"
-      title="Menu Mobile"
-      width="50%"
-      placement="left"
-      @handleClose="handleClose"
-    >
+    <Drawer :isVisible="isVisible" class="menu-drawer" title="Menu Mobile" width="50%" placement="left"
+      @handleClose="handleClose">
       <div id="menu-mobile">
         <div class="body">
           <div class="item">
@@ -158,7 +134,9 @@
             </RouterLink>
           </div>
           <div class="item">
-            <RouterLink to="/"><p>Contact Us</p></RouterLink>
+            <RouterLink to="/">
+              <p>Contact Us</p>
+            </RouterLink>
           </div>
           <!-- <div class="item">
             <a-collapse :bordered="false" :ghost="true">
@@ -173,16 +151,19 @@
     <Cart />
   </div>
 </template>
-<script lang="ts">
+<script >
 import "./header.scss";
 import Drawer from "@/components/drawer/Drawer.vue";
 import Cart from "@/components/cart/Cart.vue";
 import { toastSuccess } from "@/utils/toast";
-import {removetJwtToken, removeRefreshToken, removeUserCart, removeCheckoutLogin} from "@/utils/helpers"
+import { removetJwtToken, removeRefreshToken, removeUserCart, removeCheckoutLogin } from "@/utils/helpers"
+import SwitchLanguage from '@/components/language/SwitchLanguage.vue'
+import { useI18n } from 'vue-i18n'
 
 export default {
-  components: { Drawer, Cart },
+  components: { Drawer, Cart, SwitchLanguage },
   data() {
+    const { t } = useI18n() // use as global scope
     return {
       isVisible: false,
       isVisibleInputSearch: false,
@@ -190,6 +171,7 @@ export default {
       qty: 0,
       username: "",
       isLogin: true,
+      t,
     };
   },
   created() {
