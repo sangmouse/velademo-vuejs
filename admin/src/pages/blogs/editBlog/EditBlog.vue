@@ -13,16 +13,10 @@
         <a-select
           mode="multiple"
           placeholder="Select a category"
-          v-model:value="categories.name"
-          :option="categories"
-          
+          v-model:value="categoriesItem"
         >
-        <!-- <Option
-            v-for="(cat, index) in categories"
-            :key="index"
-            :value="cat.name"
-          >
-          </Option> -->
+          <Option v-for="(cat, index) in categories" :key="index" :value="cat">
+          </Option>
         </a-select>
       </div>
     </div>
@@ -83,6 +77,7 @@
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import { QuillEditor } from "@vueup/vue-quill";
 import requestUnauthorized from "@/api/request";
+import CategoriesService from "@/api/CategoriesService";
 import "./edit-blog.scss";
 export default {
   components: {
@@ -90,6 +85,7 @@ export default {
   },
   data() {
     return {
+      categoriesItem: [],
       categories: [],
       content: "",
       formEntered: false,
@@ -101,17 +97,17 @@ export default {
       `/api/blog/${this.$route.params.id}`
     );
     this.blogEdit = response;
-    this.categories = this.array(this.blogEdit.categories)
+    this.categoriesItem = this.array(this.blogEdit.categories);
+    const res = await CategoriesService.get();
+    this.categories = this.array(res);
   },
   methods: {
     Update() {
       this.formEntered = true;
     },
-    array(arr){
-      return (
-        arr.map(item => item.name )
-      )
-      }
+    array(arr) {
+      return arr.map((item) => item.name);
+    },
   },
 };
 </script>
