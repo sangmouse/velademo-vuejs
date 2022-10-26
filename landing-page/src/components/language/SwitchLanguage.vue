@@ -35,8 +35,8 @@ export default {
   components: { GlobalOutlined },
   methods: {
     log(e){
-      this.$store.dispatch('setLang', e.target.value)
       console.log(e.target.value);
+      this.$store.commit('SET_LANG', e.target.value)
     }
   },
 }

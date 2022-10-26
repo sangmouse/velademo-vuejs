@@ -17,3 +17,26 @@ const language ={
     mutations
 }
 export default language
+
+
+
+// import i18n from '@/components/language/i18n'
+
+// const language = {
+//     state: {
+//         language: i18n.locale
+//     },
+//     mutations: {
+//         SET_LANG(state, payload) {
+//             state.language = payload
+//         }
+//     },
+//     actions: {
+//         setLang({ commit }, payload) {
+//             commit('SET_LANG', payload)
+//         }
+//     },
+//     getters: {},
+// };
+
+// export default language;

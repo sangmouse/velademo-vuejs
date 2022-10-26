@@ -63,19 +63,19 @@
       </div>
       <ul class="menus">
         <li class="menu">
-          <RouterLink to="/">Home</RouterLink>
+          <RouterLink to="/">{{$t('header.home')}}</RouterLink>
         </li>
         <li class="menu">
-          <RouterLink to="/products">Shop</RouterLink>
+          <RouterLink to="/products">{{$t('header.shop')}}</RouterLink>
         </li>
         <li class="menu">
-          <RouterLink to="/collections">Collections</RouterLink>
+          <RouterLink to="/collections">{{$t('header.collections')}}</RouterLink>
         </li>
         <li class="menu">
-          <RouterLink to="/blogs">Blogs</RouterLink>
+          <RouterLink to="/blogs">{{$t('header.blogs')}}</RouterLink>
         </li>
         <li class="menu">
-          <RouterLink to="/contact">Contact Us</RouterLink>
+          <RouterLink to="/contact">{{$t('header.contactus')}}</RouterLink>
         </li>
       </ul>
       <ul class="user">
@@ -86,12 +86,12 @@
             </RouterLink>
           </p>
           <p class="link" v-if="!isLogin">
-            Hi <span style="font-weight: 800">{{ username }}</span>! <button @click="handleLogout">Logout</button>
+            Hi <span style="font-weight: 800">{{ username }}</span>! <button @click="handleLogout">{{$t('login.logout')}}</button>
           </p>
           <p class="link" v-else>
-            <RouterLink to="/account/login" @click="handleStatusLogin('login')">      {{ $t('login') }} /</RouterLink>
+            <RouterLink to="/account/login" @click="handleStatusLogin('login')">      {{ $t('login.login') }} /</RouterLink>
             <RouterLink to="/account/register" @click="handleStatusLogin('register')"> 
-              {{ $t('register') }}</RouterLink>
+              {{ $t('login.register') }}</RouterLink>
           </p>
         </li>
         <button class="btn-search" type="button" v-on:click="handleVisibleInputSearch">
@@ -115,27 +115,27 @@
         <div class="body">
           <div class="item">
             <RouterLink to="/">
-              <p>Home</p>
+              <p>{{$t('header.home')}}</p>
             </RouterLink>
           </div>
           <div class="item">
             <RouterLink to="/">
-              <p>Shop</p>
+              <p>{{$t('header.shop')}}</p>
             </RouterLink>
           </div>
           <div class="item">
             <RouterLink to="/">
-              <p>Collections</p>
+              <p>{{$t('header.collections')}}</p>
             </RouterLink>
           </div>
           <div class="item">
             <RouterLink to="/">
-              <p>Blogs</p>
+              <p>{{$t('header.blogs')}}</p>
             </RouterLink>
           </div>
           <div class="item">
             <RouterLink to="/">
-              <p>Contact Us</p>
+              <p>{{$t('header.contact')}}</p>
             </RouterLink>
           </div>
           <!-- <div class="item">

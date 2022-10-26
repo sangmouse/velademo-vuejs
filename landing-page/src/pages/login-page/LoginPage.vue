@@ -9,7 +9,7 @@
                 ? 'account-nav-login__title--active'
                 : ''
             ">
-              Login
+              {{ $t('login.login') }}
             </h4>
           </div>
           <div class="account-nav-create" @click="handleLogin('register')">
@@ -18,7 +18,7 @@
                 ? 'account-nav-create__title--active'
                 : ''
             ">
-              Create Account
+              {{ $t('login.register') }}
             </h4>
           </div>
         </div>
@@ -39,8 +39,8 @@
                 <input v-bind:type="showPassword ? 'text' : 'password'" class="form-control account-password-control"
                   required placeholder="Password" v-on:change="onChangePassword" />
                 <div class="account-password__showbtn" @click="handleShowPassword">
-                  <span class="showbtn" v-if="isPassword">Hide </span>
-                  <span class="showbtn" v-if="!isPassword">Show</span>
+                  <span class="showbtn" v-if="isPassword">{{ $t('login.hide') }} </span>
+                  <span class="showbtn" v-if="!isPassword">{{ $t('login.show') }}</span>
                 </div>
               </div>
               <div class="account-signin-btn">
@@ -58,8 +58,8 @@
 
             <div>
               <div class="register-name">
-                <input type="text" class="form-control register-name-control" placeholder="Full Name" required autofocus
-                  @change="handleName" />
+                <input type="text" class="form-control register-name-control" placeholder="Full name" required
+                  autofocus @change="handleName" />
               </div>
               <div class="register-email">
                 <input type="email" class="form-control register-email-control" required placeholder="Email"
@@ -69,8 +69,8 @@
                 <input v-bind:type="showPassword ? 'text' : 'password'" class="form-control register-password-control"
                   required placeholder="Password" v-on:change="onChangePasswordRegister" />
                 <div class="register-password__showbtn" @click="handleShowPassword">
-                  <span class="showbtn" v-if="isPassword">Hide</span>
-                  <span class="showbtn" v-if="!isPassword">Show</span>
+                  <span class="showbtn" v-if="isPassword">{{ $t('login.hide') }}</span>
+                  <span class="showbtn" v-if="!isPassword">{{ $t('login.show') }}</span>
                 </div>
               </div>
               <div class="register-confirm-password">
@@ -93,9 +93,18 @@
 import LoginService from "@/api/LoginService";
 import "./login.scss";
 import { getCheckoutLogin } from '@/utils/helpers'
+import { useI18n } from 'vue-i18n'
 export default {
   data() {
+    const { t } = useI18n()
+    // const placeholder = {
+    //   fullname: t('login.password')
+    // }
     return {
+      t,
+      placeholder: {
+        fullname: t('login.password')
+      },
       alertLogin: true,
       messageAlertLogin: "",
       alertRegister: true,
@@ -203,7 +212,7 @@ export default {
         };
         await this.$store.dispatch("getLogin", infor);
         await this.$store.dispatch("updateCartCurrent")
-        const carttotal =  [...this.$store.state.cart.cart, ...this.$store.state.cart.cartNotLogin]
+        const carttotal = [...this.$store.state.cart.cart, ...this.$store.state.cart.cartNotLogin]
         await this.$store.dispatch("updateCart", this.unique(carttotal))
         await this.$store.dispatch("updateCartCurrent")
         this.$store.commit("CHECK_NAME");
@@ -211,11 +220,11 @@ export default {
           this.alertLogin = true;
           this.messageAlertLogin = "Sign in Successfully!";
           setTimeout(() => {
-            if(getCheckoutLogin() === 'true'){
+            if (getCheckoutLogin() === 'true') {
               const path = this.$store.state.routerpath.path
-              this.$router.push( `${path}`);
+              this.$router.push(`${path}`);
               this.$store.commit("ISVISIBLE_CART")
-            } else{
+            } else {
               this.$router.go(-1)
             }
           }, 1000);

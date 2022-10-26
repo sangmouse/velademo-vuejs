@@ -5,18 +5,23 @@
       "language": "Ngôn ngữ"
 
     },
+    "header":{
+      "home":"Trang Chủ",
+      "shop": "Shop",
+      "collections":"Bộ Sưu Tập",
+      "blogs":"Blogs",
+      "contactus":"Liên Hệ"
+    },
     "login": {
-      "title": "Đăng nhập vào dibochit",
-      "buttons": {
-        "login": "Đăng nhập"
-      },
-      "input_text": {
-        "email": "Địa chỉ gmail",
-        "password": "Mật khẩu"
-      },
-      "messages": {
-        "none_account": "Tạo tài khoản mới",
-        "register": "Đăng ký"
-      }
+      "login": "Đăng nhập",
+      "register": "Đăng ký",
+      "logout": "Đăng xuất",
+      "signin": "Chấp nhận",
+      "email": "Email",
+      "password":"Mật hhẩu",
+      "fullname": "Tên đăng nhập",
+      "confirmpassword": "Nhập lại mật khẩu",
+      "hide": "Ẩn",
+      "show": "Hiện"
     }
   }
