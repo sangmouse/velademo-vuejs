@@ -33,6 +33,7 @@ export default {
         'contact',
         'login',
         'blogs',
+        'blog-detail',
       ].indexOf($route.name) > -1
     "
   />
@@ -48,6 +49,7 @@ export default {
         'search-product',
         'contact',
         'blogs',
+        'blog-detail',
       ].indexOf($route.name) > -1
     "
   />

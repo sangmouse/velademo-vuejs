@@ -13,6 +13,22 @@
             </router-link>
           </span>
         </template>
+        <template v-if="column.key === 'editBlog'">
+          <span class="actions">
+            <router-link :to="urlPathBlog + record.id">
+              <p class="view-record">
+                <img src="../../assets/images/edit.png" alt="view-record" />
+              </p>
+            </router-link>
+          </span>
+        </template>
+        <template v-if="column.key === 'removeBlog'">
+          <span class="actions remove">
+              <p class="view-record">
+                <img src="../../assets/images/trash.png" alt="view-record" />
+              </p>
+          </span>
+        </template>
       </template>
     </a-table>
     <div class="paginate">
@@ -51,7 +67,9 @@ export default {
     DownOutlined,
   },
   data() {
-    return {};
+    return {
+      urlPathBlog: `/edit-blog/`,
+    };
   },
 };
 </script>

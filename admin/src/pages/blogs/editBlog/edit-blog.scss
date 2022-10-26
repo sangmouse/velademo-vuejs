@@ -1,0 +1,44 @@
+.rteditor {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.cat-input,
+.title-input {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.post-inputs {
+  display: grid;
+  width: 90%;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+.ql-editor {
+  height: 73vh;
+}
+.inner-image-input {
+  display: flex;
+  align-items: center;
+}
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.post-actions-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+.ivu-icon-ios-camera-outline {
+  font-size: 16px;
+}
+.btn-delete {
+  color: #2d8cf0 !important;
+  border: 1px solid #2d8cf0 !important;
+}
+.btn-delete:hover {
+  color: red !important;
+  border: 1px solid red !important;
+}

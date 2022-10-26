@@ -81,6 +81,7 @@
   &-content {
     margin-bottom: 50px;
     &-item {
+      display: inline-block;
       &__list {
         padding: 5px 0;
         color: var(--vela-text-color-secondary);
@@ -103,6 +104,7 @@
     }
     &-category {
       list-style: inside;
+      display: inline-block;
       &__item {
         font-family: var(--vela-font-family-secondary);
         color: var(--vela-text-color-primary);

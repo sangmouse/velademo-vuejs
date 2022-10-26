@@ -1,23 +1,15 @@
 <template>
-  <div style="height: 100px" v-if="
-    ['home-page', 'add-product', 'product-detail', 'AddBlogs','blogs',].indexOf($route.name) > -1
-  " />
-  <Header v-if="
-    ['home-page', 'add-product', 'product-detail', 'AddBlogs','blogs',].indexOf($route.name) > -1
-  " />
+  <div style="height: 100px" />
+  <Header />
   <div class="container-layout">
     <div>
-      <Sidebar v-if="
-        ['home-page', 'add-product', 'product-detail', 'AddBlogs','blogs',].indexOf($route.name) > -1
-      " />
+      <Sidebar  />
     </div>
     <div class="app-main">
       <RouterView />
     </div>
   </div>
-  <Footer v-if="
-    ['home-page', 'add-product', 'product-detail', 'AddBlogs','blogs',].indexOf($route.name) > -1
-  " />
+  <Footer />
 </template>
 
 <script lang="ts">

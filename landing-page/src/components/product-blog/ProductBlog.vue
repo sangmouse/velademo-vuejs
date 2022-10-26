@@ -36,5 +36,11 @@ export default {
     const response = await BlogsService.getListBlogs(1,6);
     this.productBlog = response.voList;
   },
+  computed: {
+    productBlog(){
+      return this.$store.state.blog.blogList.length == 0 ? this.productBlog : this.$store.state.blog.blogList;
+
+    }
+  },
 };
 </script>

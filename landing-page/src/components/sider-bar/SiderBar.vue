@@ -10,10 +10,7 @@
             class="search-group__input form-control"
           />
           <div class="search-group-addon">
-            <button
-              class="btn search-group-addon__btn"
-              @click="handleSearch"
-              >
+            <button class="btn search-group-addon__btn" @click="handleSearch">
               <!-- type="button" -->
               <img src="../../assets/images/search.png" alt="search-i" />
             </button>
@@ -21,48 +18,48 @@
         </div>
       </div>
       <h4 class="siderbar__title" id="add">Recent Articles</h4>
-        <div class="siderbar-content" id="move">
-          <ul class="siderbar-content-item">
-            <li
-              class="siderbar-content-item__list"
-              v-for="item in productBlog.voList"
-              :key="item.id"
-            >
-              {{ item.title }}
-              <p class="siderbar-content-item__time">Apr 04, 2020</p>
-            </li>
-          </ul>
-        </div>
+      <div class="siderbar-content" id="move">
+        <ul class="siderbar-content-item">
+          <li
+            class="siderbar-content-item__list"
+            v-for="item in productBlog.voList"
+            :key="item.id"
+          >
+            {{ item.title }}
+            <p class="siderbar-content-item__time">Apr 04, 2020</p>
+          </li>
+        </ul>
+      </div>
       <h4 class="siderbar__title" id="show">Categories</h4>
-        <div class="siderbar-content" id="hide">
-          <ul class="siderbar-content-category">
-            <li
-              class="siderbar-content-category__item"
-              v-for="item in categories"
-              :key="item"
-            >
-              {{ item.name }}
-            </li>
-          </ul>
-        </div>
+      <div class="siderbar-content" id="hide">
+        <ul class="siderbar-content-category">
+          <li
+            class="siderbar-content-category__item"
+            v-for="item in categories"
+            :key="item"
+          >
+            {{ item.name }}
+          </li>
+        </ul>
+      </div>
       <h4 class="siderbar__title" id="active">Articles Tags</h4>
-        <div class="siderbar-content" id="clear-active">
-          <ul class="siderbar-content-tag">
-            <li class="siderbar-content-tag__item"><span>Apps</span></li>
-            <li class="siderbar-content-tag__item">
-              <span>Conference</span>
-            </li>
-            <li class="siderbar-content-tag__item">
-              <span>Developers</span>
-            </li>
-            <li class="siderbar-content-tag__item">
-              <span>Enterprise</span>
-            </li>
-            <li class="siderbar-content-tag__item">
-              <span>Startups</span>
-            </li>
-          </ul>
-        </div>
+      <div class="siderbar-content" id="clear-active">
+        <ul class="siderbar-content-tag">
+          <li class="siderbar-content-tag__item"><span>Apps</span></li>
+          <li class="siderbar-content-tag__item">
+            <span>Conference</span>
+          </li>
+          <li class="siderbar-content-tag__item">
+            <span>Developers</span>
+          </li>
+          <li class="siderbar-content-tag__item">
+            <span>Enterprise</span>
+          </li>
+          <li class="siderbar-content-tag__item">
+            <span>Startups</span>
+          </li>
+        </ul>
+      </div>
       <div class="siderbar-banner">
         <div class="siderbar-banner__img">
           <img
@@ -79,18 +76,18 @@
 import "./sider-bar.scss";
 import BlogsService from "@/api/BlogsService";
 import CategoryService from "@/api/CategoryService";
-$(document).ready(function(){
-  $('#add').click(function(){
-    $('#move').slideToggle({"display": "block"});
-    $('#add').toggleClass('down');
+$(document).ready(function () {
+  $("#add").click(function () {
+    $("#move").slideToggle({ display: "block" });
+    $("#add").toggleClass("down");
   });
-  $('#show').click(function(){
-    $('#hide').slideToggle({"display": "block"});
-    $('#show').toggleClass('down');
+  $("#show").click(function () {
+    $("#hide").slideToggle({ display: "block" });
+    $("#show").toggleClass("down");
   });
-  $('#active').click(function(){
-    $('#clear-active').slideToggle({"display": "block"});
-    $('#active').toggleClass('down');
+  $("#active").click(function () {
+    $("#clear-active").slideToggle({ display: "block" });
+    $("#active").toggleClass("down");
   });
 });
 export default {
@@ -103,16 +100,17 @@ export default {
   },
   methods: {
     async handleSearch() {
-      const response = await BlogsService.getSearchBlogs(1, 6, this.search)
-      console.log(response);
-      // this.search = response;
+      const response = await BlogsService.getSearchBlogs(1, 6, this.search);
+      this.$store.commit("BLOG_LIST", response.voList);
     },
   },
+
   async created() {
-    const response = await BlogsService.getListBlogs(1,7);
+    const response = await BlogsService.getListBlogs(1, 7);
     this.productBlog = response;
     const resCategory = await CategoryService.getCategory();
     this.categories = resCategory;
   },
 };
 </script>
+<style scoped></style>

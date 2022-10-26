@@ -38,8 +38,12 @@
             align-items: center;
             opacity: 0.6;
             p {
-              margin: 0 10px 0 0;
+              margin: 0 0 0 5px;
             }
+          }
+          .remove {
+            padding: 0 0 0 15px;
+            cursor: pointer;
           }
         }
       }

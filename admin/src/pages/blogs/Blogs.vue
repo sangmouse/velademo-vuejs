@@ -39,6 +39,7 @@ export default {
 
   data() {
     return {
+      // urlPath: '/edit-blog/',
       pageSize: 10,
       current: 1,
       pageNumber: 1,
@@ -90,20 +91,13 @@ export default {
           dataIndex: "createdDate",
           key: "createdDate",
         },
-        // {
-        //   title: "Updated Date",
-        //   dataIndex: "updatedDate",
-        //   key: "updatedDate",
-        // },
-        // {
-        //   title: "Created User",
-        //   dataIndex: "createdUser",
-        //   key: "createdUser",
-        // },
         {
           title: "edit",
-          key: "edit",
-
+          key: "editBlog",
+        },
+        {
+          title: "remove",
+          key: "removeBlog",
         },
       ],
       source: [],
