@@ -3,7 +3,7 @@
     <div class="product">
       <div class="action">
         <button
-          class="btn btn-add-cart"
+          class="btn btn-add-cart display-none-990px"
           v-on:click="$emit('showCart', product.id)"
         >
           <span>
@@ -12,7 +12,7 @@
         </button>
         <button
           class="btn btn-view"
-          v-on:click="$emit('handleVisibleViewInfoModal')"
+          v-on:click="$emit('handleVisibleViewInfoModal', product.id)"
         >
           <span>
             <img src="../../assets/images/search-b-16.png" alt="add-cart" />

@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../pages/HomePage.vue";
-import { getJwtToken, getCheckoutLogin } from "../utils/helpers"
+import { getJwtToken } from "../utils/helpers"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -67,15 +67,10 @@ const router = createRouter({
     }
   ],
 });
-router.beforeEach((to, from, next) => {
+router.beforeResolve((to, from, next) => {
   const token = getJwtToken();
-  const checkout = getCheckoutLogin()
   if (token && to.path === '/account/login') {
-    if (checkout === 'true' && from.path === '/checkout') {
-      next({ path: "/checkout" })
-    } else if(checkout !== 'true' && from.path !== '/checkout') {
       next({ path: "/" })
-    }
   } else {
     next()
   }

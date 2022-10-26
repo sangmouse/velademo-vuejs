@@ -216,7 +216,7 @@ export default {
               this.$router.push( `${path}`);
               this.$store.commit("ISVISIBLE_CART")
             } else{
-              this.$router.push('/');
+              this.$router.go(-1)
             }
           }, 1000);
         } else {

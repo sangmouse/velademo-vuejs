@@ -94,7 +94,7 @@
           <li class="cart-box-product-list" v-for="item in products" :key="id">
             <div class="cart-box-product-list-img">
               <img :src="urlImg + item.listImg[0].url" alt="" />
-              <span>{{item.quantity}}</span>
+              <span>{{ item.quantity }}</span>
             </div>
             <p class="cart-box-product-list-name">{{ item.name }}</p>
             <p class="cart-box-product-list-price">{{ item.price }} $</p>
@@ -117,14 +117,21 @@ import { toastSuccess } from "@/utils/toast";
 export default {
   data() {
     return {
+      urlImg:'http://localhost:8081/api/image/downloadFile/',
       useremail: getUserCart(),
       products: [],
       iconLoading: false,
       cartEmpty: [],
-      requidPhone: false,
-      requidAddress: false,
-      valuePhone1: '',
-      valueAddress1: '',
+      phoneNumber: "",
+      isValidatePhoneNumber: true,
+      firstName: "",
+      isValidateFirstName: true,
+      lastName: "",
+      isValidateLastName: true,
+      address: "",
+      isValidateAddress: true,
+      apartment: "",
+      isValidateApartment: true,
     };
   },
   created() {

@@ -127,11 +127,12 @@
                           </div>
                           <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2">
                             <div class="rating-block">
+                              <!-- <i class="fa-solid fa-star"></i>
                               <i class="fa-solid fa-star"></i>
                               <i class="fa-solid fa-star"></i>
                               <i class="fa-solid fa-star"></i>
-                              <i class="fa-solid fa-star"></i>
-                              <i class="fa-solid fa-star"></i>
+                              <i class="fa-solid fa-star"></i> -->
+                              <a-rate v-model:value="value" allow-half />
                             </div>
                           </div>
                         </div>
@@ -156,6 +157,17 @@
       </div>
     </div>
   </div>
+  <!-- modal view info -->
+  <a-modal
+    v-model:visible="isVisibleModal"
+    centered
+    wrapClassName="view-info-modal"
+    :footer="null"
+    :title="null"
+    width="60%"
+  >
+    <Modal :popUpProduct="popUpProduct" :function="handleCancelModal"></Modal>
+  </a-modal>
   <Footer />
 </template>
 
@@ -168,6 +180,7 @@ import ProductFilter from "../../components/product-filter/ProductFilter.vue";
 import Footer from "../../layout/footer/Footer.vue";
 import Header from "../../layout/header/Header.vue";
 import Spinner from "../../components/spinner/Spinner.vue";
+import Modal from "../../components/modal/Modal.vue";
 
 export default {
   data() {
@@ -183,7 +196,10 @@ export default {
       pageSize: 8,
       layoutStatus: true,
       total: null,
+      value: 2.5,
       listPages: [],
+      popUpProduct: {},
+      isVisibleModal: false,
       url: "http://localhost:8081/api/image/downloadFile/",
     };
   },
@@ -206,6 +222,7 @@ export default {
     Header,
     Drawer,
     Spinner,
+    Modal,
   },
   computed: {
     total() {
@@ -230,7 +247,7 @@ export default {
       const infor = this.products[index];
       console.log(infor);
       const data = {
-        listImg: infor.images,
+        listImg: infor.listImg,
         id: infor.id,
         name: infor.displayName,
         price: infor.price,
@@ -239,8 +256,23 @@ export default {
       this.$store.commit("ADD_PRODUCT_ONE", data);
       this.$store.commit("ISVISIBLE_CART");
     },
-    handleVisibleViewInfoModal() {},
 
+    // handle modal
+    handleVisibleViewInfoModal(id) {
+      this.isVisibleModal = true;
+      const index = this.products.findIndex((item) => item.id === id);
+      const info = this.products[index];
+      const data = {
+        listImg: info.listImg,
+        id: info.id,
+        name: info.name,
+        price: info.price,
+        desc: info.desc,
+        quantity: 1,
+      };
+      this.popUpProduct = data;
+    },
+    
     //Sorting
     handleSort(e) {
       if (e.target.value === "lowToHigh") {

@@ -3,6 +3,7 @@ import request from "./request";
 const API_ENDPOINT = {
   LIST_PRODUCT: "/api/products",
   SEARCH_PRODUCT: "/api/products",
+  DETAIL_PRODUCT:"/api/product/"
 };
 class ProductService {
   constructor() {
@@ -16,6 +17,10 @@ class ProductService {
   }
   getSearch(pageNumber, pageSize, text){
     return request.get(API_ENDPOINT.LIST_PRODUCT + `?page=${pageNumber}&size=${pageSize}&name=${text}`);
+  }
+  getProductDetail(id){
+    return request.get(API_ENDPOINT.DETAIL_PRODUCT + `${id}`);
+
   }
 }
 
