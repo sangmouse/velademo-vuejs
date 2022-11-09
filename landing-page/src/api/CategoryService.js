@@ -1,8 +1,8 @@
 import request from "./request";
 
 const API_ENDPOINT = {
-  CATEGORY_GET: "/api/categories",
-  CATEGORY_SEARCH: "/api/categories",
+  CATEGORY_GET: "/product/api/categories",
+  CATEGORY_SEARCH: "/product/api/categories",
 
 };
 class CategoryService {

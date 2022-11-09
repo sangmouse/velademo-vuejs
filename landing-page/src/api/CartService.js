@@ -1,8 +1,8 @@
 import request from "./request";
 
 const API_ENDPOINT = {
-  CART_CURRENT: "/api/cart/",
-  CART_UPDATE: "/api/cart/add",
+  CART_CURRENT: "/cart/api/cart/",
+  CART_UPDATE: "/cart/api/cart/add",
 };
 class CartService {
   constructor() {

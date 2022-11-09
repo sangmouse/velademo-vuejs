@@ -1,8 +1,8 @@
 import request from "./request";
 
 const API_ENDPOINT = {
-    GET_LIST_BLOGS: "/api/blogs",
-    GET_SEARCH_BLOGS:'/api/blogs'
+    GET_LIST_BLOGS: "/blog/api/blogs",
+    GET_SEARCH_BLOGS:'/blog/api/blogs'
 };
 class BlogsService {
     constructor() {

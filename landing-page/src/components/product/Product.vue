@@ -40,7 +40,7 @@ export default {
   },
   data() {
     return {
-      urlImg:'http://localhost:8081/api/image/downloadFile/'
+      urlImg:'http://35.215.129.247:8083/common/api/image/downloadFile/'
     };
   },
 };

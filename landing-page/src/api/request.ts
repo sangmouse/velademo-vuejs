@@ -1,22 +1,25 @@
-import { getJwtToken, setUserCart,setUserIdCart, setUserName, setJwtToken, setRefreshToken, seturl } from "@/utils/helpers";
+import { getJwtToken, setUserCart, setUserIdCart, setUserName, setJwtToken, setRefreshToken, seturl } from "@/utils/helpers";
 import { toastError } from "@/utils/toast";
 import axios from "axios";
 import { store } from "../stores";
 import router from "@/router";
 import RefreshTokenServive from './RefreshTokenServive'
 
-const API_URL = "http://localhost:8081";
+const API_URL = "http://35.215.129.247:8083";
 
 const request = axios.create({
   baseURL: API_URL,
-  timeout: 1000,
+  timeout: 5000,
   headers: {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token",
     "Content-Type": "application/json",
   },
 });
 
 request.interceptors.request.use(
-  (request) => {
+  (request) => {    
     const token = getJwtToken();
     if (token) {
       request.headers["Authorization"] = `Bearer ${token}`;
@@ -25,17 +28,16 @@ request.interceptors.request.use(
     return request;
   },
   (error) => {
-    // console.log(error);
     return Promise.reject(error);
   }
 );
 
 request.interceptors.response.use(
   (response) => {
-    console.log(response);
+    // console.log(response);
     
 
-    if(response?.data?.user?.email && response?.data?.user?.id && response?.data?.user?.name && response?.data?.access_token){
+    if (response?.data?.user?.email && response?.data?.user?.id && response?.data?.user?.name && response?.data?.access_token) {
       setUserCart(response.data.user.email)
       setUserIdCart(response.data.user.id)
       setUserName(response.data.user.name)

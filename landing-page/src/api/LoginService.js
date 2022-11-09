@@ -1,8 +1,8 @@
 import request from "./request";
 
 const API_ENDPOINT = {
-    LOGIN: "/api/login",
-    REGISTER: "/api/user/register",
+    LOGIN: "/user/api/login",
+    REGISTER: "/user/api/register",
 };
 class LoginService {
     constructor() {

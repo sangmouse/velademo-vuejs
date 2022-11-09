@@ -1,9 +1,9 @@
 import request from "./request";
 
 const API_ENDPOINT = {
-  LIST_PRODUCT: "/api/products",
-  SEARCH_PRODUCT: "/api/products",
-  DETAIL_PRODUCT:"/api/product/"
+  LIST_PRODUCT: "/product/api/products",
+  SEARCH_PRODUCT: "/product/api/products",
+  DETAIL_PRODUCT:"/product/api/product/"
 };
 class ProductService {
   constructor() {
