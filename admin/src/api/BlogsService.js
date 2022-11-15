@@ -1,10 +1,10 @@
 import requestUnauthorized from "./request";
 
 const API_ENDPOINT = {
-  GET_BLOGS: "/api/admin/blogs/",
-  POST_BLOGS: "/api/admin/blog/add",
-  SEARCH_BLOGS: "/api/admin/blogs",
-  DETAIL_BLOGS: "/api/blogs"
+  GET_BLOGS: "/blog/api/blogs/",
+  POST_BLOGS: "/blog/api/admin/blog/add",
+  SEARCH_BLOGS: "/blog/api/admin/blogs",
+  DETAIL_BLOGS: "/blog/api/blogs"
 };
 class BlogsService {
   constructor() {

@@ -2,9 +2,9 @@
 import requestUnauthorized from "./request";
 
 const API_ENDPOINT = {
-  POST_REGISTER: "/api/user/register/",
-  POST_LOGIN: `/api/login`,
-  GET_REFRESH_TOKEN: "/api/token/refresh",
+  POST_REGISTER: "/user/api/register",
+  POST_LOGIN: `/user/api/login`,
+  GET_REFRESH_TOKEN: "/user/api/token/refresh",
 };
 class AuthService {
   constructor() {

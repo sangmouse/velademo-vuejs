@@ -2,11 +2,11 @@ import axios from "axios";
 import { setJwtToken, getJwtToken, geturl, seturl, setRefreshToken, setTheme } from '@/utils/helpers'
 import RefreshTokenServive from './RefreshTokenServive'
 
-const BASE_URL = "http://localhost:8081"
+const BASE_URL = "http://35.215.129.247:8083"
 
 const requestUnauthorized = axios.create({
   baseURL: BASE_URL,
-  timeout: 1000,
+  timeout: 5000,
   headers: {
     "Content-Type": "application/json",
   },
@@ -14,7 +14,7 @@ const requestUnauthorized = axios.create({
 
 requestUnauthorized.interceptors.request.use(
   (request) => {
-    if (request.url?.indexOf('/api/login') >= 1 || request.url?.indexOf('/api/token/refresh') >= 1 || request.url?.indexOf('/api/user/register') >= 1) {
+    if (request.url?.indexOf('/user/api/login') >= 1 || request.url?.indexOf('/user/api/token/refresh') >= 1 || request.url?.indexOf('/user/api/user/register') >= 1) {
       return request;
     }
     if (getJwtToken()) {
@@ -47,7 +47,7 @@ requestUnauthorized.interceptors.response.use(
     return response.data;
   },
   async (error) => {
-    if (error?.response?.status === 403) {
+    if (error?.response?.status === 403 || error?.response?.status === 401) {
       try {
         const response = await RefreshTokenServive.getRefreshToken()
         setJwtToken(response.data.access_token)

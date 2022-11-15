@@ -26,7 +26,6 @@
 <script>
 import "./home-page.scss";
 import Table from "../components/table/Table.vue";
-import { getJwtToken } from "./../utils/helpers";
 import ProductService from '@/api/ProductService'
 
 export default {
@@ -34,9 +33,8 @@ export default {
 
   data() {
     return {
-      product:'/product/',
-      current:1,
-      urlImg:'http://localhost:8081/api/image/downloadFile/',
+      product: '/product/',
+      current: 1,
       pageSize: 10,
       pageNumber: 1,
       searchProduct: "",
@@ -145,7 +143,7 @@ export default {
     transformData(arr) {
       return arr.map((item) => ({
         id: item?.id,
-        displayName: item?.name,
+        displayName: item?.displayName,
         price: new Intl.NumberFormat("de-DE", {
           style: "currency",
           currency: "USD",
@@ -169,7 +167,7 @@ export default {
         const response = await ProductService.search(this.pageNumber, this.pageSize, this.searchProduct)
         const data = this.transformData(response.voList);
         this.totalItem = response.total
-        
+
         return (this.source = data);
       } catch (error) {
         this.source = [];

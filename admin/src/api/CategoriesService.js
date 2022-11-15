@@ -1,7 +1,7 @@
 import requestUnauthorized from "./request";
 
 const API_ENDPOINT = {
-  GET_CATEGORIEES: "/api/categories",
+  GET_CATEGORIEES: "/product/api/categories",
 
 };
 class CategoriesService {

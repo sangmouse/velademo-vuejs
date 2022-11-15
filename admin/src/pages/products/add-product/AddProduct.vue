@@ -116,7 +116,8 @@ export default defineComponent({
     );
 
     const beforeUpload: UploadProps["beforeUpload"] = (file) => {
-      fileList.value = [...fileList.value, file];
+      // fileList.value = [...fileList.value, file];
+      fileList.value = [];
       if (!!fileList.value.length) {
         msgUpload.value = "";
       }
@@ -131,9 +132,11 @@ export default defineComponent({
     };
 
     const onFinish = (values) => {
-      if (!fileList.value.length) {
-        msgUpload.value = "This field is required";
-      } else {
+      // if (!fileList.value.length) {
+        // msgUpload.value = "This field is required";
+        console.log('khong can anh nua', fileList.value);
+        
+      // } else {
         loading.value = true;
         const formData = new FormData();
         fileList.value.forEach((file: any) => {
@@ -165,13 +168,15 @@ export default defineComponent({
               loading.value = false;
             }, 500);
           });
-      }
+      // }
     };
 
     const onFinishFailed = (errorInfo: any) => {
-      if (!fileList.value.length) {
-        msgUpload.value = "This field is required";
-      }
+      // if (!fileList.value.length) {
+      //   msgUpload.value = "This field is required";
+      // }
+      console.log('khong can nua dau');
+      
     };
     return {
       formState,

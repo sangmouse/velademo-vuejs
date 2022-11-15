@@ -1,10 +1,10 @@
 import requestUnauthorized from "./request";
 
 const API_ENDPOINT = {
-  DETAIL_PRODUCT: "/api/admin/product/",
-  LIST_PRODUCT: "/api/admin/products",
-  POST_PRODUCT: "/api/admin/addProduct",
-  SEARCH_PRODUCT: '/api/admin/products'
+  DETAIL_PRODUCT: "/product/api/admin/product/",
+  LIST_PRODUCT: "/product/api/admin/products",
+  POST_PRODUCT: "/product/api/admin/addProduct",
+  SEARCH_PRODUCT: '/product/api/admin/products'
 };
 class ProductService {
   constructor() {
